@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>Improving the raven-qt Mnemonic Dialog</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="Improving the raven-qt Mnemonic Dialog"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Nov
+                    24th 2020 <br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center">
+              <big><big>Improving the raven-qt Mnemonic Dialog</big></big>
+              <br>
+              <i><b>*This document describes changes made on raventoo-qt
+                  related to selection of the seed words and passphrase*</b></i><br>
+            </div>
+            <br>
+            <br>
+            <br>
+            <b>Background:</b><br>
+            <br>
+            This document describes improvements made relative to the
+            official ravencoin node software V4.3.1.<br>
+            <br>
+            When starting that client, if no "wallet.dat" file is found,
+            a dialog window is displayed for the purpose of creating a
+            new wallet. In particular, the dialog is related to the
+            support for BIP-39 compliant DH (Deterministic Hierarchical)
+            wallets which generate their keys from a 12-word seed and an
+            optional user-supplied passphrase. <br>
+            <br>
+            The user has the choice of either:<br>
+            <ol>
+              <li>Creating a new wallet by requesting a newly-generated
+                set of 12 seed words, and optionally supplying a
+                passphrase, or <br>
+              </li>
+              <li>Re-creating a previous wallet from seed words and a
+                passphrase (if previously used) in order to recover lost
+                keys (and thereby coins and assets) </li>
+            </ol>
+            <b><br>
+              The Problem:</b><br>
+            <br>
+            The raven-qt current-version client presents a single dialog
+            GUI window which combines the create/re-create functionality
+            into a single dialog. I find this to be very confusing.
+            Worse still, a poor choice of button selections can result
+            in a wallet being generated from random seed words without
+            the using having the opportunity to record them.<br>
+            <br>
+            I suspect that new Ravencoin users are equally confused (or
+            worse). <br>
+            <br>
+            The current raven-qt mnemonic dialog window appears like
+            this:<br>
+            <br>
+            <img alt="ravencore_qt-v4p3p1 HD Wallet Setup Dialog"
+              src="../images/ravencore_qt-v4p3p1_HD_Wallet_Setup_Dialog.png"
+              width="815" height="325"><br>
+            PS: Don't bother checking- I didn't leave any RVN at these
+            seed words for you to grab :-)<br>
+            <br>
+            <br>
+            As an exercise to brush up on my C++ and QT coding skills, I
+            decided to take a shot at making some improvements.<br>
+            <br>
+            <br>
+            <b>The Improvements:</b><br>
+            <br>
+            <div align="center"><big><i>"Another flaw in the human
+                  character is that everybody wants to build and nobody
+                  wants to do maintenance."<br>
+                  -Kurt Vonnegut</i><br>
+              </big></div>
+            <img src="images/mouse-42255.jpeg" alt="" width="50%">
+            <br>
+            The revised GUI in the raventoo-qt client has three separate
+            dialog windows. The first window asks the user which type of
+            wallet they would like to create: <br>
+            <br>
+            <img alt="raventoo-qt Wallet Type Selection Dialog"
+              src="../images/ravencore_too_qt_HD_Walet_Setup_Page1.png"
+              width="672" height="440" border="2"><br>
+            <br>
+            Depending on the user's selection...<br>
+            <br>
+            either the new wallet creation dialog window appears like
+            this:<br>
+            <br>
+            <img
+              src="../images/ravencore_too_qt_HD_Walet_Setup_Page2a.png"
+              alt="raventoo-qt New Wallet Creation Dialog" width="814"
+              height="465"><br>
+            <br>
+            <br>
+            or the previous wallet re-creation dialog window appears
+            like this:<br>
+            <br>
+            <img
+              src="../images/ravencore_too_qt_HD_Walet_Setup_Page2b.png"
+              alt="raventoo-qt Wallet Re-Creation Dialog" width="808"
+              height="460"><br>
+            <br>
+            The "Go Back" buttons allow the user to study their options
+            before making a decision, and the "Accept" buttons are
+            designed to prevent an invalid action from taking place.<br>
+            <br>
+            <b>Portability:<br>
+              <br>
+            </b>These code changes on raventoo-qt are fully compatible
+            with the official Ravencoin core client and can be used to
+            generate a Pull Request if wanted by the community. <br>
+            <br>
+            Note: I am primarily a Linux user. I did not verify that
+            everything still looks good on an MS-Windows or Mac
+            computer, but the QT gui toolkit is "supposed to" take care
+            of that.<br>
+            <b><br>
+            </b>
+            <div align="center">Copyright 2020 by Hans Schmidt<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
