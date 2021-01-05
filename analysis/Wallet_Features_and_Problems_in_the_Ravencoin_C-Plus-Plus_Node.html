@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>What is wrong with Ravencoin testnet6 block 38554?</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="What is wrong with Ravencoin testnet6 block 38554?"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Jan
+                    4th 2021 <br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center">
+              <big><big>Wallet Features and Problems in the Ravencoin
+                  C++ Node</big></big>
+              <br>
+              <i><b>*An overview of wallet functionality and common
+                  wallet problems in raven-qt*</b></i><br>
+            </div>
+            <br>
+            <b>Background:</b><br>
+            <br>
+            Last month I committed to spending some of my free time on
+            improving the quality and functionality of the Ravencoin C++
+            node software. I have started documenting my code changes at
+            <a href="https://github.com/hans-schmidt/raventoo-qt">https://github.com/hans-schmidt/raventoo-qt</a>
+            and I intend to post an assortment of code improvements over
+            the coming weeks. Obviously one of the most important
+            functions of that software is to serve as your keychain and
+            transaction utility for the RVN coins and assets which you
+            own. In order to reduce confusion, I redesigned the wallet
+            creation GUI as documented <a
+              href="../raventoo-qt/Improving_the_raven-qt_Mnemonic_Dialog.html">HERE</a>.
+            But I have also observed a number of functional problems
+            with the wallet. The Discord forum also records quite a few
+            problems and misunderstandings in this area. Hopefully, this
+            document can provide some help in understanding and using
+            the wallet. <br>
+            <br>
+            The Ravencoin C++ node software stores your wallet
+            information in a file called "wallet.dat". That file
+            contains primarily three types of information:<br>
+            <ol>
+              <li>Your keys (and associated addresses) - if you lose
+                these then you lose access to your RVN coins and assets.<br>
+              </li>
+              <li>Your metadata (such as optional names you created for
+                certain addresses or transactions) - these are useful
+                but not needed for ownership.</li>
+              <li>The transaction details for all transactions which
+                involve your addresses - this information can always be
+                re-fetched from the blockchain, but the wallet needs it
+                in order to properly calculate and show your RVN coin
+                and asset balances.<br>
+              </li>
+            </ol>
+            <br>
+            <b>Wallet Types:<br>
+              <br>
+            </b>Historically in crypto-currencies there are basically
+            four major types of wallets:<br>
+            <br>
+            1) Wallets which generate new keys randomly and you need to
+            make a copy of your wallet every time a new key pair is
+            generated. Thankfully, those are no longer used (at least
+            not by us)<br>
+            <br>
+            2) HD (Hierarchical Deterministic- called BIP-32) wallets
+            which generate all their keys from an initial seed. The
+            Ravencoin ravend/raven-qt C++ node software prior to
+            V4.0.0.0 used this type of wallet. Since all keys are
+            derived from the initial seed, you only need to make a
+            backup one time, and all future generated keys can be
+            regenerated from the backup. That seed is randomly generated
+            at wallet initialization. Many of these wallets support
+            being encrypted using an encryption passphrase- a feature
+            which you should use for improved security. But you need
+            BOTH the "wallet.dat" file AND the encryption passphrase to
+            recover your keys. It is also worth knowing that when you
+            encrypt an existing wallet, the random initial seed is
+            replaced with a new one, so you need to make a new backup of
+            your "wallet.dat" file. <br>
+            <br>
+            3) BIP-44 HD wallets- BIP-44 is a specific implementation of
+            BIP-32 that defines the coin type and support for multiple
+            accounts on top of having receiving addresses and change
+            addresses in their own tree. BIP-44 primarily just provides
+            better compatibility between different wallets and key
+            generation utilities, which could prove particularly
+            important if a wallet software which you used becomes
+            obsoleted and unavailable. Ravencoin BIP-44 compliance was
+            added to the C++ wallet starting with release V4.0.0.0.<br>
+            <br>
+            4) BIP-39 (Mnemonic code deterministic) wallets- these are
+            HD wallets which generate their initial seed from a set of
+            12 to 24 mnemonic code words, and an optional mnemonic
+            passphrase. With this type of wallet, the mnemonic code
+            words (and required mnemonic passphrase if you used one) is
+            all you need to recover your coins and assets. The ravencoin
+            Android wallet works this way. Ravencoin BIP-39 compliance
+            was also added to the C++ wallet using 12 mnemonic code
+            words and an optional mnemonic passphrase starting with
+            release V4.0.0.0. <br>
+            &nbsp;&nbsp;&nbsp; An optional encryption passphrase in also
+            supported to encrypt your on-disk "wallet.dat" file for
+            improved security, but the encryption passphrase is not
+            needed to re-create your keys. Note, however, that if you
+            lose your "wallet.dat" file and re-create your keys using
+            your mnemonic words and mnemonic passphrase, you will lose
+            your helpful metadata. For that reason, it is still best
+            practice to keep backups of your "wallet.dat" file. You
+            should record your mnemonic code words and mnemonic
+            passphrase as Plan-B. But you don't need to know or enter
+            the mnemonic passphrase or the 12 seed words if you have
+            your valid "wallet.dat" file and encryption passphrase, and
+            in fact you can do a "dumpwallet" RPC call or GUI Debug
+            Console command to see them.<br>
+            &nbsp;&nbsp;&nbsp; It is also worth mentioning that if you
+            use any of the available methods to import keys into your
+            BIP-39 wallet, then those keys will be lost and cannot be
+            mnemonically re-created if you lose your "wallet.dat" file.<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; One more time to guarantee clarity: There
+            are two possible types of wallet "passphrase". <br>
+            <blockquote>
+              <ul>
+                <li>The "mnemonic passphrase" is an optional item which
+                  is used to encrypt the 12 seed words used by BIP-39.
+                  It is entered into the wallet creation mnemonic dialog
+                  GUI together with the 12 mnemonic words. If you choose
+                  to use a "mnemonic passphrase" when you create a
+                  wallet, then you will need to know that passphrase in
+                  addition to the 12 seed words in order to re-create
+                  the wallet in the future if your "wallet.dat" file is
+                  corrupted or lost. You don't need to know or enter the
+                  mnemonic passphrase or the 12 seed words if you have
+                  your valid "wallet.dat" file, and in fact you can do a
+                  "dumpwallet" RPC call or GUI Debug Console command to
+                  see them.</li>
+                <li>The "wallet encrypt passphrase" is an optional
+                  passphrase used to encrypt your "wallet.dat" file. It
+                  is entered from the GUI main menu --&gt; "Wallet"
+                  --&gt; "Encrypt Wallet". If you choose to encrypt your
+                  "wallet.dat" file using this passphrase, then you will
+                  need to know and enter this passphrase in order to
+                  access your coins even if you have your valid
+                  "wallet.dat" file. This type of passphrase can be used
+                  with legacy pre-BIP-39 Ravencoin wallets or with newer
+                  version BIP-39 compliant Ravencoin wallets.</li>
+              </ul>
+            </blockquote>
+            <br>
+            &nbsp;&nbsp;&nbsp; Ravencoin has been assigned index 175
+            (hex 0x800000af) as its BIP-44 "Coin Type"<br>
+            <blockquote>
+              <ul>
+                <li>documented here: <a
+                    href="https://github.com/satoshilabs/slips/blob/master/slip-0044.md">https://github.com/satoshilabs/slips/blob/master/slip-0044.md</a></li>
+                <li>specified as "nExtCoinType" in file chainparams.cpp</li>
+              </ul>
+            </blockquote>
+            &nbsp;&nbsp;&nbsp; For a few additional technical
+            implementation details see:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a
+href="https://github.com/RavenProject/Ravencoin/tree/master/roadmap/mnemonic-seed">https://github.com/RavenProject/Ravencoin/tree/master/roadmap/mnemonic-seed</a><br>
+            <br>
+            <b><br>
+              Problems with wallet balances, especially when re-creating
+              a wallet</b><br>
+            <br>
+            &nbsp;&nbsp;&nbsp; If you re-create your "wallet.dat" file
+            using the 12 BIP-39 mnemonic seed words (and optional
+            mnemonic passphrase), you will probably find that your
+            wallet does not show your correct RVN balance or the assets
+            which you own. The intended method of solving that problem
+            (contrary to the button labelling) is to use the "Rescan
+            blockchain files" button of the "Wallet Repair" tab of the
+            GUI "Debug Window" or to restart the node software with the
+            "-rescan" command line option. Unfortunately, bugs in
+            raven-qt (as of v4.3.2.1) have always prevented 2 of the 3
+            buttons on the "Wallet Repair" tab from functioning properly
+            most of the time because they cause a software restart and
+            depend on the same function as the "-rescan" CLI option,
+            which is also broken. For that reason, the common advice on
+            the helpdesk forums is to use the "Rebuild index" button on
+            the "Wallet Repair" tab or to restart raven-qt with the
+            -reindex option. Although that works, it is a VERY slow
+            operation which can take many hours or even days, and which
+            is totally unnecessary. Note that if you have bitcoin and
+            use the bitcoin-qt node software, a reindex is not necessary
+            when replacing a "wallet.dat" file (only a rescan is needed
+            - see technical explanation below).<br>
+            &nbsp;&nbsp;&nbsp; Some users have reported that this
+            problem does not happen if they have "txindex=1" and
+            "assetindex=1" in their "raven.conf" file, or if their
+            wallet is used for only certain types of transactions- I am
+            unable to confirm that behavior. In any case, those indices
+            also take a long time to build and are totally unnecessary
+            for successful wallet re-creation.<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; Correcting the "rescan bug" in raven-qt
+            is non-trivial because it is caused by a race condition
+            which causes the rescan to most often take place before all
+            the necessary information is available in memory. The
+            solution therefore requires a rescan scheduling function to
+            schedule the rescan to take place when all the needed
+            resources become available. Note that due to this problem,
+            the following RPC commands which depend on rescan
+            functionality are also negatively affected and are likely to
+            cause your wallet to show incorrect balances.<br>
+            <blockquote>RPC calls which are impacted by the broken
+              rescan functionality:<br>
+              &nbsp;&nbsp;&nbsp; importprivkeyeserver<br>
+              &nbsp;&nbsp;&nbsp; importaddress<br>
+              &nbsp;&nbsp;&nbsp; importpubkey<br>
+              &nbsp;&nbsp;&nbsp; importwallet<br>
+              &nbsp;&nbsp;&nbsp; importmulti<br>
+            </blockquote>
+            &nbsp;&nbsp;&nbsp; I am currently working on fixing the
+            "rescan bug" in raventoo-qt, properly relabelling the
+            buttons in the "Wallet Repair" tab of the GUI "Debug
+            Window", and automatically invoking a rescan after
+            mnemonically re-creating a wallet.<br>
+            <br>
+            <br>
+            <u><i>Helpful Workaround:<br>
+                <br>
+              </i></u>&nbsp;&nbsp;&nbsp; Until the "rescan bug" is
+            properly fixed in the code, the following temporary hack can
+            be used to painlessly and quickly fix wallets which show
+            incorrect balances or missing transactions after re-creating
+            a wallet from BIP-39 mnemonic seed words (and optional
+            mnemonic passphrase), or after replacing a lost/corrupted
+            "wallet.dat" file with an old backup, or after use of one of
+            the troublesome RPC calls listed above:<br>
+            <br>
+            <blockquote>&nbsp;&nbsp;&nbsp; <i>After booting raven-qt
+                with the replaced or re-created "wallet.dat" file, go to
+                the "Console" tab of the "Debug Window". In the text
+                entry field, issue the command "rescanblockchain" and
+                hit &lt;Return&gt;. That's it !! A progress box will
+                open showing the rescan progress. After the scan
+                finishes, you will see notifications for all your
+                relevant transactions as if they had just occurred and
+                your balances should be correct. This works because all
+                the needed resources were already stable in memory when
+                the rescan was requested</i>.<br>
+            </blockquote>
+            <br>
+            <b>Technical Details About "Wallet.dat" and Rescan
+              Functionality</b><br>
+            <br>
+            &nbsp;&nbsp;&nbsp; Ravencoin maintains a LevelDB database
+            (in the subdirectory blocks/index) which keeps track of
+            where to find all the blocks in the "blk?????.dat" files on
+            the disk. It also keeps track of all the unspent current
+            coin and asset locations (the UTXO set or chainstate) using
+            LevelDB databases in the "chainstate" and "assets"
+            subdirectories. These LevelDB databases are required to be
+            kept valid and up to date for all RVN and assets UTXOs in
+            order for the node to be able to confirm compliance with the
+            consensus rules. If this information is not valid, the node
+            will suffer from much more serious problems than only
+            displaying incorrect wallet balances. The "reindex"
+            operation rebuilds all three of these databases from the
+            on-disk "blk?????.dat" files. This is a very long duration
+            operation, but it should never be necessary unless the
+            databases have somehow become corrupted. Note that none of
+            these databases contain all the detailed information about
+            transactions which the wallet needs. A reindex operation
+            also forces a rescan operation, which succeeds because all
+            the required resources are available before beginning the
+            rescan..<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; In order for your wallet to know the
+            amount of RVN coins and various assets which you own, which
+            addresses they reside in, and the details of all relevant
+            transactions, the wallet must keep track of all transactions
+            related to its addresses. It does this in the background on
+            a real-time basis and keeps all that data together with
+            keys, addresses, and metadata in a BerkelyDB database in the
+            "wallet.dat" file. If the "wallet.dat" file is replaced with
+            an old copy, then it will be missing newer transactions (if
+            any transactions involving your addresses occurred). If you
+            manually import keys into your wallet, then it will be
+            missing the transactions for those keys (if there were any).
+            If the wallet file is replaced with a new wallet which was
+            re-created using your 12 mnemonic words, then it will be
+            missing all transactions. In any of these cases, it is
+            necessary to fetch the missing transaction information for
+            the "wallet.dat" database from the blockchain. The only way
+            to do this is to scan through all of the "blk?????.dat"
+            files on-disk to look for transactions involving your
+            addresses. This operation is called a "rescan". It takes a
+            short time (typically a few minutes up to an hour), but it
+            is MUCH faster than a "reindex" (which can take many hours
+            or even days) because it can use the LevelDB block index and
+            is looking to retrieve a relatively small amount of
+            information. <br>
+            <br>
+            &nbsp;&nbsp;&nbsp; Note that if you keep multiple
+            "wallet.dat" files for different purposes with mutually
+            exclusive addresses and transactions at addresses occur only
+            when the appropriate wallet is active, then you can swap out
+            "wallet.dat" files without seeing wrong balances because
+            each wallet will keep track of its relevant transactions.
+            This behavior is common amount miners, and they remain
+            unaffected by the rescan bug when they behave in this
+            manner.<br>
+            <br>
+            <b>Welcome to being moderately knowledgeable about Ravencoin
+              Wallets !</b><br>
+            <b><br>
+            </b>
+            <div align="center">Copyright 2021 by Hans Schmidt<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
