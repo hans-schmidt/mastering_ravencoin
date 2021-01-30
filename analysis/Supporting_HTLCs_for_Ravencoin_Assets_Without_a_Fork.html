@@ -46,10 +46,24 @@ div{margin-top:20px; margin-bottom:20px !important;}
               </tbody>
             </table>
             <br>
+            <b>Update 2021-01-30: </b><br>
             <br>
-            <div align="center">
-              <big><big>Supporting HTLCs for Ravencoin Assets Without a
-                  Fork</big></big> <br>
+            This proposal has been withdrawn.<br>
+            <br>
+            Thank you to everyone who provided feedback and analysis on
+            this proposal. In the end we found that it can be attacked
+            using Transaction Malleability. Ravencoin has no solution to
+            TM because it is pre-Segwit. So I am withdrawing the
+            proposal. Nice try. <br>
+            <br>
+            We will proceed with planning the P2SH asset support
+            hardfork, which is the only remaining solution and is needed
+            for Multisig assets anyway.<br>
+            <br>
+            <br>
+            <hr size="2" width="100%">
+            <div align="center"> <big><big>Supporting HTLCs for
+                  Ravencoin Assets Without a Fork</big></big> <br>
               <i><b>*How to be Atomic*</b></i><br>
             </div>
             <br>
@@ -75,10 +89,10 @@ div{margin-top:20px; margin-bottom:20px !important;}
             AtomicDEX is built using HTLCs to support UTXO-base
             blockchains (such as Ravencoin). Standard HTLC
             implementations require the UTXO transactions to use
-            Pay-to-Script-Hash (P2SH) ouputs containing the tokens or
+            Pay-to-Script-Hash (P2SH) outputs containing the tokens or
             assets being swapped. But the Ravencoin code is written to
-            allow asset operations only on using the simpler
-            Pay-to-Public-Key-Hash (P2PKH) outputs format. <br>
+            allow asset operations only using the simpler
+            Pay-to-Public-Key-Hash (P2PKH) output format. <br>
             <br>
             So it appears that Ravencoin consensus code changes (and a
             hardfork) are needed in order to make HTLCs possible for
@@ -88,7 +102,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <blockquote><i>Sidebar: Note that the inability of Ravencoin
                 to support P2SH format outputs for assets also makes
                 Multisig Ravencoin assets currently impossible. This
-                document and the enclosed proposal does not apply to or
+                document and the enclosed proposal do not apply to or
                 fix Multisig functionality of Ravencoin assets.</i><br>
             </blockquote>
             <br>
@@ -108,7 +122,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             blockchains (such as Ravencoin). HTLCs are built using two
             interlocked transactions (which is what makes the exchange
             atomic). Standard HTLC implementations require the UTXO
-            transactions to use Pay-to-Script-Hash (P2SH) ouputs
+            transactions to use Pay-to-Script-Hash (P2SH) outputs
             containing the tokens or assets being swapped. The purpose
             of the P2SH format is to handle a secret which is generated
             by one party and then revealed to the other party. This
@@ -160,7 +174,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             person who needs to sign the transaction because all of the
             inputs are yours. But you could create a Ravencoin asset
             sale transaction in which RVN come from one party and the
-            assets from another, and each of these parties will needs to
+            assets from another, and each of these parties will need to
             sign the transaction. Asset swaps could be done in a similar
             way. In these cases, the sale or swap is taking place within
             a single transaction. That means that it is inherently
