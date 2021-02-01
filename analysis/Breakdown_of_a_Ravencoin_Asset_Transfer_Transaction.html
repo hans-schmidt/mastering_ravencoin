@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>Breakdown_of_a_Ravencoin_Asset_Transfer_Transaction</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="Breakdown_of_a_Ravencoin_Asset_Transfer_Transaction"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Feb
+                    1st 2021 <br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <div align="center"><big><big>Breakdown of a Ravencoin Asset
+                  Transfer Transaction</big></big> <br>
+            </div>
+            <br>
+            This document presents the raw transaction for an asset
+            transfer on the Ravencoin testnet blockchain, and decodes
+            the purpose of every byte in the transaction.<br>
+            <br>
+            Note that asset operations are always encoded as extra
+            information appended to the scriptPubKey of outputs having a
+            value=0<br>
+            <br>
+            For details about the Ravencoin asset operation encoding
+            method, please see <a
+              href="Anatomy_of_a_Ravencoin_Asset_Transaction_Script.html">HERE</a><br>
+            <br>
+            To see this particular transaction in an online Ravencoin
+            blockchain explorer, please see <a
+href="https://testnet.ravencoin.network/tx/1cfac553cc7d70528775ce865436bc20d7f1beb69cae94e1089698941698f082">HERE</a><br>
+            <br>
+            <br>
+            <b>Transaction ID (hash):</b><br>
+            <font face="Courier 10 Pitch">1cfac553cc7d70528775ce865436bc20d7f1beb69cae94e1089698941698f082<br>
+              <br>
+            </font>
+            <hr size="2" width="100%">
+            <hr size="2" width="100%"><b><br>
+              Raw Transaction:</b><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="1">
+              <tbody>
+                <tr>
+                  <td valign="top"><font face="Courier 10 Pitch">0200000002696ef042e4ac0fe159ceb1282c41c69057368b21efd7cfdfe5f81bef7d5abd6e000000006b4830450221009ccdc7f50f9dd96ff9de374dbae93ac44a6799153b0c0aaacbf90af5de9191a002202914cea6ec22becf89acaca7522db96e22daffe8603db74d524dfed0d3fd7ed00121030c070f72421baea0272d00099480af8288890c8ecbc6f4016351d32cbb58a94afeffffff016b8aa576daf46a573a2efb99f76f8064e167620847cbf4a84e954a35a3f317030000006a473044022033f3b9d81aeb8fe8b8efaf5364fbc84d5165c620b8308fb2ee1e1078acbc174a0220753664bcd75b01629424718cd879eea11988acd98def4cd93863b30fc2fc517101210287bf8adbf3535eebe73937183499554a08df9652f27e15b7a0c027391fb3ce80feffffff0300000000000000003376a9143228f10a2ec7991be2df386cbe1a3658a071cac588acc01772766e740a544553545f544f4b454e00e40b54020000007534afee05000000001976a91495a69d8872bea6e25e5652f8ef062664b73d738d88ac00000000000000003376a91495a69d8872bea6e25e5652f8ef062664b73d738d88acc01772766e740a544553545f544f4b454e00046bf414000000759ceb0800</font><br>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <hr size="2" width="100%">
+            <hr size="2" width="100%"><b><br>
+              Transaction Structure</b><b>:</b><br>
+            <br>
+            2 inputs:<br>
+            <blockquote>0) the source of RVN for the transaction fees<br>
+              1) the source of the asset tokens<br>
+            </blockquote>
+            3 output:<br>
+            <blockquote>0) the target for the asset
+              tokens&nbsp;&nbsp;&nbsp; <br>
+              1) change for the remaining RVN<br>
+              2) the change back for the remaining assets<br>
+            </blockquote>
+            Note that asset operations are always encoded as extra
+            information appended to the scriptPubKey of outputs having a
+            value=0&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; <br>
+            <br>
+            <hr size="2" width="100%">
+            <hr size="2" width="100%"><b><br>
+              Decoded Transaction:</b><br>
+            <br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="1">
+              <tbody>
+                <tr>
+                  <td valign="top" nowrap="nowrap"><font face="Courier
+                      10 Pitch">{<br>
+                      &nbsp; "txid":
+                      "1cfac553cc7d70528775ce865436bc20d7f1beb69cae94e1089698941698f082",<br>
+                      &nbsp; "hash":
+                      "1cfac553cc7d70528775ce865436bc20d7f1beb69cae94e1089698941698f082",<br>
+                      &nbsp; "version": 2,<br>
+                      &nbsp; "size": 459,<br>
+                      &nbsp; "vsize": 459,<br>
+                      &nbsp; "locktime": 584604,<br>
+                      &nbsp; "vin": [<br>
+                      &nbsp;&nbsp;&nbsp; {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "txid":
+                      "6ebd5a7def1bf8e5dfcfd7ef218b365790c6412c28b1ce59e10face442f06e69",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "vout": 0,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "scriptSig": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "asm":
+                      "30450221009ccdc7f50f9dd96ff9de374dbae93ac44a6799153b0c0aaacbf90af5de9191a002202914cea6ec22becf89acaca7522db96e22daffe8603db74d524dfed0d3fd7ed0[ALL]
+030c070f72421baea0272d00099480af8288890c8ecbc6f4016351d32cbb58a94a",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "hex":
+"4830450221009ccdc7f50f9dd96ff9de374dbae93ac44a6799153b0c0aaacbf90af5de9191a002202914cea6ec22becf89acaca7522db96e22daffe8603db74d524dfed0d3fd7ed00121030c070f72421baea0272d00099480af8288890c8ecbc6f4016351d32cbb58a94a"<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "sequence":
+                      4294967294<br>
+                      &nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp; {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "txid":
+                      "17f3a3354a954ea8f4cb47086267e164806ff799fb2e3a576af4da76a58a6b01",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "vout": 3,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "scriptSig": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "asm":
+                      "3044022033f3b9d81aeb8fe8b8efaf5364fbc84d5165c620b8308fb2ee1e1078acbc174a0220753664bcd75b01629424718cd879eea11988acd98def4cd93863b30fc2fc5171[ALL]
+0287bf8adbf3535eebe73937183499554a08df9652f27e15b7a0c027391fb3ce80",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "hex":
+"473044022033f3b9d81aeb8fe8b8efaf5364fbc84d5165c620b8308fb2ee1e1078acbc174a0220753664bcd75b01629424718cd879eea11988acd98def4cd93863b30fc2fc517101210287bf8adbf3535eebe73937183499554a08df9652f27e15b7a0c027391fb3ce80"<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "sequence":
+                      4294967294<br>
+                      &nbsp;&nbsp;&nbsp; }<br>
+                      &nbsp; ],<br>
+                      &nbsp; "vout": [<br>
+                      &nbsp;&nbsp;&nbsp; {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "value":
+                      0.00000000,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "n": 0,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "scriptPubKey": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "asm":
+                      "OP_DUP OP_HASH160
+                      3228f10a2ec7991be2df386cbe1a3658a071cac5
+                      OP_EQUALVERIFY OP_CHECKSIG OP_RVN_ASSET
+                      1772766e740a544553545f544f4b454e00e40b540200000075",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "hex":
+"76a9143228f10a2ec7991be2df386cbe1a3658a071cac588acc01772766e740a544553545f544f4b454e00e40b540200000075",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "reqSigs": 1,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "type":
+                      "transfer_asset",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "asset": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "name": "TEST_TOKEN",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "amount": 100.00000000<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "addresses": [<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "mk6B8KEJDug4zKJMFzGvmwq4r5RasSkCoD"<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+                      &nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp; {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "value":
+                      0.99528500,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "n": 1,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "scriptPubKey": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "asm":
+                      "OP_DUP OP_HASH160
+                      95a69d8872bea6e25e5652f8ef062664b73d738d
+                      OP_EQUALVERIFY OP_CHECKSIG",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "hex":
+"76a91495a69d8872bea6e25e5652f8ef062664b73d738d88ac",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "reqSigs": 1,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "type":
+                      "pubkeyhash",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "addresses": [<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "muAEaGur5Wnc7WG8Wir9mfFbstVtKj1HUS"<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+                      &nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp; {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "value":
+                      0.00000000,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "n": 2,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "scriptPubKey": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "asm":
+                      "OP_DUP OP_HASH160
+                      95a69d8872bea6e25e5652f8ef062664b73d738d
+                      OP_EQUALVERIFY OP_CHECKSIG OP_RVN_ASSET
+                      1772766e740a544553545f544f4b454e00046bf41400000075",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "hex":
+"76a91495a69d8872bea6e25e5652f8ef062664b73d738d88acc01772766e740a544553545f544f4b454e00046bf41400000075",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "reqSigs": 1,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "type":
+                      "transfer_asset",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "asset": {<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "name": "TEST_TOKEN",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "amount": 900.00000000<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "addresses": [<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      "muAEaGur5Wnc7WG8Wir9mfFbstVtKj1HUS"<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+                      &nbsp;&nbsp;&nbsp; }<br>
+                      &nbsp; ]<br>
+                      }</font><br>
+                    <br>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <hr size="2" width="100%">
+            <hr size="2" width="100%"><b><br>
+              Detailed Transaction Description:</b><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="1">
+              <tbody>
+                <tr>
+                  <td valign="top" nowrap="nowrap"><font face="Courier
+                      10 Pitch"><br>
+                      02000000&nbsp;&nbsp;&nbsp; version type-2<br>
+                      02&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the number of inputs<br>
+                      696ef042e4ac0fe159ceb1282c41c69057368b21efd7cfdfe5f81bef7d5abd6e&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the reversed hash of the
+                      transaction for the first input<br>
+                      <br>
+                      00000000&nbsp;&nbsp;&nbsp; the output index of the
+                      first input (=0)<br>
+                      6b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the length of the scriptSig for
+                      the first input<br>
+                      The scriptSig for the first input:<br>
+4830450221009ccdc7f50f9dd96ff9de374dbae93ac44a6799153b0c0aaacbf90af5de9191a002202914cea6ec22becf89acaca7522db96e22daffe8603db74d524dfed0d3fd7ed00121030c070f72421baea0272d00099480af8288890c8ecbc6f4016351d32cbb58a94a<br>
+                      feffffff&nbsp;&nbsp;&nbsp; reversed sequence code<br>
+                      <br>
+                      016b8aa576daf46a573a2efb99f76f8064e167620847cbf4a84e954a35a3f317&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the reversed hash of the
+                      transaction for the second input <br>
+                      03000000&nbsp;&nbsp;&nbsp; the output index of the
+                      third input (=3)<br>
+                      6a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the length of the scriptSig for
+                      the second input<br>
+                      The scriptSig for the second input:<br>
+473044022033f3b9d81aeb8fe8b8efaf5364fbc84d5165c620b8308fb2ee1e1078acbc174a0220753664bcd75b01629424718cd879eea11988acd98def4cd93863b30fc2fc517101210287bf8adbf3535eebe73937183499554a08df9652f27e15b7a0c027391fb3ce80<br>
+                      feffffff&nbsp;&nbsp;&nbsp; reversed sequence code<br>
+                      <br>
+                      03&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the number of outputs<br>
+                      <br>
+                      0000000000000000&nbsp;&nbsp;&nbsp; the value of
+                      the first output (always =0 for an asset
+                      operation)<br>
+                      33&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the length of the scriptPubKey
+                      for the first output<br>
+                      The scriptPubKey for the first output:<br>
+                      &nbsp;&nbsp;&nbsp; 76a914&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; OP_DUP OP_HASH160<br>
+                      &nbsp;&nbsp;&nbsp;
+                      3228f10a2ec7991be2df386cbe1a3658a071cac5<br>
+                      &nbsp;&nbsp;&nbsp; 88ac&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; OP_EQUALVERIFY OP_CHECKSIG<br>
+                      &nbsp;&nbsp;&nbsp; The Ravencoin asset operation:<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      c0&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      OP_RVN_ASSET (always =c0 and indicates an asset
+                      operation)<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      17&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; the length
+                      of the asset script<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      72766e&nbsp;&nbsp;&nbsp; asset type header (always
+                      =rvn)<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      74&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; asset
+                      operation type (transfer=74 or new=71 or owner=6f)<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      0a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; length of
+                      the asset name<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      544553545f544f4b454e&nbsp;&nbsp;&nbsp; the ascii
+                      of the asset name<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      00e40b5402000000&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the quantity of assets affected
+                      in satoshis<br>
+                      &nbsp;&nbsp;&nbsp; 75&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_DROP<br>
+                      <br>
+                      34afee0500000000&nbsp;&nbsp;&nbsp; the value of
+                      the second output<br>
+                      19&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the length of the scriptPubKey
+                      for the second output<br>
+                      The scriptPubKey for the second output:<br>
+                      &nbsp;&nbsp;&nbsp; 76a914&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; OP_DUP OP_HASH160<br>
+                      &nbsp;&nbsp;&nbsp;
+                      95a69d8872bea6e25e5652f8ef062664b73d738d<br>
+                      &nbsp;&nbsp;&nbsp; 88ac&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; OP_EQUALVERIFY OP_CHECKSIG<br>
+                      <br>
+                      0000000000000000&nbsp;&nbsp;&nbsp; the value of
+                      the third output (always =0 for an asset
+                      operation)<br>
+                      33&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the length of the scriptPubKey
+                      for the third output<br>
+                      The scriptPubKey for the third output:<br>
+                      &nbsp;&nbsp;&nbsp; 76a914&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; OP_DUP OP_HASH160<br>
+                      &nbsp;&nbsp;&nbsp;
+                      95a69d8872bea6e25e5652f8ef062664b73d738d<br>
+                      &nbsp;&nbsp;&nbsp; 88ac&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; OP_EQUALVERIFY OP_CHECKSIG<br>
+                      &nbsp;&nbsp;&nbsp; The Ravencoin asset
+                      operation:&nbsp;&nbsp;&nbsp; <br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      c0&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      OP_RVN_ASSET (always =c0 and indicates an asset
+                      operation)<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      17&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; the length
+                      of the asset script<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      72766e&nbsp;&nbsp;&nbsp; asset type header (always
+                      =rvn)<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      74&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; asset
+                      operation type (transfer=74 or new=71 or owner=6f)<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      0a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; length of
+                      the asset name<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      544553545f544f4b454e&nbsp;&nbsp;&nbsp; the ascii
+                      of the asset name<br>
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                      00046bf414000000&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; the quantity of assets affected
+                      in satoshis<br>
+                      &nbsp;&nbsp;&nbsp; 75&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_DROP<br>
+                      <br>
+                      9ceb0800&nbsp;&nbsp;&nbsp; block lock time<br>
+                    </font><br>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <font face="Courier 10 Pitch"></font><br>
+            <br>
+            <div align="center">Copyright 2021 by Hans Schmidt<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
