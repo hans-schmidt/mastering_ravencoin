@@ -5,7 +5,8 @@
       http-equiv="content-type">
     <title>Wallet_Features_and_Problems_in_the_Ravencoin_C-Plus-Plus_Node</title>
     <meta content="Hans Schmidt" name="author">
-    <meta content="Wallet_Features_and_Problems_in_the_Ravencoin_C-Plus-Plus_Node"
+    <meta
+      content="Wallet_Features_and_Problems_in_the_Ravencoin_C-Plus-Plus_Node"
       name="description">
     <style type="text/css">
 
@@ -47,26 +48,24 @@ div{margin-top:20px; margin-bottom:20px !important;}
             </table>
             <br>
             <br>
-            <div align="center">
-              <big><big>Wallet Features and Problems in the Ravencoin
-                  C++ Node</big></big>
-              <br>
+            <div align="center"> <big><big>Wallet Features and Problems
+                  in the Ravencoin C++ Node</big></big> <br>
               <i><b>*An overview of wallet functionality and common
                   wallet problems in raven-qt*</b></i><br>
             </div>
             <br>
-            <b>Background:</b><br>
+            <b><a name="Background"></a>Background:</b><br>
             <br>
             Last month I committed to spending some of my free time on
             improving the quality and functionality of the Ravencoin C++
             node software. I have started documenting my code changes at
-            <a href="https://github.com/hans-schmidt/raventoo-qt">https://github.com/hans-schmidt/raventoo-qt</a>
-            and I intend to post an assortment of code improvements over
-            the coming weeks. Obviously one of the most important
-            functions of that software is to serve as your keychain and
-            transaction utility for the RVN coins and assets which you
-            own. In order to reduce confusion, I redesigned the wallet
-            creation GUI as documented <a
+            <a href="../raventoo-qt/Information_about_raventoo-qt.html"
+              moz-do-not-send="true">https://github.com/hans-schmidt/raventoo-qt</a>.
+            Obviously one of the most important functions of that
+            software is to serve as your keychain and transaction
+            utility for the RVN coins and assets which you own. In order
+            to reduce confusion, I redesigned the wallet creation GUI as
+            documented <a
               href="../raventoo-qt/Improving_the_raven-qt_Mnemonic_Dialog.html">HERE</a>.
             But I have also observed a number of functional problems
             with the wallet. The Discord forum also records quite a few
@@ -92,7 +91,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
               </li>
             </ol>
             <br>
-            <b>Wallet Types:<br>
+            <b><a name="Wallet_Types"></a>Wallet Types:<br>
               <br>
             </b>Historically in crypto-currencies there are basically
             four major types of wallets:<br>
@@ -202,8 +201,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
 href="https://github.com/RavenProject/Ravencoin/tree/master/roadmap/mnemonic-seed">https://github.com/RavenProject/Ravencoin/tree/master/roadmap/mnemonic-seed</a><br>
             <br>
             <b><br>
-              Problems with wallet balances, especially when re-creating
-              a wallet</b><br>
+              <a name="Balance_Problems"></a> Problems with wallet
+              balances, especially when re-creating a wallet</b><br>
             <br>
             &nbsp;&nbsp;&nbsp; If you re-create your "wallet.dat" file
             using the 12 BIP-39 mnemonic seed words (and optional
@@ -247,14 +246,14 @@ href="https://github.com/RavenProject/Ravencoin/tree/master/roadmap/mnemonic-see
             cause your wallet to show incorrect balances.<br>
             <blockquote>RPC calls which are impacted by the broken
               rescan functionality:<br>
-              &nbsp;&nbsp;&nbsp; importprivkeyeserver<br>
+              &nbsp;&nbsp;&nbsp; importprivkey<br>
               &nbsp;&nbsp;&nbsp; importaddress<br>
               &nbsp;&nbsp;&nbsp; importpubkey<br>
               &nbsp;&nbsp;&nbsp; importwallet<br>
               &nbsp;&nbsp;&nbsp; importmulti<br>
             </blockquote>
-            &nbsp;&nbsp;&nbsp; I am currently working on fixing the
-            "rescan bug" in raventoo-qt, properly relabelling the
+            &nbsp;&nbsp;&nbsp; Proper functionality will require fixing
+            the "rescan bug" in raventoo-qt, properly relabelling the
             buttons in the "Wallet Repair" tab of the GUI "Debug
             Window", and automatically invoking a rescan after
             mnemonically re-creating a wallet.<br>
@@ -284,8 +283,8 @@ href="https://github.com/RavenProject/Ravencoin/tree/master/roadmap/mnemonic-see
                 the rescan was requested</i>.<br>
             </blockquote>
             <br>
-            <b>Technical Details About "Wallet.dat" and Rescan
-              Functionality</b><br>
+            <b><a name="Rescan_Tech_Details"></a>Technical Details About
+              "Wallet.dat" and Rescan Functionality</b><br>
             <br>
             &nbsp;&nbsp;&nbsp; Ravencoin maintains a LevelDB database
             (in the subdirectory blocks/index) which keeps track of
