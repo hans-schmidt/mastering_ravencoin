@@ -35,8 +35,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
               border="0">
               <tbody>
                 <tr>
-                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Oct
-                    25th 2018 <br>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; July
+                    27th 2021 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
@@ -47,27 +47,33 @@ div{margin-top:20px; margin-bottom:20px !important;}
             </table>
             <br>
             <br>
-            <div align="center">
-              <big><big>Anatomy of a Ravencoin Asset Transaction Script
-                  <br>
-                  (creation or transfer)</big></big><small>
-              </small><i><b><br>
-                  <small>*Note: Applies for asset creation and asset
-                    transfer
-                    transactions. See notes below for asset reissue
-                    transactions*</small></b></i><br>
+            <div align="center"> <big><big>Anatomy of a Ravencoin Asset
+                  Transaction Script <br>
+                </big></big><i><b><br>
+                  <small>*Note: This document is a "work in progress".
+                    If you see errors, please enter an "Issue" on
+                    github*</small></b></i><br>
             </div>
             <br>
             <table width="90%" align="center" cellspacing="2"
               cellpadding="2" border="1">
               <tbody>
                 <tr>
-                  <td valign="top">Update 2021-06-02: <br>
+                  <td valign="top">This page describes the encoding of a
+                    Ravencoin Asset Script. <br>
                     <br>
-                    This page describes the encoding within a Ravencoin
-                    Asset Transaction Script. Such a script is always
-                    appended to the scriptPubKey in an output structure
-                    of a transaction.<br>
+                    Asset scripts are used to create an asset, transfer
+                    an asset, modify data associated with an asset, or
+                    modify the behavior of an asset.<br>
+                    <br>
+                    An asset script is always placed into one of the
+                    output structures of a transaction, with the value
+                    of that output set at value=0. Usually the asset
+                    script is appended to a bitcoin-style scriptPubKey
+                    in the output. There are, however, some asset
+                    scripts (called nullasset scripts) which are placed
+                    into an output which has no bitcoin-style
+                    scriptPubKey at all.<br>
                     <br>
                     For more context and examples of how a complete
                     transaction is constructed, please look <a
@@ -79,172 +85,827 @@ div{margin-top:20px; margin-bottom:20px !important;}
             </table>
             <br>
             <br>
-            EXAMPLE
-HEX:c03872766e7105544553545900743ba40b00000008010122122086d85921a971bab5d727b
-            ca0feb2a3f1336c4c5bf0453cc4c0104984c8cecfeb75
+            <b><u>Asset Owner script</u></b><br>
             <br>
-            <br>
-            EXAMPLE ASM:OP_RVN_ASSET 72766e 71 05 5445535459
-            00743ba40b000000 08 01
-            01 22
-122086d85921a971bab5d727bca0feb2a3f1336c4c5bf0453cc4c0104984c8cecfeb
-            OP_DROP
-            <br>
+            The asset owner script gives the Owner Asset to an address.
+            The Owner Asset (represented by a NAME followed by the
+            symbol '!') proves ownership of that NAME, which provides
+            certain authority such as the authority to reissue assets
+            using that NAME, to create subassets and unique assets under
+            that NAME, and to&nbsp; create restricted assets using that
+            NAME. The Owner Asset is given as an output when a new
+            Main_Asset (Root Asset) is created. It is also used as an
+            input and given back as an output in any transactions which
+            needs the Owner Asset to authorize one of the
+            authority-requiring asset operations just described.<br>
             <br>
             <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <th style="text-align: left;"> Value </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td> c0 </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of script(1 or 2 bytes) </td>
-                  <td> 38 </td>
+                  <td>Bytelength of script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">0c<br>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Asset_type Header(rvn) </td>
-                  <td> 72766e </td>
+                  <td>Asset_type Header("rvn" in ASCII) </td>
+                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  </td>
+                  <td width="30%"> 72766e </td>
                 </tr>
                 <tr>
-                  <td>Asset_type (transfer(t)=74 or new(q)=71 or
-                    owner(o)=6f) </td>
-                  <td> 74 </td>
+                  <td>Asset_type: owner(o)=6f </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">6f<br>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of Asset_Name(1 byte) </td>
-                  <td> 05 </td>
+                  <td>Bytelength of Asset_Name</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Asset_Name (up to 31 bytes: 30 for normal, 31 for
-                    ownership) </td>
-                  <td> 5445535459 </td>
+                  <td>Asset_Name: main_asset!<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>OP_DROP </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <b><u>New Asset script</u></b><br>
+            <br>
+            The New Asset script serves to create a new asset, which can
+            be a Main_Asset (Root Asset), a Subasset, a
+            Restricted_Asset, a Qualifier asset, or a Subqualifier
+            asset. Metadata will also be associated with the created
+            asset as detailed below. If the New Asset being created is a
+            Main_Asset (Root Asset), then an Owner Asset is also
+            created.<br>
+            <br>
+            <table width="100%" border="2">
+              <tbody>
+                <tr>
+                  <th style="text-align: left; width: 60%;"> Description
+                  </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                </tr>
+                <tr>
+                  <td>OP_RVN_ASSET </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">48<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Asset_type Header("rvn" in ASCII) </td>
+                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  </td>
+                  <td width="30%"> 72766e </td>
+                </tr>
+                <tr>
+                  <td>Asset_type: new(q)=71</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 71 </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Asset_Name</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
+                </tr>
+                <tr>
+                  <td>Asset_Name:<br>
+                    <small>main_asset, /subasset, #unique,
+                      $restricted_asset, #qualifier, #subqualifier <br>
+                    </small> </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
                 </tr>
                 <tr>
                   <td>8 Bytes of Little Endian hex: Amount of assets in
                     satoshis </td>
-                  <td> 00743ba40b000000 </td>
-                </tr>
-                <tr>
-                  <td>Divisible by (1 byte) range(00..08) units<br>
+                  <td valign="bottom" width="20%" align="center">8 bytes<br>
                   </td>
-                  <td> 08 </td>
+                  <td width="30%"> 00743ba40b000000 </td>
                 </tr>
                 <tr>
-                  <td>is reissueable (1 byte) (01 yes: 00 no) </td>
-                  <td> 01 </td>
+                  <td>Divisible-by range: (00..08) units<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 08 </td>
                 </tr>
                 <tr>
-                  <td>has ipfs (1 byte) (01 yes: 00 no) </td>
-                  <td> 01 </td>
+                  <td>is reissueable (01 yes: 00 no) </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 01 </td>
+                </tr>
+                <tr>
+                  <td>has ipfs (01 yes: 00 no) </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 01 </td>
                 </tr>
                 <tr>
                   <td>IPFS hash decoded from base58 to hex </td>
-                  <td>122086d85921a971bab5d727bca0feb<br>
-                    2a3f1336c4c5bf0453cc4c0104984c8cecfeb </td>
+                  <td valign="bottom" width="20%" align="center">variable
+
+
+
+
+                    (usu 34)<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td> 75 </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
                 </tr>
               </tbody>
             </table>
             <br>
-            So in this example we have an OP_RVN_ASSET with a total
-            bytelength of
-            38 bytes, with a transaction type rvn<b>t</b> (asset
-            transfer). <br>
+            <u><b>Note:<br>
+                <br>
+              </b></u>For Unique Asset:<br>
+            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
+            &nbsp;&nbsp;&nbsp; -Reissuable is always set to false<br>
             <br>
-            The Bytelength of the Asset_Name is 5 and the Asset_Name is
-            TESTY. The
-            amount of the transaction is 500. <br>
+            For Qualifier:<br>
+            &nbsp;&nbsp;&nbsp; -Amount is a number between 1 and 10<br>
+            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
+            &nbsp;&nbsp;&nbsp; -Reissuable is always set to false<br>
             <br>
-            The Asset is divisible by up to 8 units(decimal places), and
-            the Asset
-            is marked as reissuable. <br>
+            For Restricted Asset:<br>
+            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
+            &nbsp;&nbsp;&nbsp; -Reissuable is true/false for whether
+            additional asset quantity can be created and if the verifier
+            string can be changed<br>
             <br>
-            The Asset has an IPFS hash, of 34 bytes in length, and the
-            base58
-            encoded hash is
-            QmXR2gRJnYHFaYvSCKEy6mPeJAsTN8ab7AvGZeNRbycnXL.<br>
             <br>
-            <div align="center">
-              <big><big>Anatomy of a Ravencoin Asset Reissue Transaction
-                  Script</big></big>
-              <i><b>*For reissue transactions the format is identical up
-                  until and
-                  including the encoded amount (qty) in satoshis.*</b></i><br>
-            </div>
+            <br>
+            <hr size="2" width="100%"><br>
+            <b><u>Asset Transfer script</u></b><br>
+            <br>
+            The Asset Transfer script simply moves an asset from one
+            address to another address. Any asset type can be
+            transferred, but the movement of a Restricted Asset may be
+            restricted based on the associated Verifier String, an
+            Address Freeze, or a Global Freeze. Asset transfer scripts
+            support the embedding of a message and a message expiry time
+            into the transaction output.<br>
+            <br>
             <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <th style="text-align: left;"> Value </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td> c0 </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of script(1 byte) </td>
-                  <td> 38 </td>
+                  <td>Bytelength of script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 38 </td>
                 </tr>
                 <tr>
-                  <td>Asset_type Header(rvn) </td>
-                  <td> 72766e </td>
+                  <td>Asset_type Header("rvn" in ASCII) </td>
+                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  </td>
+                  <td width="30%"> 72766e </td>
                 </tr>
                 <tr>
-                  <td>Asset_type reissue(r) =72 </td>
-                  <td> 72 </td>
+                  <td>Asset_type: transfer(t)=74</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 71 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of Asset_Name(1 byte) </td>
-                  <td> 05 </td>
+                  <td>Bytelength of Asset_Name</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Asset_Name (up to 31 bytes: 30 for normal, 31 for
-                    ownership) </td>
-                  <td> 5445535459 </td>
+                  <td>Asset_Name:<br>
+                    <small>main_asset, /subasset, #unique,
+                      $restricted_asset, #qualifier, #subqualifier </small><br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
                 </tr>
                 <tr>
                   <td>8 Bytes of Little Endian hex: Amount of assets in
                     satoshis </td>
-                  <td> 00743ba40b000000 </td>
-                </tr>
-                <tr>
-                  <td>Divisible by (1 byte) range(00..08) units</td>
-                  <td> 08&nbsp; note: FF is used to indicate no change
-                    in units<br>
+                  <td valign="bottom" width="20%" align="center">8 bytes<br>
                   </td>
+                  <td width="30%"> 00743ba40b000000 </td>
                 </tr>
                 <tr>
-                  <td>is reissueable (1 byte) (01 yes: 00 no) </td>
-                  <td> 01 </td>
-                </tr>
-                <tr>
-                  <td>new IPFS hash decoded from base58 to hexif changed
-                    (34 bytes)
-                    &nbsp; <br>
+                  <td>Bytelength of Message<br>
                   </td>
-                  <td>122086d85921a971bab5d727bca0feb<br>
-                    2a3f1336c4c5bf0453cc4c0104984c8cecfeb </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 08 </td>
+                </tr>
+                <tr>
+                  <td>Message</td>
+                  <td valign="bottom" width="20%" align="center">variable<br>
+                  </td>
+                  <td width="30%"> 01 </td>
+                </tr>
+                <tr>
+                  <td>Message Expiry Time<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 01 </td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td> 75 </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
                 </tr>
               </tbody>
             </table>
             <br>
-            I am not 100% certain this is correct for all cases<br>
             <br>
             <br>
-            <div align="center">Copyright 2018 by Hans Schmidt<br>
+            <hr size="2" width="100%"><br>
+            <b><u>Asset Reissue script</u></b><br>
+            <br>
+            The Asset Reissue script issues an additional quantity of an
+            asset or modifies the metadata associated with that asset.
+            Asset Reissue requires possession of the Owner Asset, which
+            is used as an input of the transaction containing a Reissue
+            (to prove authority), and is returned as an output of the
+            same transaction. Asset Reissue is also only possible if the
+            reissue authority is indicated in the metadata of the asset,
+            based on a choice made during the original Issue operation
+            of the asset or during a subsequent Reissue operation. Note
+            that during a Reissue operation, divisibility (how many
+            decimal places to the right of the decimal point) may only
+            be increased or kept the same. Unique assets can never be
+            reissued. <br>
+            <br>
+            <table width="100%" border="2">
+              <tbody>
+                <tr>
+                  <th style="text-align: left; width: 60%;"> Description
+                  </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                </tr>
+                <tr>
+                  <td>OP_RVN_ASSET </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 38 </td>
+                </tr>
+                <tr>
+                  <td>Asset_type Header("rvn" in ASCII) </td>
+                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  </td>
+                  <td width="30%"> 72766e </td>
+                </tr>
+                <tr>
+                  <td>Asset_type: transfer(t)=74 or new(q)=71 or
+                    owner(o)=6f </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 71 </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Asset_Name</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
+                </tr>
+                <tr>
+                  <td>Asset_Name:<br>
+                    <small>main_asset, /subasset, #unique,
+                      $restricted_asset, #qualifier, #subqualifier </small><br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>8 Bytes of Little Endian hex: Amount of assets in
+                    satoshis </td>
+                  <td valign="bottom" width="20%" align="center">8 bytes<br>
+                  </td>
+                  <td width="30%"> 00743ba40b000000 </td>
+                </tr>
+                <tr>
+                  <td>Divisible-by range: (00..08) units<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 08 </td>
+                </tr>
+                <tr>
+                  <td>is reissueable (01 yes: 00 no) </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 01 </td>
+                </tr>
+                <tr>
+                  <td>has ipfs (01 yes: 00 no) </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 01 </td>
+                </tr>
+                <tr>
+                  <td>IPFS hash decoded from base58 to hex </td>
+                  <td valign="bottom" width="20%" align="center">variable<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>OP_DROP </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            Note:<br>
+            <br>
+            For Restricted Asset:<br>
+            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
+            &nbsp;&nbsp;&nbsp; -Reissuable is true/false for whether
+            additional asset quantity can be created and if the verifier
+            string can be changed<br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <b><u>Tag/Untag Address script<br>
+                (a type of nullasset script)<br>
+              </u></b> <br>
+            The Tag/Untag Address script is used to tag or untag an
+            address using a Qualifier. This operation determines whether
+            a particular Restricted Asset may be received by that
+            address depending on whether or not the address satisfies
+            the requirements of the VerifierString (a boolean of
+            Qualifiers) associated with that Restricted Asset.<br>
+            <br>
+            <table width="100%" border="2">
+              <tbody>
+                <tr>
+                  <th style="text-align: left; width: 60%;"> Description
+                  </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                </tr>
+                <tr>
+                  <td>OP_RVN_ASSET </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
+                </tr>
+                <tr>
+                  <td>NullAssetTxDataScript identifier<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">14<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Hash-160 Address<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">20
+                    bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">0b<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Qualifier Name<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
+                </tr>
+                <tr>
+                  <td>Qualifier Name (starting with #) </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Operation (1=Add, 0=Remove)<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 bytes<br>
+                  </td>
+                  <td width="30%"> 01</td>
+                </tr>
+                <tr>
+                  <td>OP_DROP </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <b><u>Freeze/Unfreeze Address script<br>
+                (a type of nullasset script)<br>
+              </u></b> <br>
+            The Freeze/Unfreeze Address script is used to freeze or
+            unfreeze the movements of a particular Restricted Asset at a
+            particular address. When frozen, the specified Restricted
+            Asset may not be transferred into or out of the specified
+            address.<br>
+            <br>
+            <table width="100%" border="2">
+              <tbody>
+                <tr>
+                  <th style="text-align: left; width: 60%;"> Description
+                  </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                </tr>
+                <tr>
+                  <td>OP_RVN_ASSET </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
+                </tr>
+                <tr>
+                  <td>NullAssetTxDataScript identifier<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">14<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Hash-160 Address<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">20
+                    bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">0b<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Restricted Asset Name<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
+                </tr>
+                <tr>
+                  <td>Restricted Asset Name (starting with $) </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Operation (1=Freeze, 0=Unfreeze)<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 bytes<br>
+                  </td>
+                  <td width="30%">01</td>
+                </tr>
+                <tr>
+                  <td>OP_DROP </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <b><u>Global Freeze/Unfreeze script<br>
+                (a type of nullasset script)<br>
+              </u></b> <br>
+            The Global Freeze/Unfreeze script is used to freeze or
+            unfreeze the movements of a particular Restricted Asset at
+            all addresses. When frozen, the specified Restricted Asset
+            may not be transferred into or out of any addresses.<br>
+            <br>
+            <table width="100%" border="2">
+              <tbody>
+                <tr>
+                  <th style="text-align: left; width: 60%;"> Description
+                  </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                </tr>
+                <tr>
+                  <td>OP_RVN_ASSET </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
+                </tr>
+                <tr>
+                  <td>NullGlobalRestrictionAssetTxDataScript identifier<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">2 bytes<br>
+                  </td>
+                  <td width="30%">5050<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">0b<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Restricted Asset Name<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
+                </tr>
+                <tr>
+                  <td>Restricted Asset Name (starting with $) </td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Operation (1=Freeze, 0=Unfreeze)<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 bytes<br>
+                  </td>
+                  <td width="30%">01</td>
+                </tr>
+                <tr>
+                  <td>OP_DROP </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <b><u>VerifierString Assignment script<br>
+                (a type of nullasset script)<br>
+              </u></b> <br>
+            A Verifier String is a boolean expression comprised of
+            Qualifiers and boolean operators. It is associated with a
+            Restricted Asset and determines the qualifiers which must
+            have tagged an address in order for that address to be
+            allowed to receive that Restricted Asset. In a transaction
+            in which a Restricted Asset is issued or reissued by an
+            output New Asset script or Reissue Asset script, an
+            additional output containing a Verifier String script is
+            created which associates that Verifier String with that
+            Restricted Asset. A Restricted Asset requires a Verifier
+            Script, and the Verifier Script "true" is used when no
+            Qualifiers are desired.<br>
+            <br>
+            <table width="100%" border="2">
+              <tbody>
+                <tr>
+                  <th style="text-align: left; width: 60%;"> Description
+                  </th>
+                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
+
+                    <br>
+                  </td>
+                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                </tr>
+                <tr>
+                  <td>OP_RVN_ASSET </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> c0 </td>
+                </tr>
+                <tr>
+                  <td rowspan="2" colspan="1">NullAssetVerifierTxDataScript
+                    identifier<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">50<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top" align="center">1 byte<br>
+                  </td>
+                  <td valign="top">anything except 50<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of Script</td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%">0b<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bytelength of VerifierString<br>
+                  </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 05 </td>
+                </tr>
+                <tr>
+                  <td>VerifierString</td>
+                  <td valign="bottom" width="20%" align="center">up to
+                    31 bytes<br>
+                  </td>
+                  <td width="30%"><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>OP_DROP </td>
+                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  </td>
+                  <td width="30%"> 75 </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <u><b>Asset Naming Rules</b></u><br>
+            <br>
+            ROOT_ASSET: Root asset name valid characters are: A-Z 0-9 .
+            _<br>
+            &nbsp;&nbsp;&nbsp; special characters can't be the first or
+            last characters<br>
+            OWNER: Owner asset will be the Root asset with ! appended<br>
+            <br>
+            SUB_ASSET: Sub_asset name valid characters are: A-Z 0-9 . _<br>
+            &nbsp;&nbsp;&nbsp; / must be the first character. special
+            characters can't be the first or last characters<br>
+            <br>
+            UNIQUE: Unique name valid characters are: A-Z a-z 0-9 @ $ %
+            &amp; * ( ) [ ] { } _ . ? : -<br>
+            &nbsp;&nbsp;&nbsp; # must be the first character. <br>
+            <br>
+            MSGCHANNEL: Message Channel name valid characters are: A-Z
+            0-9 _ .<br>
+            &nbsp;&nbsp;&nbsp; ~ must be the first character. Special
+            characters can't be the first or last characters<br>
+            <br>
+            VOTE: Vote name valid characters are: A-Z 0-9 _ .<br>
+            &nbsp;&nbsp;&nbsp; ^ must be the first character. Special
+            characters can't be the first or last characters<br>
+            <br>
+            QUALIFIER or SUB_QUALIFIER: Qualifier or Sub_qualifier name
+            valid characters are: A-Z 0-9 _ .<br>
+            &nbsp;&nbsp;&nbsp; # must be the first character. Special
+            characters can't be the first or last characters<br>
+            <br>
+            RESTRICTED: Restricted name valid characters are: A-Z 0-9 _
+            .<br>
+            &nbsp;&nbsp;&nbsp; $ must be the first character. Special
+            characters can't be the first or last characters<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            Excluding the owner tag ('!') =&gt;<br>
+            &nbsp;&nbsp;&nbsp; MAX_NAME_LENGTH = 31;<br>
+            &nbsp;&nbsp;&nbsp; MAX_CHANNEL_NAME_LENGTH = 12;<br>
+            &nbsp;&nbsp;&nbsp; must have at least 3 characters<br>
+            <br>
+            <br>
+            <div align="center">Copyright 2021 by Hans Schmidt<br>
             </div>
           </div>
         </div>

@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>What is wrong with Ravencoin testnet6 block 38554?</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="What is wrong with Ravencoin testnet6 block 38554?"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; July
+                    27th 2021<br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center">
+              <font size="+3">Example of a HTLC P2SH Cross-Chain Atomic
+                Swap Between a Ravencoin Asset and BTC</font><br>
+              <i><b>*Another step towards making Ravencoin a
+                  full-feature fair permissionless proof-of-work
+                  distributed exchange*</b></i><br>
+            </div>
+            <br>
+            <br>
+            <br>
+            <font size="+3"><b>Overview:</b></font><br>
+            <br>
+            The Proof-of-Concept (POC) shown here is an atomic swap in
+            which tokens are purchased on the Ravencoin block chain in
+            exchange for bitcoin on the bitcoin blockchain. Since this
+            capability is not yet live on Ravencoin mainnet, this POC
+            exchange is between Ravencoin testnet-7 and Bitcoin
+            testnet-3.<br>
+            <br>
+            <font size="+3"><b>How is this possible?:</b></font><br>
+            <br>
+            This functionality is enabled by the new P2SH code currently
+            running on testnet which is planned for mainnet release.
+            This same code will also make it possible to lock assets
+            into Multi-signature contracts.<br>
+            <font size="+3"><b><br>
+              </b></font><b>
+            </b><b><font size="+3">The details:</font><br>
+            </b><br>
+            <b><u>All transactions were sent using:</u></b><br>
+            -raven-qt from Raven Core version v4.7.0.0-c05c88147 (linux
+            64-bit) on Ravencoin testnet-7<br>
+            &nbsp;&nbsp;&nbsp; -which is currently available as an
+            "artifact" from <a moz-do-not-send="true"
+              href="https://github.com/RavenProject/Ravencoin/pull/1063/checks">https://github.com/RavenProject/Ravencoin/pull/1063/checks</a><br>
+            -bitcoin-qt from Bitcoin Core version v0.21.1 on Bitcoin
+            testnet-3<br>
+            <br>
+            <b><u>The desired cross-chain atomic swap can be fully
+                described as:</u></b><br>
+            -Alice has 0.02 bitcoins and wants to buy 2 TEST_TOKEN
+            ravencoin assets for 0.01 bitcoins total (0.005 bitcoins
+            each) <br>
+            &nbsp;&nbsp;&nbsp; -Alice's 0.02 bitcoin are in
+            alice_bitcoin_address. She will use this address to pay for
+            the tokens and for any bitcoin fees<br>
+            &nbsp;&nbsp;&nbsp; -Alice also has 20 RVN in
+            alice_ravencoin_address from which she will draw any RVN
+            transaction fees<br>
+            &nbsp;&nbsp;&nbsp; -Alice wants her two purchased tokens to
+            end up in in alice_ravencoin_address <br>
+            <br>
+            -Bob has 5 TEST_TOKEN ravencoin assets and wants to sell 2
+            of them for .01 bitcoins total (0.005 bitcoins each)<br>
+            &nbsp;&nbsp;&nbsp; -Bob's 5 tokens are in
+            bob_ravencoin_address.<br>
+            &nbsp;&nbsp;&nbsp; -Bob also has 10 RVN in
+            bob_ravencoin_address from which he will draw any RVN
+            transaction fees<br>
+            &nbsp;&nbsp;&nbsp; -Bob wants his bitcoin to end up in
+            bob_bitcoin_address. Any bitcoin transaction fees will be
+            substracted from his payment<br>
+            <br>
+            <u>For this POC, the following addresses were used and were
+              initialized to hold BTC, RVN, and TEST_TOKEN assets as
+              described above:&nbsp;</u>&nbsp;&nbsp; <br>
+            alice_btc_address = 'n1BTMRfeWnZxfeVtd1zr3HkMA1hhHC5fPo'<br>
+            alice_rvn_address = 'mfzGMgmZtnvZEETHSCnY7zfSGMKkGy25Bt'<br>
+            bob_rvn_address = 'n1rL8uj6ZdP4c1SJtvk6HLoz1phoQS6NwA'<br>
+            bob_btc_address = 'mqfu4jxaCF2H1Y2HjbRn2xsyVMd8GtkHN3'<br>
+            <br>
+            <u><b>The cross-chain atomic swap takes place in the
+                following steps:</b></u><br>
+            <br>
+            <b>1) Alice starts the process by:</b><br>
+            &nbsp;&nbsp;&nbsp; a) Selecting a random 32-byte secret.<br>
+            &nbsp;&nbsp;&nbsp; b) Using bitcoin script to write an HTLC
+            contract which will lock up her BTC payment for the tokens
+            she wants to buy.<br>
+            &nbsp;&nbsp;&nbsp; c) She then calculates and sends the
+            INITIATE transaction on the Bitcoin blockchain.<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Alice's transaction uses P2SH to lock her
+            BTC payment into an HTLC contract. <br>
+            &nbsp;&nbsp;&nbsp; The HTLC scriptPubKey is written in such
+            a way that it can be spent by a signature from Bob's BTC
+            address key (if Bob completes the swap), or by Alice's BTC
+            address key (if the swap is cancelled and Alice takes her
+            refund). Spending to Bob is locked by Hash(secret), the hash
+            of the secret Alice chose. Spending to herself is locked 48
+            hours into the future.<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            <b>2) Alice then communicates with Bob by Direct-Messaging
+              to send him:</b><br>
+            &nbsp;&nbsp;&nbsp; a) The transaction number of her INITIATE
+            transaction, and<br>
+            &nbsp;&nbsp;&nbsp; b) The full code of her&nbsp; HTLC
+            contract stript<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; In this POC, Alice's INITIATE transaction
+            on the BTC blockchain is:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            d8cc99ba3531d69d2986bb71ce60246f3a4c8eb9c8eced29b8d917e76fdf8599<br>
+            &nbsp;&nbsp;&nbsp; which anyone can view at:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a
+              moz-do-not-send="true"
+href="https://bitpay.com/insight/#/BTC/testnet/tx/d8cc99ba3531d69d2986bb71ce60246f3a4c8eb9c8eced29b8d917e76fdf8599">https://bitpay.com/insight/#/BTC/testnet/tx/d8cc99ba3531d69d2986bb71ce60246f3a4c8eb9c8eced29b8d917e76fdf8599</a><br>
+            &nbsp;&nbsp;&nbsp; to see that it locks her 0.1 BTC payment
+            into a P2SH contract at address:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            2MvgFdqypg9UPdyty7LPirTnRyWgFUJxVqS<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; In this POC, the full code of Alice's
+            HTLC contract is:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+63a6141373a1cacbb7ef1520cc3b81cde6c5a0085efb4b8876a9146f624e3d29d9caaeffefe0c9bb383af9d<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+754484d6704ebe70261b17576a914d7b273f4b82ae919c21359dd5a2a159019bd75ce6888ac<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Bob can calculate that the Hash160 of
+            that contract matches the Hash160 used in the P2SH of the
+            INITIATE transaction, which proves that Alice indeed gave
+            him the correct contract used in that transaction.<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Then Bob can examine the contract in his
+            bitcoin-qt node using the "decodescript" command to see the
+            contract code:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_IF OP_RIPEMD160<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            1373a1cacbb7ef1520cc3b81cde6c5a0085efb4b
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 20-byte
+            Hash(secret)<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_EQUALVERIFY <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_DUP <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_HASH160 <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            6f624e3d29d9caaeffefe0c9bb383af9d754484d
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Hash160 of
+            Bob's BTC REDEEM address<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1627580395
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            = 48 hours in the future in Unix time<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_DROP <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_HASH160 <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            d7b273f4b82ae919c21359dd5a2a159019bd75ce &nbsp;&nbsp;&nbsp;
+            = Hash160 of Alice's BTC REFUND address<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_ENDIF <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_EQUALVERIFY <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_CHECKSIG<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; So Bob was able to verify that the
+            contract sends to the correct addresses.<br>
+            &nbsp;&nbsp;&nbsp; Bob was also able to see Hash(secret)
+            which is locking up the BTC payment he wants to receive.<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Since Alice held up her end of the
+            bargain, it is Bob's turn to proceed.<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            <b>3) Bob then proceeds by:</b><br>
+            &nbsp;&nbsp;&nbsp; a) Using ravencoin script to write an
+            HTLC contract which will lock up his TEST_TOKEN assets which
+            he wants to sell <br>
+            &nbsp;&nbsp;&nbsp; b) He then calculates and sends the
+            PARTICIPATE transaction on the Ravencoin blockchain
+            &nbsp;&nbsp;&nbsp; <br>
+            <br>
+            &nbsp;&nbsp;&nbsp; (See the next step for the details about
+            the PARTICIPATE transaction.)<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; Bob's transaction uses P2SH to lock his
+            TEST_TOKEN assets into an HTLC contract. <br>
+            &nbsp;&nbsp;&nbsp; The HTLC scriptPubKey is written in such
+            a way that it can be spent by a signature from Alice's RVN
+            address key (if Alice completes the swap), or by Bob's RVN
+            address key (if the swap is cancelled and Bob takes back his
+            token refund). <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Spending to Alice is
+            locked by the same Hash(secret) which Alice used. Bob
+            doesn't know "secret", but he saw Hash(secret) in the
+            contract. <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Spending to himself is
+            locked 24 hours into the future.<br>
+            <br>
+            <b>4) Bob then communicates with Alice by Direct-Messaging
+              to send her:</b><br>
+            &nbsp;&nbsp;&nbsp; a) The transaction number of his
+            PARTICIPATE transaction, and<br>
+            &nbsp;&nbsp;&nbsp; b) The full code of his HTLC contract
+            stript<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; In this POC, Bob's PARTICIPATE
+            transaction on the RVN blockchain is:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            e1b6b297c0ad01430776e92c8a459cf16c33a869a291d2d6f15f0d0737b5541c<br>
+            &nbsp;&nbsp;&nbsp; which anyone can view at:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a
+              moz-do-not-send="true"
+href="https://rvnt.cryptoscope.io/tx/?txid=e1b6b297c0ad01430776e92c8a459cf16c33a869a291d2d6f15f0d0737b5541c">https://rvnt.cryptoscope.io/tx/?txid=e1b6b297c0ad01430776e92c8a459cf16c33a869a291d2d6f15f0d0737b5541c</a><br>
+            &nbsp;&nbsp;&nbsp; to see that it locks two of his
+            TEST_TOKEN assets into a P2SH contract at address:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            2MvgFdqypg9UPdyty7LPirTnRyWgFUJxVqS<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; In this POC, the full code of Bob's HTLC
+            contract is:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+63a6141373a1cacbb7ef1520cc3b81cde6c5a0085efb4b8876a914052a4f138092893ca600055779<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+f53a4d817e8ad867046c960161b17576a914df0ca6eab43a2cfd3660b8a2f5f36ea03093c3626888ac<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Alice can calculate that the Hash160 of
+            that contract matches the Hash160 used in the P2SH of the
+            PARTICIPATE transaction, which proves that Bob indeed gave
+            her the correct contract used in that transaction.<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; Alice can examine the contract using her
+            raven-qt node "decodescript" command to verify that it
+            contains the correct addresses and terms.<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Since Bob held up his end of the bargain,
+            Alice can go ahead and do the deal.<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            <b>5) Alice then calculates and sends her INITIATOR_REDEEM
+              transaction on the Ravencoin blockchain, in which she take
+              possession of the TEST_TOKEN assets she bought.</b><br>
+            <br>
+            &nbsp;&nbsp;&nbsp; In this POC, Alice's INITIATOR_REDEEM
+            transaction on the RVN blockchain is:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            31d4c2f66d74ab466e736cd4bb9333490491ed5110dcc7211c04952ca9d6ba4a<br>
+            &nbsp;&nbsp;&nbsp; which anyone can view at:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a
+              moz-do-not-send="true"
+href="https://rvnt.cryptoscope.io/tx/?txid=31d4c2f66d74ab466e736cd4bb9333490491ed5110dcc7211c04952ca9d6ba4a">https://rvnt.cryptoscope.io/tx/?txid=31d4c2f66d74ab466e736cd4bb9333490491ed5110dcc7211c04952ca9d6ba4a</a><br>
+            &nbsp;&nbsp;&nbsp; to see that the 2 TEST_TOKEN assets she
+            purchased have been transferred into her Ravencoin address<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; If you carefully study this REDEEM
+            transaction, you should focus on the scriptSig of input
+            Vin[1] which is used to unlock Bob's P2SH contract.<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; <u>That scriptSig which Alice calculated
+              has the following form:</u><br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Signature using the
+            key for Alice's RVN address<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; SIGHASH_ALL<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; The PubKey of Alice's
+            RVN address<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; The full 32-byte
+            secret which Alice chose at the beginning<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; OP_1 (a "True" which
+            indicates that the first clause in the contract is being
+            chosen)<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; The full 81-byte
+            contract which Bob provided<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; Note that in order to take possession of
+            the TEST_TOKEN asset which she purchase, Alice had to reveal
+            the "secret" to the world by including it in plain text in
+            this transaction.<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            <b>6) Bob can now calculate and send his PARTICIPATOR_REDEEM
+              transaction on the Bitcoin blockchain, in which he take
+              possession of 0.01 Bitcoin which Alice paid </b><b>for
+              his TEST_TOKEN assets.</b><br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; In this POC, Bob's PARTICIPATOR_REDEEM
+            transaction on the BTC blockchain is:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            d7872f41dc29c4407ea6755aae375ffd0fcaba8b6046b26729b13b0c573c5fae<br>
+            &nbsp;&nbsp;&nbsp; which anyone can view at:<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a
+              moz-do-not-send="true"
+href="https://bitpay.com/insight/#/BTC/testnet/tx/d7872f41dc29c4407ea6755aae375ffd0fcaba8b6046b26729b13b0c573c5fae">https://bitpay.com/insight/#/BTC/testnet/tx/d7872f41dc29c4407ea6755aae375ffd0fcaba8b6046b26729b13b0c573c5fae</a><br>
+            &nbsp;&nbsp;&nbsp; to see that the 0.01 BTC payment from
+            Alice (minus a BTC transaction fee) has been transferred
+            into his BTC address<br>
+            <br>
+            <u><b>THAT'S IT !!!&nbsp; EASY-PEASY (well... sort of)
+                !!!&nbsp;&nbsp; Most importantly - No Trust Is Required<br>
+              </b></u><br>
+            Note that if either Bob or Alice, or both, had become
+            uncooperative or unavailable at any time during the swap,
+            the activity could have been unwound using an
+            INITIATOR_REFUND transaction (after 48 hours) and/or a
+            PARTICIPATOR_REFUND transaction (after 24 hours).<br>
+            <br>
+            The format of REFUND transactions are similar to the REDEEM
+            transactions, except that the scriptSigs use OP_0 opcode (to
+            select the 2nd clause in the contract), and don't need to
+            include the "secret"<br>
+            <br>
+            <b><br>
+            </b>
+            <div align="center">Copyright 2021 by Hans Schmidt<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
