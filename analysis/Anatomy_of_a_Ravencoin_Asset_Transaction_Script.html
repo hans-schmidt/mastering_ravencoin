@@ -31,12 +31,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
           background-repeat: repeat;">
           <div style="padding-right: 50px; padding-top: 10px;
             padding-bottom: 20px;"><br>
-            <table width="100%" cellspacing="2" cellpadding="2"
-              border="0">
+            <table cellspacing="2" cellpadding="2" border="0"
+              width="100%">
               <tbody>
                 <tr>
-                  <td valign="top" width="33%">Hans Schmidt :&nbsp; July
-                    27th 2021 <br>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Aug
+                    1st 2021 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
@@ -55,8 +55,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                     github*</small></b></i><br>
             </div>
             <br>
-            <table width="90%" align="center" cellspacing="2"
-              cellpadding="2" border="1">
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="90%" align="center">
               <tbody>
                 <tr>
                   <td valign="top">This page describes the encoding of a
@@ -99,12 +99,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             needs the Owner Asset to authorize one of the
             authority-requiring asset operations just described.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -146,8 +149,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Asset_Name: main_asset!<br>
-                  </td>
+                  <td>Asset_Name: (<small><small>root_asset!)</small></small></td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -176,12 +178,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Main_Asset (Root Asset), then an Owner Asset is also
             created.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -223,9 +228,10 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_Name:<br>
-                    <small>main_asset, /subasset, #unique,
-                      $restricted_asset, #qualifier, #subqualifier <br>
-                    </small> </td>
+                    <small><small>root_asset, root/subasset,
+                        root#unique, $restricted_asset, #qualifier,
+                        #qualifier/#subqualifier <br>
+                      </small></small> </td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -233,8 +239,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   </td>
                 </tr>
                 <tr>
-                  <td>8 Bytes of Little Endian hex: Amount of assets in
-                    satoshis </td>
+                  <td>8 Bytes of Little Endian hex: "Amount" of assets
+                    in satoshis </td>
                   <td valign="bottom" width="20%" align="center">8 bytes<br>
                   </td>
                   <td width="30%"> 00743ba40b000000 </td>
@@ -253,19 +259,23 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
-                  <td>has ipfs (01 yes: 00 no) </td>
+                  <td>Has userdata (01 yes: 00 no) </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
-                  <td>IPFS hash decoded from base58 to hex </td>
+                  <td><small>1byte Type +1byte Length +32bytes max (usu
+                      IPFS base58 converted to hex)</small> </td>
                   <td valign="bottom" width="20%" align="center">variable
 
 
 
 
-                    (usu 34)<br>
+
+
+
+                    (max 34)<br>
                   </td>
                   <td width="30%"><br>
                   </td>
@@ -296,6 +306,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
             additional asset quantity can be created and if the verifier
             string can be changed<br>
             <br>
+            Divisible:<br>
+            &nbsp;&nbsp;&nbsp; -Specifies how many decimal places the
+            "Amount" has to the right of the decimal point. Zero means
+            "Amount" is always an integer number of assets. Amount of
+            eight means "Amount" varies in increments of 0.00000001
+            assets.<br>
             <br>
             <br>
             <hr size="2" width="100%"><br>
@@ -309,12 +325,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             support the embedding of a message and a message expiry time
             into the transaction output.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -355,9 +374,9 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_Name:<br>
-                    <small>main_asset, /subasset, #unique,
-                      $restricted_asset, #qualifier, #subqualifier </small><br>
-                  </td>
+                    <small><small>root_asset, root/subasset,
+                        root#unique, $restricted_asset, #qualifier,
+                        #qualifier/#subqualifier </small></small> </td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -416,15 +435,20 @@ div{margin-top:20px; margin-bottom:20px !important;}
             of the asset or during a subsequent Reissue operation. Note
             that during a Reissue operation, divisibility (how many
             decimal places to the right of the decimal point) may only
-            be increased or kept the same. Unique assets can never be
+            be increased or kept the same, and any increase in
+            divisibility cannot be used until after the increase has
+            taken effect by being mined. Unique assets can never be
             reissued. <br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -466,9 +490,9 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_Name:<br>
-                    <small>main_asset, /subasset, #unique,
-                      $restricted_asset, #qualifier, #subqualifier </small><br>
-                  </td>
+                    <small><small>root_asset, root/subasset,
+                        root#unique, $restricted_asset, #qualifier,
+                        #qualifier/#subqualifier </small></small> </td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -496,14 +520,16 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
-                  <td>has ipfs (01 yes: 00 no) </td>
+                  <td>Has userdata (01 yes: 00 no) </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
-                  <td>IPFS hash decoded from base58 to hex </td>
-                  <td valign="bottom" width="20%" align="center">variable<br>
+                  <td><small>1byte Type +1byte Length +32bytes max (usu
+                      IPFS base58 converted to hex)</small></td>
+                  <td valign="bottom" width="20%" align="center">variable
+                    (max 34)<br>
                   </td>
                   <td width="30%"><br>
                   </td>
@@ -537,12 +563,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             the requirements of the VerifierString (a boolean of
             Qualifiers) associated with that Restricted Asset.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -589,7 +618,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Qualifier Name (starting with #) </td>
+                  <td>Qualifier Name <small><small>(#qualifier OR
+                        #qualifier/#subqualifier)</small></small></td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -624,12 +654,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Asset may not be transferred into or out of the specified
             address.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -676,7 +709,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Restricted Asset Name (starting with $) </td>
+                  <td>Restricted Asset Name <small><small>($restricted_asset)</small></small></td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -710,12 +743,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             all addresses. When frozen, the specified Restricted Asset
             may not be transferred into or out of any addresses.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -753,7 +789,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Restricted Asset Name (starting with $) </td>
+                  <td>Restricted Asset Name <small><small>($restricted_asset)</small></small></td>
                   <td valign="bottom" width="20%" align="center">up to
                     31 bytes<br>
                   </td>
@@ -795,12 +831,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Script, and the Verifier Script "true" is used when no
             Qualifiers are desired.<br>
             <br>
-            <table width="100%" border="2">
+            <table border="2" width="100%">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
+
+
 
 
 
@@ -817,6 +856,9 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td rowspan="2" colspan="1">NullAssetVerifierTxDataScript
+
+
+
                     identifier<br>
                   </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
@@ -869,12 +911,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
             ROOT_ASSET: Root asset name valid characters are: A-Z 0-9 .
             _<br>
             &nbsp;&nbsp;&nbsp; special characters can't be the first or
-            last characters<br>
+            last characters or repeated<br>
             OWNER: Owner asset will be the Root asset with ! appended<br>
             <br>
             SUB_ASSET: Sub_asset name valid characters are: A-Z 0-9 . _<br>
             &nbsp;&nbsp;&nbsp; / must be the first character. special
-            characters can't be the first or last characters<br>
+            characters can't be the first or last characters or repeated<br>
             <br>
             UNIQUE: Unique name valid characters are: A-Z a-z 0-9 @ $ %
             &amp; * ( ) [ ] { } _ . ? : -<br>
@@ -883,27 +925,32 @@ div{margin-top:20px; margin-bottom:20px !important;}
             MSGCHANNEL: Message Channel name valid characters are: A-Z
             0-9 _ .<br>
             &nbsp;&nbsp;&nbsp; ~ must be the first character. Special
-            characters can't be the first or last characters<br>
+            characters can't be the first or last characters or repeated<br>
             <br>
             VOTE: Vote name valid characters are: A-Z 0-9 _ .<br>
             &nbsp;&nbsp;&nbsp; ^ must be the first character. Special
-            characters can't be the first or last characters<br>
+            characters can't be the first or last characters or repeated<br>
             <br>
             QUALIFIER or SUB_QUALIFIER: Qualifier or Sub_qualifier name
             valid characters are: A-Z 0-9 _ .<br>
             &nbsp;&nbsp;&nbsp; # must be the first character. Special
-            characters can't be the first or last characters<br>
+            characters can't be the first or last characters or repeated<br>
             <br>
             RESTRICTED: Restricted name valid characters are: A-Z 0-9 _
             .<br>
             &nbsp;&nbsp;&nbsp; $ must be the first character. Special
-            characters can't be the first or last characters<br>
-            &nbsp;&nbsp;&nbsp; <br>
+            characters can't be the first or last characters or repeated<br>
+            <br>
+            VerifierString: Boolean expression comprised of Qualifiers
+            and boolean operators, up to 31 bytes in length<br>
+            <br>
+            The names RVN, RAVEN, and RAVENCOIN are reserved<br>
+            <br>
             Excluding the owner tag ('!') =&gt;<br>
             &nbsp;&nbsp;&nbsp; MAX_NAME_LENGTH = 31;<br>
             &nbsp;&nbsp;&nbsp; MAX_CHANNEL_NAME_LENGTH = 12;<br>
             &nbsp;&nbsp;&nbsp; must have at least 3 characters<br>
-            <br>
+            &nbsp;&nbsp;&nbsp; Max VerifierString Length: 31 bytes<br>
             <br>
             <div align="center">Copyright 2021 by Hans Schmidt<br>
             </div>

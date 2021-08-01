@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>All defined Ravencoin raven-qt RPC calls</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="All defined Ravencoin raven-qt RPC calls"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table cellspacing="2" cellpadding="2" border="0"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Aug
+                    1st 2021<br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center"> <big>All defined Ravencoin raven-qt
+                RPC calls as of v4.7.0</big><br>
+            </div>
+            <tt>Note: Enter 'help "command"' in the GUI command console
+              to get more details about each command.<br>
+              <br>
+              <b>== Addressindex ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>getaddressbalance</tt></li>
+              <li><tt>getaddressdeltas</tt></li>
+              <li><tt>getaddressmempool</tt></li>
+              <li><tt>getaddresstxids</tt></li>
+              <li><tt>getaddressutxos</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Assets ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>getassetdata "asset_name"</tt></li>
+              <li><tt>getcacheinfo </tt></li>
+              <li><tt>getsnapshot "asset_name" block_height</tt></li>
+              <li><tt>issue "asset_name" qty "( to_address )" "(
+                  change_address )" ( units ) ( reissuable ) ( has_ipfs
+                  ) "( ipfs_hash )"</tt></li>
+              <li><tt>issueunique "root_name" [asset_tags] (
+                  [ipfs_hashes] ) "( to_address )" "( change_address )"</tt></li>
+              <li><tt>listaddressesbyasset "asset_name" (onlytotal)
+                  (count) (start)</tt></li>
+              <li><tt>listassetbalancesbyaddress "address" (onlytotal)
+                  (count) (start)</tt></li>
+              <li><tt>listassets "( asset )" ( verbose ) ( count ) (
+                  start )</tt></li>
+              <li><tt>listmyassets "( asset )" ( verbose ) ( count ) (
+                  start ) (confs) </tt></li>
+              <li><tt>purgesnapshot "asset_name" block_height</tt></li>
+              <li><tt>reissue "asset_name" qty "to_address"
+                  "change_address" ( reissuable ) ( new_units) "(
+                  new_ipfs )" </tt></li>
+              <li><tt>transfer "asset_name" qty "to_address" "message"
+                  expire_time "change_address" "asset_change_address"</tt></li>
+              <li><tt>transferfromaddress "asset_name" "from_address"
+                  qty "to_address" "message" expire_time
+                  "rvn_change_address" "asset_change_address"</tt></li>
+              <li><tt>transferfromaddresses "asset_name"
+                  ["from_addresses"] qty "to_address" "message"
+                  expire_time "rvn_change_address"
+                  "asset_change_address"</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Blockchain ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>clearmempool</tt></li>
+              <li><tt>decodeblock "blockhex"</tt></li>
+              <li><tt>getbestblockhash</tt></li>
+              <li><tt>getblock "blockhash" ( verbosity ) </tt></li>
+              <li><tt>getblockchaininfo</tt></li>
+              <li><tt>getblockcount</tt></li>
+              <li><tt>getblockhash height</tt></li>
+              <li><tt>getblockhashes timestamp</tt></li>
+              <li><tt>getblockheader "hash" ( verbose )</tt></li>
+              <li><tt>getchaintips</tt></li>
+              <li><tt>getchaintxstats ( nblocks blockhash )</tt></li>
+              <li><tt>getdifficulty</tt></li>
+              <li><tt>getmempoolancestors txid (verbose)</tt></li>
+              <li><tt>getmempooldescendants txid (verbose)</tt></li>
+              <li><tt>getmempoolentry txid</tt></li>
+              <li><tt>getmempoolinfo</tt></li>
+              <li><tt>getrawmempool ( verbose )</tt></li>
+              <li><tt>getspentinfo</tt></li>
+              <li><tt>gettxout "txid" n ( include_mempool )</tt></li>
+              <li><tt>gettxoutproof ["txid",...] ( blockhash )</tt></li>
+              <li><tt>gettxoutsetinfo</tt></li>
+              <li><tt>preciousblock "blockhash"</tt></li>
+              <li><tt>pruneblockchain</tt></li>
+              <li><tt>savemempool</tt></li>
+              <li><tt>verifychain ( checklevel nblocks )</tt></li>
+              <li><tt>verifytxoutproof "proof"</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Control ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>getinfo</tt></li>
+              <li><tt>getmemoryinfo ("mode")</tt></li>
+              <li><tt>getrpcinfo</tt></li>
+              <li><tt>help ( "command" )</tt></li>
+              <li><tt>stop</tt></li>
+              <li><tt>uptime</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Generating ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>generate nblocks ( maxtries )</tt></li>
+              <li><tt>generatetoaddress nblocks address (maxtries)</tt></li>
+              <li><tt>getgenerate</tt></li>
+              <li><tt>setgenerate generate ( genproclimit )</tt></li>
+            </ul>
+            <tt><b>== Messages ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>clearmessages </tt></li>
+              <li><tt>sendmessage "channel_name" "ipfs_hash"
+                  (expire_time)</tt></li>
+              <li><tt>subscribetochannel </tt></li>
+              <li><tt>unsubscribefromchannel </tt></li>
+              <li><tt>viewallmessagechannels </tt></li>
+              <li><tt>viewallmessages </tt></li>
+            </ul>
+            <tt><br>
+              <b>== Mining ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>getblocktemplate ( TemplateRequest )</tt></li>
+              <li><tt>getkawpowhash "header_hash" "mix_hash" nonce,
+                  height, "target"</tt></li>
+              <li><tt>getmininginfo</tt></li>
+              <li><tt>getnetworkhashps ( nblocks height )</tt></li>
+              <li><tt>pprpcsb "header_hash" "mix_hash" "nonce"</tt></li>
+              <li><tt>prioritisetransaction &lt;txid&gt; &lt;dummy
+                  value&gt; &lt;fee delta&gt;</tt></li>
+              <li><tt>submitblock "hexdata"&nbsp; ( "dummy" )</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Network ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>addnode "node" "add|remove|onetry"</tt></li>
+              <li><tt>clearbanned</tt></li>
+              <li><tt>disconnectnode "[address]" [nodeid]</tt></li>
+              <li><tt>getaddednodeinfo ( "node" )</tt></li>
+              <li><tt>getconnectioncount</tt></li>
+              <li><tt>getnettotals</tt></li>
+              <li><tt>getnetworkinfo</tt></li>
+              <li><tt>getpeerinfo</tt></li>
+              <li><tt>listbanned</tt></li>
+              <li><tt>ping</tt></li>
+              <li><tt>setban "subnet" "add|remove" (bantime) (absolute)</tt></li>
+              <li><tt>setnetworkactive true|false</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Rawtransactions ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>combinerawtransaction ["hexstring",...]</tt></li>
+              <li><tt>createrawtransaction [{"txid":"id","vout":n},...]
+                  {"address":(amount or object),"data":"hex",...}</tt></li>
+              <li><tt>decoderawtransaction "hexstring"</tt></li>
+              <li><tt>decodescript "hexstring"</tt></li>
+              <li><tt>fundrawtransaction "hexstring" ( options )</tt></li>
+              <li><tt>getrawtransaction "txid" ( verbose )</tt></li>
+              <li><tt>sendrawtransaction "hexstring" ( allowhighfees )</tt></li>
+              <li><tt>signrawtransaction "hexstring" (
+                  [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...]
+                  ["privatekey1",...] sighashtype )</tt></li>
+              <li><tt>testmempoolaccept ["rawtxs"] ( allowhighfees )</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Restricted assets ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>addtagtoaddress tag_name to_address
+                  (change_address) (asset_data)</tt></li>
+              <li><tt>checkaddressrestriction address restricted_name</tt></li>
+              <li><tt>checkaddresstag address tag_name</tt></li>
+              <li><tt>checkglobalrestriction restricted_name</tt></li>
+              <li><tt>freezeaddress asset_name address (change_address)
+                  (asset_data)</tt></li>
+              <li><tt>freezerestrictedasset asset_name (change_address)
+                  (asset_data)</tt></li>
+              <li><tt>getverifierstring restricted_name</tt></li>
+              <li><tt>issuequalifierasset "asset_name" qty "( to_address
+                  )" "( change_address )" ( has_ipfs ) "( ipfs_hash )"</tt></li>
+              <li><tt>issuerestrictedasset "asset_name" qty "verifier"
+                  "to_address" "( change_address )" (units) ( reissuable
+                  ) ( has_ipfs ) "( ipfs_hash )"</tt></li>
+              <li><tt>isvalidverifierstring verifier_string</tt></li>
+              <li><tt>listaddressesfortag tag_name</tt></li>
+              <li><tt>listaddressrestrictions address</tt></li>
+              <li><tt>listglobalrestrictions</tt></li>
+              <li><tt>listtagsforaddress address</tt></li>
+              <li><tt>reissuerestrictedasset "asset_name" qty to_address
+                  ( change_verifier ) ( "new_verifier" ) "(
+                  change_address )" ( new_units ) ( reissuable ) "(
+                  new_ipfs )"</tt></li>
+              <li><tt>removetagfromaddress tag_name to_address
+                  (change_address) (asset_data)</tt></li>
+              <li><tt>transferqualifier "qualifier_name" qty
+                  "to_address" ("change_address") ("message")
+                  (expire_time) </tt></li>
+              <li><tt>unfreezeaddress asset_name address
+                  (change_address) (asset_data)</tt></li>
+              <li><tt>unfreezerestrictedasset asset_name
+                  (change_address) (asset_data)</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Restricted ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>viewmyrestrictedaddresses </tt></li>
+              <li><tt>viewmytaggedaddresses </tt></li>
+            </ul>
+            <tt><br>
+              <b>== Rewards ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>cancelsnapshotrequest "asset_name" block_height</tt></li>
+              <li><tt>distributereward "asset_name" snapshot_height
+                  "distribution_asset_name" gross_distribution_amount (
+                  "exception_addresses" ) ("change_address") ("dry_run")</tt></li>
+              <li><tt>getdistributestatus "asset_name" snapshot_height
+                  "distribution_asset_name" gross_distribution_amount (
+                  "exception_addresses" )</tt></li>
+              <li><tt>getsnapshotrequest "asset_name" block_height</tt></li>
+              <li><tt>listsnapshotrequests ["asset_name" [block_height]]</tt></li>
+              <li><tt>requestsnapshot "asset_name" block_height</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Util ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>createmultisig nrequired ["key",...]</tt></li>
+              <li><tt>estimatefee nblocks</tt></li>
+              <li><tt>estimatesmartfee conf_target ("estimate_mode")</tt></li>
+              <li><tt>signmessagewithprivkey "privkey" "message"</tt></li>
+              <li><tt>validateaddress "address"</tt></li>
+              <li><tt>verifymessage "address" "signature" "message"</tt></li>
+            </ul>
+            <tt><br>
+              <b>== Wallet ==</b><br>
+            </tt>
+            <ul>
+              <li><tt>abandontransaction "txid"</tt></li>
+              <li><tt>abortrescan</tt></li>
+              <li><tt>addmultisigaddress nrequired ["key",...] (
+                  "account" )</tt></li>
+              <li><tt>addwitnessaddress "address"</tt></li>
+              <li><tt>backupwallet "destination"</tt></li>
+              <li><tt>bumpfee has been deprecated on the RVN Wallet.</tt></li>
+              <li><tt>dumpprivkey "address"</tt></li>
+              <li><tt>dumpwallet "filename"</tt></li>
+              <li><tt>encryptwallet "passphrase"</tt></li>
+              <li><tt>getaccount "address"</tt></li>
+              <li><tt>getaccountaddress "account"</tt></li>
+              <li><tt>getaddressesbyaccount "account"</tt></li>
+              <li><tt>getbalance ( "account" minconf include_watchonly )</tt></li>
+              <li><tt>getmasterkeyinfo</tt></li>
+              <li><tt>getmywords ( "account" )</tt></li>
+              <li><tt>getnewaddress ( "account" )</tt></li>
+              <li><tt>getrawchangeaddress</tt></li>
+              <li><tt>getreceivedbyaccount "account" ( minconf )</tt></li>
+              <li><tt>getreceivedbyaddress "address" ( minconf )</tt></li>
+              <li><tt>gettransaction "txid" ( include_watchonly )</tt></li>
+              <li><tt>getunconfirmedbalance</tt></li>
+              <li><tt>getwalletinfo</tt></li>
+              <li><tt>importaddress "address" ( "label" rescan p2sh )</tt></li>
+              <li><tt>importmulti "requests" ( "options" )</tt></li>
+              <li><tt>importprivkey "privkey" ( "label" ) ( rescan )</tt></li>
+              <li><tt>importprunedfunds</tt></li>
+              <li><tt>importpubkey "pubkey" ( "label" rescan )</tt></li>
+              <li><tt>importwallet "filename"</tt></li>
+              <li><tt>keypoolrefill ( newsize )</tt></li>
+              <li><tt>listaccounts ( minconf include_watchonly)</tt></li>
+              <li><tt>listaddressgroupings</tt></li>
+              <li><tt>listlockunspent</tt></li>
+              <li><tt>listreceivedbyaccount ( minconf include_empty
+                  include_watchonly)</tt></li>
+              <li><tt>listreceivedbyaddress ( minconf include_empty
+                  include_watchonly)</tt></li>
+              <li><tt>listsinceblock ( "blockhash" target_confirmations
+                  include_watchonly include_removed )</tt></li>
+              <li><tt>listtransactions ( "account" count skip
+                  include_watchonly)</tt></li>
+              <li><tt>listunspent ( minconf maxconf&nbsp;
+                  ["addresses",...] [include_unsafe] [query_options])</tt></li>
+              <li><tt>listwallets</tt></li>
+              <li><tt>lockunspent unlock
+                  ([{"txid":"txid","vout":n},...])</tt></li>
+              <li><tt>move "fromaccount" "toaccount" amount ( minconf
+                  "comment" )</tt></li>
+              <li><tt>removeprunedfunds "txid"</tt></li>
+              <li><tt>rescanblockchain ("start_height") ("stop_height")</tt></li>
+              <li><tt>sendfrom "fromaccount" "toaddress" amount (
+                  minconf "comment" "comment_to" )</tt></li>
+              <li><tt>sendfromaddress "from_address" "to_address" amount
+                  ( "comment" "comment_to" subtractfeefromamount
+                  replaceable conf_target "estimate_mode")</tt></li>
+              <li><tt>sendmany "fromaccount" {"address":amount,...} (
+                  minconf "comment" ["address",...] replaceable
+                  conf_target "estimate_mode")</tt></li>
+              <li><tt>sendtoaddress "address" amount ( "comment"
+                  "comment_to" subtractfeefromamount replaceable
+                  conf_target "estimate_mode")</tt></li>
+              <li><tt>setaccount "address" "account"</tt></li>
+              <li><tt>settxfee amount</tt></li>
+              <li><tt>signmessage "address" "message"</tt></li>
+            </ul>
+            <tt> &nbsp;&nbsp;</tt>&nbsp; <br>
+            &nbsp;<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

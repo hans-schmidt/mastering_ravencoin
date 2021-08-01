@@ -1,0 +1,969 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>All Ravencoin raven-qt CLI Options Including Hidden Debug
+      Options</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="All Ravencoin raven-qt CLI Options Including Hidden
+      Debug Options" name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table cellspacing="2" cellpadding="2" border="0"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Aug
+                    1st 2021<br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center"> <big>All Ravencoin raven-qt CLI
+                Options Including Hidden Debug Options as of v4.7.0</big><br>
+            </div>
+            <tt>Raven Core version v4.7.0.0 (64-bit)<br>
+              Usage:<br>
+              &nbsp; raven-qt [command-line
+              options]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <br>
+              <br>
+              Options:<br>
+              <br>
+              &nbsp; -?<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Print this help
+              message and exit<br>
+              <br>
+              &nbsp; -version<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Print version and
+              exit<br>
+              <br>
+              &nbsp; -alertnotify=&lt;cmd&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Execute command when
+              a relevant alert is received or we see a really<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long fork (%s in cmd
+              is replaced by message)<br>
+              <br>
+              &nbsp; -blocknotify=&lt;cmd&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Execute command when
+              the best block changes (%s in cmd is replaced by<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; block hash)<br>
+              <br>
+              &nbsp; -blocksonly<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Whether to operate in
+              a blocks only mode (default: 0)<br>
+              <br>
+              &nbsp; -assumevalid=&lt;hex&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If this block is in
+              the chain assume that it and its ancestors are valid<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; and potentially skip
+              their script verification (0 to verify all,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              0000000000000d4840d4de1f7d943542c2aed532bd5d6527274fc0142fa1a410,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; testnet:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              000000006272208605c4df3b54d4d5515759105e7ffcb258e8cd8077924ffef1)<br>
+              <br>
+              &nbsp; -conf=&lt;file&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify configuration
+              file (default: raven.conf)<br>
+              <br>
+              &nbsp; -datadir=&lt;dir&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify data
+              directory<br>
+              <br>
+              &nbsp; -dbbatchsize<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum database
+              write batch size in bytes (default: 16777216)<br>
+              <br>
+              &nbsp; -dbcache=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set database cache
+              size in megabytes (4 to 16384, default: 450)<br>
+              <br>
+              &nbsp; -disablemessaging<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Turn off the
+              databasing the messages sent with assets (default: 0)<br>
+              <br>
+              &nbsp; -feefilter<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tell other nodes to
+              filter invs to us by our mempool min fee (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1)<br>
+              <br>
+              &nbsp; -loadblock=&lt;file&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Imports blocks from
+              external blk000??.dat file on startup<br>
+              <br>
+              &nbsp; -maxreorg=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set the Maximum reorg
+              depth (default: 60)<br>
+              <br>
+              &nbsp; -minreorgpeers=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set the Minimum
+              amount of peers required to disallow reorg of chains of<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; depth &gt;= maxreorg.
+              Peers must be greater than. (default: 4)<br>
+              <br>
+              &nbsp; -minreorgage=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set the Minimum tip
+              age (in seconds) required to allow reorg of a chain<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; of depth &gt;=
+              maxreorg on a node with more than minreorgpeers<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; peers. (default:
+              43200)<br>
+              <br>
+              &nbsp; -maxorphantx=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Keep at most
+              &lt;n&gt; unconnectable transactions in memory (default:
+              100)<br>
+              <br>
+              &nbsp; -maxmempool=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Keep the transaction
+              memory pool below &lt;n&gt; megabytes (default: 300)<br>
+              <br>
+              &nbsp; -mempoolexpiry=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do not keep
+              transactions in the mempool longer than &lt;n&gt; hours
+              (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 336)<br>
+              <br>
+              &nbsp; -minimumchainwork=&lt;hex&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum work assumed
+              to exist on a valid chain in hex (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              000000000000000000000000000000000000000000000020d4ac871fb7009b63,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; testnet:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              000000000000000000000000000000000000000000000000000168050db560b4)<br>
+              <br>
+              &nbsp; -persistmempool<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Whether to save the
+              mempool on shutdown and load on restart (default: 1)<br>
+              <br>
+              &nbsp; -blockreconstructionextratxn=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Extra transactions to
+              keep in memory for compact block reconstructions<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 100)<br>
+              <br>
+              &nbsp; -par=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set the number of
+              script verification threads (-2 to 16, 0 = auto, &lt;0 =<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; leave that many cores
+              free, default: 0)<br>
+              <br>
+              &nbsp; -autofixmempool<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When set, if the
+              CreateNewBlock fails because of a transaction. The<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mempool will be
+              cleared. (default: 0)<br>
+              <br>
+              &nbsp; -bypassdownload<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When set, if the
+              chain is in initialblockdownload the getblocktemplate<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rpc call will still
+              return block data (default: 0)<br>
+              <br>
+              &nbsp; -pid=&lt;file&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify pid file
+              (default: ravend.pid)<br>
+              <br>
+              &nbsp; -prune=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Reduce storage
+              requirements by enabling pruning (deleting) of old<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; blocks. This allows
+              the pruneblockchain RPC to be called to<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delete specific
+              blocks, and enables automatic pruning of old<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; blocks if a target
+              size in MiB is provided. This mode is<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; incompatible with
+              -txindex and -rescan. Warning: Reverting this<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setting requires
+              re-downloading the entire blockchain. (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 = disable pruning
+              blocks, 1 = allow manual pruning via RPC,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;550 =
+              automatically prune block files to stay under the<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; specified target size
+              in MiB)<br>
+              <br>
+              &nbsp; -reindex-chainstate<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rebuild chain state
+              from the currently indexed blocks<br>
+              <br>
+              &nbsp; -reindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rebuild chain state
+              and block index from the blk*.dat files on disk<br>
+              <br>
+              &nbsp; -sysperms<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Create new files with
+              system default permissions, instead of umask 077<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (only effective with
+              disabled wallet functionality)<br>
+              <br>
+              &nbsp; -txindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maintain a full
+              transaction index, used by the getrawtransaction rpc<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call (default: 0)<br>
+              <br>
+              &nbsp; -assetindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Keep an index of
+              assets, used by the requestsnapshot rpc call. Requires<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a -reindex.<br>
+              <br>
+              &nbsp; -addressindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maintain a full
+              address index, used to query for the balance, txids and<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unspent outputs for
+              addresses (default: 0)<br>
+              <br>
+              &nbsp; -timestampindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maintain a timestamp
+              index for block hashes, used to query blocks hashes<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; by a range of
+              timestamps (default: 0)<br>
+              <br>
+              &nbsp; -spentindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maintain a full spent
+              index, used to query the spending txid and input<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; index for an outpoint
+              (default: 0)<br>
+              <br>
+              <u><b>Connection options:</b></u><br>
+              <br>
+              &nbsp; -addnode=&lt;ip&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add a node to connect
+              to and attempt to keep the connection open (see<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the `addnode` RPC
+              command help for more info)<br>
+              <br>
+              &nbsp; -banscore=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold for
+              disconnecting misbehaving peers (default: 100)<br>
+              <br>
+              &nbsp; -bantime=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of seconds to
+              keep misbehaving peers from reconnecting (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400)<br>
+              <br>
+              &nbsp; -bind=&lt;addr&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bind to given address
+              and always listen on it. Use [host]:port notation<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for IPv6<br>
+              <br>
+              &nbsp; -connect=&lt;ip&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connect only to the
+              specified node(s); -connect=0 disables automatic<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; connections (the
+              rules for this peer are the same as for<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -addnode)<br>
+              <br>
+              &nbsp; -discover<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Discover own IP
+              addresses (default: 1 when listening and no -externalip<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or -proxy)<br>
+              <br>
+              &nbsp; -dns<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Allow DNS lookups for
+              -addnode, -seednode and -connect (default: 1)<br>
+              <br>
+              &nbsp; -dnsseed<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Query for peer
+              addresses via DNS lookup, if low on addresses (default: 1<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unless -connect used)<br>
+              <br>
+              &nbsp; -externalip=&lt;ip&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify your own
+              public address<br>
+              <br>
+              &nbsp; -forcednsseed<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always query for peer
+              addresses via DNS lookup (default: 1)<br>
+              <br>
+              &nbsp; -listen<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accept connections
+              from outside (default: 1 if no -proxy or -connect)<br>
+              <br>
+              &nbsp; -listenonion<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Automatically create
+              Tor hidden service (default: 1)<br>
+              <br>
+              &nbsp; -maxconnections=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maintain at most
+              &lt;n&gt; connections to peers (default: 125)<br>
+              <br>
+              &nbsp; -maxreceivebuffer=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum
+              per-connection receive buffer, &lt;n&gt;*1000 bytes
+              (default: 5000)<br>
+              <br>
+              &nbsp; -maxsendbuffer=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum
+              per-connection send buffer, &lt;n&gt;*1000 bytes (default:
+              1000)<br>
+              <br>
+              &nbsp; -maxtimeadjustment<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum allowed
+              median peer time offset adjustment. Local perspective of<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; time may be
+              influenced by peers forward or backward by this<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; amount. (default:
+              4200 seconds)<br>
+              <br>
+              &nbsp; -onion=&lt;ip:port&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use separate SOCKS5
+              proxy to reach peers via Tor hidden services<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: -proxy)<br>
+              <br>
+              &nbsp; -onlynet=&lt;net&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Only connect to nodes
+              in network &lt;net&gt; (ipv4, ipv6 or onion)<br>
+              <br>
+              &nbsp; -permitbaremultisig<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay non-P2SH
+              multisig (default: 1)<br>
+              <br>
+              &nbsp; -peerbloomfilters<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Support filtering of
+              blocks and transaction with bloom filters (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1)<br>
+              <br>
+              &nbsp; -port=&lt;port&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Listen for
+              connections on &lt;port&gt; (default: 8767 or testnet:
+              18770)<br>
+              <br>
+              &nbsp; -proxy=&lt;ip:port&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connect through
+              SOCKS5 proxy<br>
+              <br>
+              &nbsp; -proxyrandomize<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Randomize credentials
+              for every proxy connection. This enables Tor<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stream isolation
+              (default: 1)<br>
+              <br>
+              &nbsp; -seednode=&lt;ip&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connect to a node to
+              retrieve peer addresses, and disconnect<br>
+              <br>
+              &nbsp; -timeout=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify connection
+              timeout in milliseconds (minimum: 1, default: 5000)<br>
+              <br>
+              &nbsp; -torcontrol=&lt;ip&gt;:&lt;port&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tor control port to
+              use if onion listening enabled (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 127.0.0.1:9051)<br>
+              <br>
+              &nbsp; -torpassword=&lt;pass&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tor control port
+              password (default: empty)<br>
+              <br>
+              &nbsp; -upnp<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use UPnP to map the
+              listening port (default: 0)<br>
+              <br>
+              &nbsp; -whitebind=&lt;addr&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bind to given address
+              and whitelist peers connecting to it. Use<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [host]:port notation
+              for IPv6<br>
+              <br>
+              &nbsp; -whitelist=&lt;IP address or network&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Whitelist peers
+              connecting from the given IP address (e.g. 1.2.3.4) or<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CIDR notated network
+              (e.g. 1.2.3.0/24). Can be specified multiple<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; times. Whitelisted
+              peers cannot be DoS banned and their<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactions are
+              always relayed, even if they are already in the<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mempool, useful e.g.
+              for a gateway<br>
+              <br>
+              &nbsp; -maxuploadtarget=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tries to keep
+              outbound traffic under the given target (in MiB per 24h),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 = no limit
+              (default: 0)<br>
+              <br>
+              <u><b>Wallet options:</b></u><br>
+              <br>
+              &nbsp; -bip44=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sets the wallet to
+              use/not use bip44 12-words, non-bip44=0 or bip44=1<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 1). Note:
+              By default 12-words will automatically be<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; generated for you
+              (random word selection). See -mnemonic and<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -mnemonicpassphrase
+              below to create a wallet using a specific<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; word list (use an
+              existing bip-44 wallet word-list), or use the<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RPC/CLI getmywords or
+              dumpwallet to retrieve the auto-generated<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; word-list. This flag
+              is ignored if there is already an existing<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; non-bip44 wallet.<br>
+              <br>
+              &nbsp; -discardfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The fee rate (in
+              RVN/kB) that indicates your tolerance for discarding<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; change by adding it
+              to the fee (default: 0.00025). Note: An<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output is discarded
+              if it is dust at this rate, but we will<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; always discard up to
+              the dust relay fee and a discard fee above<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; that is limited by
+              the fee estimate for the longest target<br>
+              <br>
+              &nbsp; -disablewallet<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do not load the
+              wallet and disable wallet RPC calls<br>
+              <br>
+              &nbsp; -fallbackfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A fee rate (in
+              RVN/kB) that will be used when fee estimation has<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insufficient data
+              (default: 0.01025)<br>
+              <br>
+              &nbsp; -keypool=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set key pool size to
+              &lt;n&gt; (default: 1000)<br>
+              <br>
+              &nbsp; -mintxfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fees (in RVN/kB)
+              smaller than this are considered zero fee for<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transaction creation
+              (default: 0.01)<br>
+              <br>
+              &nbsp; -mnemonic=&lt;word-list&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A space separated
+              list of 12-words used to import a bip44 wallet<br>
+              <br>
+              &nbsp; -mnemonicpassphrase=&lt;passphrase&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Passphrase securing
+              your 12-word mnemonic word-list<br>
+              <br>
+              &nbsp; -paytxfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fee (in RVN/kB) to
+              add to transactions you send (default: 0.00)<br>
+              <br>
+              &nbsp; -rescan<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rescan the block
+              chain for missing wallet transactions on startup<br>
+              <br>
+              &nbsp; -salvagewallet<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attempt to recover
+              private keys from a corrupt wallet on startup<br>
+              <br>
+              &nbsp; -spendzeroconfchange<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spend unconfirmed
+              change when sending transactions (default: 1)<br>
+              <br>
+              &nbsp; -txconfirmtarget=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If paytxfee is not
+              set, include enough fee so transactions begin<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; confirmation on
+              average within n blocks (default: 6)<br>
+              <br>
+              &nbsp; -upgradewallet<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Upgrade wallet to
+              latest format on startup<br>
+              <br>
+              &nbsp; -walletrbf<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Send transactions
+              with full-RBF opt-in enabled (default: 0)<br>
+              <br>
+              &nbsp; -wallet=&lt;file&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify wallet file
+              (within data directory) (default: wallet.dat)<br>
+              <br>
+              &nbsp; -walletbroadcast<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Make the wallet
+              broadcast transactions (default: 1)<br>
+              <br>
+              &nbsp; -walletnotify=&lt;cmd&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Execute command when
+              a wallet transaction changes (%s in cmd is replaced<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; by TxID)<br>
+              <br>
+              &nbsp; -zapwallettxes=&lt;mode&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Delete all wallet
+              transactions and only recover those parts of the<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; blockchain through
+              -rescan on startup (1 = keep tx meta data e.g.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; account owner and
+              payment request information, 2 = drop tx meta<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data)<br>
+              <br>
+              &nbsp; -miningaddress=&lt;address&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When getblocktemplate
+              is called. It will create the coinbase transaction<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using this
+              address(default: empty string)<br>
+              <br>
+              <u><b>Wallet debugging/testing options:</b></u><br>
+              <br>
+              &nbsp; -dblogsize=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flush wallet database
+              activity from memory to disk log every &lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; megabytes (default:
+              100)<br>
+              <br>
+              &nbsp; -flushwallet<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Run a thread to flush
+              wallet periodically (default: 1)<br>
+              <br>
+              &nbsp; -privdb<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sets the DB_PRIVATE
+              flag in the wallet db environment (default: 1)<br>
+              <br>
+              &nbsp; -walletrejectlongchains<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wallet will not
+              create transactions that violate mempool chain limits<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 0)<br>
+              <br>
+              &nbsp; -minrewardheight=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The default height
+              that is required before rewards are allowed to be<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sent out (default:
+              60)<br>
+              <br>
+              <u><b>ZeroMQ notification options:</b></u><br>
+              <br>
+              &nbsp; -zmqpubhashblock=&lt;address&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable publish hash
+              block in &lt;address&gt;<br>
+              <br>
+              &nbsp; -zmqpubhashtx=&lt;address&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable publish hash
+              transaction in &lt;address&gt;<br>
+              <br>
+              &nbsp; -zmqpubrawblock=&lt;address&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable publish raw
+              block in &lt;address&gt;<br>
+              <br>
+              &nbsp; -zmqpubrawtx=&lt;address&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable publish raw
+              transaction in &lt;address&gt;<br>
+              <br>
+              &nbsp; -zmqpubrawmessage=&lt;address&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable publish raw
+              asset messages in &lt;address&gt;<br>
+              <br>
+              <u><b>Debugging/Testing options:</b></u><br>
+              <br>
+              &nbsp; -uacomment=&lt;cmt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Append comment to the
+              user agent string<br>
+              <br>
+              &nbsp; -checkblocks=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How many blocks to
+              check at startup (default: 6, 0 = all)<br>
+              <br>
+              &nbsp; -checklevel=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How thorough the
+              block verification of -checkblocks is (0-4, default: 3)<br>
+              <br>
+              &nbsp; -checkblockindex<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do a full consistency
+              check for mapBlockIndex, setBlockIndexCandidates,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chainActive and
+              mapBlocksUnlinked occasionally. Also sets<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -checkmempool
+              (default: 0)<br>
+              <br>
+              &nbsp; -checkmempool=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Run checks every
+              &lt;n&gt; transactions (default: 0)<br>
+              <br>
+              &nbsp; -checkpoints<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disable expensive
+              verification for known chain history (default: 1)<br>
+              <br>
+              &nbsp; -disablesafemode<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disable safemode,
+              override a real safe mode event (default: 1)<br>
+              <br>
+              &nbsp; -deprecatedrpc=&lt;method&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Allows deprecated RPC
+              method(s) to be used<br>
+              <br>
+              &nbsp; -testsafemode<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Force safe mode
+              (default: 0)<br>
+              <br>
+              &nbsp; -dropmessagestest=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Randomly drop 1 of
+              every &lt;n&gt; network messages<br>
+              <br>
+              &nbsp; -fuzzmessagestest=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Randomly fuzz 1 of
+              every &lt;n&gt; network messages<br>
+              <br>
+              &nbsp; -stopafterblockimport<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stop running after
+              importing blocks from disk (default: 0)<br>
+              <br>
+              &nbsp; -stopatheight<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stop running after
+              reaching the given height in the main chain (default:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0)<br>
+              <br>
+              &nbsp; -limitancestorcount=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do not accept
+              transactions if number of in-mempool ancestors is
+              &lt;n&gt; or<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; more (default: 200)<br>
+              <br>
+              &nbsp; -limitancestorsize=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do not accept
+              transactions whose size with all in-mempool ancestors<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exceeds &lt;n&gt;
+              kilobytes (default: 250)<br>
+              <br>
+              &nbsp; -limitdescendantcount=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do not accept
+              transactions if any ancestor would have &lt;n&gt; or more<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; in-mempool
+              descendants (default: 200)<br>
+              <br>
+              &nbsp; -limitdescendantsize=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do not accept
+              transactions if any ancestor would have more than
+              &lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; kilobytes of
+              in-mempool descendants (default: 250).<br>
+              <br>
+              &nbsp; -vbparams=deployment:start:end<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use given start/end
+              times for specified version bits deployment<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (regtest-only)<br>
+              <br>
+              &nbsp; -debug=&lt;category&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output debugging
+              information (default: 0, supplying &lt;category&gt; is<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional). If
+              &lt;category&gt; is not supplied or if &lt;category&gt; =
+              1,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; output all debugging
+              information. &lt;category&gt; can be: net, tor,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mempool, http, bench,
+              zmq, db, rpc, estimatefee, addrman,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectcoins, reindex,
+              cmpctblock, rand, prune, proxy, mempoolrej,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; libevent, coindb, qt,
+              leveldb, rewards.<br>
+              <br>
+              &nbsp; -debugexclude=&lt;category&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exclude debugging
+              information for a category. Can be used in conjunction<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with -debug=1 to
+              output debug logs for all categories except one<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or more specified
+              categories.<br>
+              <br>
+              &nbsp; -help-debug<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Show all debugging
+              options (usage: --help -help-debug)<br>
+              <br>
+              &nbsp; -logips<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Include IP addresses
+              in debug output (default: 0)<br>
+              <br>
+              &nbsp; -logtimestamps<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prepend debug output
+              with timestamp (default: 1)<br>
+              <br>
+              &nbsp; -logtimemicros<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add microsecond
+              precision to debug timestamps (default: 0)<br>
+              <br>
+              &nbsp; -mocktime=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replace actual time
+              with &lt;n&gt; seconds since epoch (default: 0)<br>
+              <br>
+              &nbsp; -maxsigcachesize=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limit sum of
+              signature cache and script execution cache sizes to
+              &lt;n&gt; MiB<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 32)<br>
+              <br>
+              &nbsp; -maxtipage=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum tip age in
+              seconds to consider node in initial block download<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 86400)<br>
+              <br>
+              &nbsp; -maxtxfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum total fees
+              (in RVN) to use in a single wallet transaction or raw<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transaction; setting
+              this too low may abort large transactions<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 1000.00)<br>
+              <br>
+              &nbsp; -printtoconsole<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Send trace/debug info
+              to console instead of debug.log file<br>
+              <br>
+              &nbsp; -printpriority<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Log transaction fee
+              per kB when mining blocks (default: 0)<br>
+              <br>
+              &nbsp; -shrinkdebugfile<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shrink debug.log file
+              on client startup (default: 1 when no -debug)<br>
+              <br>
+              Chain selection options:<br>
+              <br>
+              &nbsp; -testnet<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use the test chain<br>
+              <br>
+              &nbsp; -regtest<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enter regression test
+              mode, which uses a special chain in which blocks<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; can be solved
+              instantly. This is intended for regression testing<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tools and app
+              development.<br>
+              <br>
+              <u><b>Node relay options:</b></u><br>
+              <br>
+              &nbsp; -acceptnonstdtxn<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay and mine
+              "non-standard" transactions (testnet/regtest only;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default: 1)<br>
+              <br>
+              &nbsp; -incrementalrelayfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fee rate (in RVN/kB)
+              used to define cost of relay, used for mempool<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limiting and BIP 125
+              replacement. (default: 0.00001)<br>
+              <br>
+              &nbsp; -dustrelayfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fee rate (in RVN/kB)
+              used to defined dust, the value of an output such<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; that it will cost
+              more than its value in fees at this fee rate to<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; spend it. (default:
+              0.00003)<br>
+              <br>
+              &nbsp; -bytespersigop<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Equivalent bytes per
+              sigop in transactions for relay and mining<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 20)<br>
+              <br>
+              &nbsp; -datacarrier<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay and mine data
+              carrier transactions (default: 1)<br>
+              <br>
+              &nbsp; -datacarriersize<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum size of data
+              in data carrier transactions we relay and mine<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (default: 83)<br>
+              <br>
+              &nbsp; -mempoolreplacement<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable transaction
+              replacement in the memory pool (default: 0)<br>
+              <br>
+              &nbsp; -minrelaytxfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fees (in RVN/kB)
+              smaller than this are considered zero fee for relaying,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mining and
+              transaction creation (default: 0.01)<br>
+              <br>
+              &nbsp; -whitelistrelay<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accept relayed
+              transactions received from whitelisted peers even when<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; not relaying
+              transactions (default: 1)<br>
+              <br>
+              &nbsp; -whitelistforcerelay<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Force relay of
+              transactions from whitelisted peers even if they violate<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; local relay policy
+              (default: 1)<br>
+              <br>
+              <u><b>Block creation options:</b></u><br>
+              <br>
+              &nbsp; -blockmaxweight=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set maximum BIP141
+              block weight (default: 3996000)<br>
+              <br>
+              &nbsp; -blockmaxsize=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set maximum BIP141
+              block weight to this * 4. Deprecated, use<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; blockmaxweight<br>
+              <br>
+              &nbsp; -blockmintxfee=&lt;amt&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set lowest fee rate
+              (in RVN/kB) for transactions to be included in block<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; creation. (default:
+              0.00001)<br>
+              <br>
+              &nbsp; -blockversion=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Override block
+              version to test forking scenarios<br>
+              <br>
+              <u><b>RPC server options:</b></u><br>
+              <br>
+              &nbsp; -server<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accept command line
+              and JSON-RPC commands<br>
+              <br>
+              &nbsp; -rest<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accept public REST
+              requests (default: 0)<br>
+              <br>
+              &nbsp; -rpcbind=&lt;addr&gt;[:port]<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bind to given address
+              to listen for JSON-RPC connections. This option is<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ignored unless
+              -rpcallowip is also passed. Port is optional and<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; overrides -rpcport.
+              Use [host]:port notation for IPv6. This<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; option can be
+              specified multiple times (default: 127.0.0.1 and<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ::1 i.e., localhost,
+              or if -rpcallowip has been specified,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.0.0.0 and :: i.e.,
+              all addresses)<br>
+              <br>
+              &nbsp; -rpccookiefile=&lt;loc&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Location of the auth
+              cookie (default: data dir)<br>
+              <br>
+              &nbsp; -rpcuser=&lt;user&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Username for JSON-RPC
+              connections<br>
+              <br>
+              &nbsp; -rpcpassword=&lt;pw&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Password for JSON-RPC
+              connections<br>
+              <br>
+              &nbsp; -rpcauth=&lt;userpw&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Username and hashed
+              password for JSON-RPC connections. The field<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;userpw&gt; comes
+              in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;.
+              A<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canonical python
+              script is included in share/rpcuser. The client<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; then connects
+              normally using the<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair
+              of arguments. This<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; option can be
+              specified multiple times<br>
+              <br>
+              &nbsp; -rpcport=&lt;port&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Listen for JSON-RPC
+              connections on &lt;port&gt; (default: 8766 or testnet:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18766)<br>
+              <br>
+              &nbsp; -rpcallowip=&lt;ip&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Allow JSON-RPC
+              connections from specified source. Valid for &lt;ip&gt;
+              are a<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; single IP (e.g.
+              1.2.3.4), a network/netmask (e.g.<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              1.2.3.4/255.255.255.0) or a network/CIDR (e.g.
+              1.2.3.4/24). This<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; option can be
+              specified multiple times<br>
+              <br>
+              &nbsp; -rpcserialversion<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sets the
+              serialization of raw transaction or block hex returned in<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; non-verbose mode,
+              non-segwit(0) or segwit(1) (default: 1)<br>
+              <br>
+              &nbsp; -rpcthreads=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set the number of
+              threads to service RPC calls (default: 4)<br>
+              <br>
+              &nbsp; -rpcworkqueue=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set the depth of the
+              work queue to service RPC calls (default: 16)<br>
+              <br>
+              &nbsp; -rpcservertimeout=&lt;n&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Timeout during HTTP
+              requests (default: 30)<br>
+              <br>
+              <u><b>UI Options:</b></u><br>
+              <br>
+              &nbsp; -allowselfsignedrootcertificates<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Allow self signed
+              root certificates (default: 0)<br>
+              <br>
+              &nbsp; -choosedatadir<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Choose data directory
+              on startup (default: 0)<br>
+              <br>
+              &nbsp; -lang=&lt;lang&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set language, for
+              example "de_DE" (default: system locale)<br>
+              <br>
+              &nbsp; -min<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Start minimized<br>
+              <br>
+              &nbsp; -rootcertificates=&lt;file&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set SSL root
+              certificates for payment request (default: -system-)<br>
+              <br>
+              &nbsp; -splash<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Show splash screen on
+              startup (default: 1)<br>
+              <br>
+              &nbsp; -resetguisettings<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Reset all settings
+              changed in the GUI<br>
+              <br>
+              &nbsp; -uiplatform<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Select platform to
+              customize UI for (one of windows, macosx, other;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default: other)<br>
+            </tt><br>
+            <ul>
+            </ul>
+            <tt> &nbsp;&nbsp;</tt>&nbsp; <br>
+            &nbsp;<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
