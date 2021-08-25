@@ -1,0 +1,1185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>Vault_Assets-_Fungible_Assets_with_Native_RVN_Face_Value</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta
+      content="Vault_Assets-_Fungible_Assets_with_Native_RVN_Face_Value"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table cellspacing="2" cellpadding="2" border="0"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt<br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right">2021-08-23<br>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center"> <big><big>Vault Assets for Ravencoin</big></big>
+              <br>
+              <i><b>*Fungible Assets with Native RVN "Face Value"*</b></i><br>
+            </div>
+            <br>
+            <font size="-1"><u><b>Revisions:</b></u></font><br>
+            <ul>
+              <li><font size="-1">2021-08-22: Add support for
+                  RavenVault-Plus (A modification of the RavenVault
+                  proposal to allow extraction of face value from
+                  assets. A mechanism for on-chain post-issue ICOs).
+                  Optional.<br>
+                </font> </li>
+              <font size="-1"> </font>
+              <li><font size="-1">2021-08-21: Add support for daily
+                  asset interest rate (positive or demurage) as a % of
+                  "face value" or fixed amount of RVN. Requires 3 new
+                  asset metadata fields<br>
+                </font> </li>
+              <font size="-1"> </font>
+              <li><font size="-1">2021-08-21: Change requirement: asset
+                  name must begin with ^ symbol (change of plan: no
+                  ^vote tokens)<br>
+                </font> </li>
+              <font size="-1"> </font>
+              <li><font size="-1">2020-07-25: Footnote #3 has been
+                  improved to insure that the total RVN supply is
+                  accurately maintained even when there are round-off
+                  errors during "face value" calculations</font></li>
+              <font size="-1"> </font>
+              <li><font size="-1">2020-07-22: Additional implementation
+                  details and a use case have been added</font></li>
+              <font size="-1"> </font>
+              <li><font size="-1">2020-07-20: The first publication of
+                  this RIP</font></li>
+            </ul>
+            <u><b> <a name="Overview"></a>Overview:</b></u><br>
+            <ul>
+              <li><b>What:</b> The purpose of this RIP is to modify the
+                Ravencoin consensus core protocol to enable Vault
+                assets. Vault assets are fungible assets on the
+                Ravencoin blockchain which have native value in the form
+                of Ravencoin currency (ie a "face value"). They also
+                pay/cost an interest/demurrage % rate of the "face
+                value" per day or a fixed quantity of RVN per day.<br>
+              </li>
+            </ul>
+            <br>
+            <ul>
+              <li> <b>Why:</b> The Ravencoin protocol is an extension
+                of the bitcoin protocol design which natively supports
+                the creation and management of assets. But adoption and
+                use of those assets depends on the traditional legal and
+                banking systems to establish the link of value between a
+                Ravencoin asset and a real world asset. The result is
+                that the rate of adoption of Ravencoin is determined by
+                the rate of adoption of blockchain technology by the
+                traditional legal and banking systems. Currently,
+                Ravencoin lacks the ability to assign value to on-chain
+                assets denominated in the local Ravencoin RVN currency.
+                This is an oversight because the flexibility built into
+                the Ravencoin protocol can fully support this with the
+                ability to securely and atomically trade between the
+                asset and the currency in a single transaction.
+                Enhancing an asset with the ability to carry a face
+                value also makes it possible for the asset to implement
+                a daily interest rate, either positive (earnings) or
+                negative (demurrage) or a fixed daily positive or
+                negative quantity of RVN , which opens many more
+                interesting applications.<br>
+              </li>
+            </ul>
+            <b><u><br>
+                <a name="Naming_Rule"></a>Naming Rule:</u></b><br>
+            <ul>
+              <li>Vault assets are a special type of root asset or
+                subasset. They follow the same naming rules as root
+                assets and subassets except that their name must always
+                start with the ^ symbol (an upside-down "v"). <br>
+              </li>
+              <li>This naming convention makes it clear that the asset
+                is a Vault asset which has a face value and which
+                pays/costs an interest/demurrage rate from/to an
+                address.<br>
+              </li>
+              <li>Vault assets therefore look something like
+                ^MYNAME/^MYSUBNAME</li>
+              <li>Vault asset names may only be issued by the owner of
+                the root asset of the same name. Thus ^MYNAME may only
+                be issued by the owner of MYNAME!<br>
+              </li>
+            </ul>
+            <br>
+            <b><u><br>
+                <a name="New_data"></a>New data maintained by the nodes
+                for each fungible Vault asset or Vault subasset:</u></b><br>
+            <ul>
+              <li>RF = Raven_Fund = The quantity of RVN currency held in
+                escrow for this fungible Vault asset name</li>
+            </ul>
+            <ul>
+              <li> AQ = Authorized_Quantity = The inactivated quantity
+                of this Vault asset name which has been authorized but
+                is not currently in circulation and which has no value</li>
+            </ul>
+            <ul>
+              <li>Interest_Rate = A signed float which represents the
+                interest/demurrage % rate paid/charged in RVN per day
+                for holding the Vault asset. The payment/charge is
+                against the face value of the Vault asset. The
+                payments/charges are made automatically on a daily basis
+                by the consensus code.</li>
+            </ul>
+            <ul>
+              <li>Interest_Amount = A signed float fixed value paid or
+                charged in RVN per day for holding the Vault asset.</li>
+            </ul>
+            <ul>
+              <li>Interest_Address = The address from which interest
+                payments are charged to increase the Vault asset "face
+                value" or into which demurrage payments are paid from
+                the Vault asset "face value".<br>
+              </li>
+            </ul>
+            <br>
+            <u><b><a name="RPC_Commands"></a>Vault-related RPC Commands</b></u><br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="90%">
+              <tbody>
+                <tr>
+                  <td valign="top">Mint=&gt; mintasset</td>
+                  <td valign="top">
+                    <ul>
+                      <li> This issues a Vault asset and then does a
+                        "monetizeasset" It is similar to a normal root
+                        asset or subasset "issueasset" except that it
+                        also creates and allows setting the
+                        Vault-specific metadata fields as defined above:</li>
+                      <ul>
+                        <li>RF = Raven_Fund</li>
+                        <li>AQ = Authorized_Quantity</li>
+                        <li>Interest_Rate = Signed % interest/demurrage
+                          of "face value" RVN per day</li>
+                        <li>Interest_Amount = Signed float fixed value
+                          RVN per day<br>
+                        </li>
+                        <li>Interest_Address = The address for
+                          interest/demurrage payments/charges<br>
+                        </li>
+                      </ul>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">Monetize=&gt; monetizeasset</td>
+                  <td valign="top">
+                    <ul>
+                      <li>This removes a designated qty of RVN currency
+                        from the designated address and from circulation
+                        and puts it into the RF escrow account
+                        associated with this Vault asset name</li>
+                      <ul>
+                        <li> This increases the prorated RVN currency
+                          "face value" of each Vault asset because it
+                          increases RF</li>
+                        <li> It can be executed as often as desired to
+                          increase the "face value" of the Vault assets
+                          in circulation</li>
+                      </ul>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">Melt=&gt; meltasset</td>
+                  <td valign="top">
+                    <ul>
+                      <li>This inactivates the designated qty of Vault
+                        assets by removing them from the designated
+                        address and from circulation. It increases AQ.</li>
+                      <ul>
+                        <li> It pays out a prorated qty of RVN from
+                          escrow (reduces RF) and puts them into the
+                          designated address and back into circulation</li>
+                      </ul>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">Unmelt=&gt; unmeltasset</td>
+                  <td valign="top">
+                    <ul>
+                      <li> This reactivates the designated qty of Vault
+                        assets by moving them from AQ into the
+                        designated address and back into circulation. It
+                        reduces AQ.</li>
+                      <ul>
+                        <li> It requires a payment of RVN currency equal
+                          to the current per-asset "face value" times
+                          the qty of Vault assets being unmelted</li>
+                        <li> If this command is executed with qty=0, it
+                          prints the current values of AQ and RF to
+                          reveal the amount of RVN currency which will
+                          be required for an unmelt</li>
+                      </ul>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">Remint=&gt; remintasset</td>
+                  <td valign="top">
+                    <ul>
+                      <li>Reissue a fungible Vault asset. If the Vault
+                        asset was previously monetized, then also lock
+                        raven into the RF escrow attached to this Vault
+                        asset name. That is, if RF&gt;0 the fund_address
+                        must contain sufficient RVN currency equal to
+                        the current per-asset "face value" times the
+                        assetqty being reissued. It increases RF.</li>
+                      <li>Note that Interest_Rate and Interest_Address
+                        are decided during Mint and cannot be changed
+                        during a Remint operation.<br>
+                      </li>
+                    </ul>
+                    <ul>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <u><b><a name="RPC_Command_Details"></a>Vault-related RPC
+                Command Details:</b></u><br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top">Mint =&gt;<br>
+                    mintasset "asset_name" assetqty rvnqty
+                    "fund_address" "to_address" interest_rate
+                    interest_amount "interest_address"
+                    "mint_burnfee_address" fee_amount&nbsp;
+                    "fee_address" "(change_address)" (units) (
+                    reissuable ) (has_ipfs) "(ipfs_hash)"<br>
+                    <ul>
+                      <li>mintasset is like a issueasset but for a Vault
+                        asset</li>
+                      <li>mintasset requires payment of a RVN burn fee,
+                        just as issueasset does<br>
+                      </li>
+                      <li>Issue a fungible Vault asset and lock RVN into
+                        an escrow RF attached to this asset name</li>
+                      <li> Asset names must begin with ^. Only the owner
+                        of the root asset of the same name may claim
+                        that name.<br>
+                      </li>
+                      <li> Reissuable is true/false for whether
+                        additional Vault assets can be created</li>
+                    </ul>
+                    Arguments: </td>
+                </tr>
+                <tr>
+                  <td valign="top">"asset_name"</td>
+                  <td valign="top">(string, required) a unique name,
+                    starts with '^' if '^' is not there it will be added
+                    automatically</td>
+                </tr>
+                <tr>
+                  <td valign="top">assetqty</td>
+                  <td valign="top"> (numeric, required) the number of
+                    Vault assets to be issued</td>
+                </tr>
+                <tr>
+                  <td valign="top">rvnqty</td>
+                  <td valign="top">(numeric, required) the number of RVN
+                    to be put into escrow RF for this assetname</td>
+                </tr>
+                <tr>
+                  <td valign="top">"fund_address"</td>
+                  <td valign="top">(string, required), address from
+                    which the rvnqty will be taken and locked in the
+                    escrow for this asset name</td>
+                </tr>
+                <tr>
+                  <td valign="top">"to_address"</td>
+                  <td valign="top">(string, required), address asset
+                    will be sent to</td>
+                </tr>
+                <tr>
+                  <td valign="top">interest_rate</td>
+                  <td valign="top">(signed float, required) %
+                    interest/demurrage of "face value" RVN paid/charged
+                    per day</td>
+                </tr>
+                <tr>
+                  <td valign="top">interest_amount</td>
+                  <td valign="top">(signed float, required) fixed value
+                    RVN paid or charged per day</td>
+                </tr>
+                <tr>
+                  <td valign="top">"interest_address"</td>
+                  <td valign="top">(string, required), the address for
+                    interest/demurrage payments/charges</td>
+                </tr>
+                <tr>
+                  <td valign="top">"mint_burnfee_address"</td>
+                  <td valign="top">(string, required), the address from
+                    which the RVN burn fee will be taken to pay for the
+                    mintasset operation<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">fee_amount</td>
+                  <td valign="top">(numeric, required) the number of
+                    ravencoins to be paid in fees for this transaction</td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_address"<br>
+                  </td>
+                  <td valign="top">(string, required), address from
+                    which the ravencoin fee will be taken</td>
+                </tr>
+                <tr>
+                  <td valign="top">"change_address"</td>
+                  <td valign="top">(string, optional, default=""),
+                    address the Ravencoin change from the fee will be
+                    sent to. If it is empty, a change address will be
+                    generated for you</td>
+                </tr>
+                <tr>
+                  <td valign="top">units</td>
+                  <td valign="top">(integer, optional, default=0, min=0,
+                    max=8), the number of decimals precision for the
+                    asset (0 for whole units ("1"), 8 for max precision
+                    ("1.00000000")</td>
+                </tr>
+                <tr>
+                  <td valign="top">"reissuable"</td>
+                  <td valign="top"> (boolean, optional, default=true),
+                    whether future reissuance is allowed</td>
+                </tr>
+                <tr>
+                  <td valign="top">"has_ipfs"</td>
+                  <td valign="top"> (boolean, optional, default=false),
+                    whether ifps hash is going to be added to the asset</td>
+                </tr>
+                <tr>
+                  <td valign="top">"ipfs_hash"</td>
+                  <td valign="top"> (string, optional but required if
+                    has_ipfs = 1), an ipfs hash or a txid hash once RIP5
+                    is activated</td>
+                </tr>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top"><br>
+                    Result:<br>
+                    "txid" (string) The transaction id</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top">Monetize
+                    =&gt;<br>
+                    monetizeasset "asset_name" rvnqty "fund_address"
+                    fee_amount "fee_address" "(change_address)"
+                    (has_ipfs) "(ipfs_hash)"<br>
+                    <ul>
+                      <li>Removes the designated qty of RVN currency
+                        from the designated address and from circulation
+                        and puts it into escrow RF associated with the
+                        designated asset name to increase the "face
+                        value" of those Vault assets<br>
+                      </li>
+                    </ul>
+                    Arguments:<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"asset_name"</td>
+                  <td valign="top">(string, required) the name of the
+                    Vault asset for which the "face value" in being
+                    increased<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"rvnqty"</td>
+                  <td valign="top">(numeric, required) the number of RVN
+                    to be put into escrow RF for this assetname</td>
+                </tr>
+                <tr>
+                  <td valign="top">"fund_address"</td>
+                  <td valign="top">(string, required), address from
+                    which the rvnqty will be taken and locked in the
+                    escrow for this asset name</td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_amount"<br>
+                  </td>
+                  <td valign="top">(numeric, required) the number of
+                    ravencoins to be paid in fees for this transaction<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_address"</td>
+                  <td valign="top">(string, required), address from
+                    which the ravencoin fee will be taken</td>
+                </tr>
+                <tr>
+                  <td valign="top">"change_address"</td>
+                  <td valign="top">(string, optional, default=""),
+                    address the Ravencoin change from the fee will be
+                    sent to. If it is empty, a change address will be
+                    generated for you</td>
+                </tr>
+                <tr>
+                  <td valign="top">"has_ipfs"</td>
+                  <td valign="top"> (boolean, optional, default=false),
+                    whether ifps hash is going to be added to the asset</td>
+                </tr>
+                <tr>
+                  <td valign="top">"ipfs_hash"</td>
+                  <td valign="top"> (string, optional but required if
+                    has_ipfs = 1), an ipfs hash or a txid hash once RIP5
+                    is activated</td>
+                </tr>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top"><br>
+                    Result:<br>
+                    "txid" (string) The transaction id</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top">Melt =&gt;<br>
+                    meltasset "asset_name" assetqty "from_address"
+                    "to_address" fee_amount "fee_address"
+                    "(change_address)" (has_ipfs) "(ipfs_hash)"<br>
+                    <ul>
+                      <li>Inactivates the designated qty of Vault assets
+                        by removing them from the designated address and
+                        from circulation. Pays out a prorated qty of RVN
+                        from escrow RF and puts them into the designated
+                        address and back into circulation.</li>
+                    </ul>
+                    Arguments: </td>
+                </tr>
+                <tr>
+                  <td valign="top">"asset_name"</td>
+                  <td valign="top">(string, required) the name of the
+                    Vault assets which are being inactivated</td>
+                </tr>
+                <tr>
+                  <td valign="top">"assetqty"</td>
+                  <td valign="top"> (numeric, required) the number of
+                    assets being inactivated</td>
+                </tr>
+                <tr>
+                  <td valign="top">"from_address"</td>
+                  <td valign="top">(string, required), address from
+                    which Vault assets will be removed and inactivated<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"to_address"<br>
+                  </td>
+                  <td valign="top">(string, required), address where
+                    extracted "face value" RVN will be put<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_amount"</td>
+                  <td valign="top">(numeric, required) the number of
+                    ravencoins to be paid in fees for this transaction</td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_address"<br>
+                  </td>
+                  <td valign="top">(string, required), address from
+                    which the ravencoin fee will be taken<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"change_address"<br>
+                  </td>
+                  <td valign="top">(string, optional, default=""),
+                    address the Ravencoin change from the fee will be
+                    sent to. If it is empty, a change address will be
+                    generated for you</td>
+                </tr>
+                <tr>
+                  <td valign="top">"has_ipfs"</td>
+                  <td valign="top"> (boolean, optional, default=false),
+                    whether ifps hash is going to be added to the asset</td>
+                </tr>
+                <tr>
+                  <td valign="top">"ipfs_hash"</td>
+                  <td valign="top"> (string, optional but required if
+                    has_ipfs = 1), an ipfs hash or a txid hash once RIP5
+                    is activated</td>
+                </tr>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top"><br>
+                    Result:<br>
+                    "txid" (string) The transaction id</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top">Unmelt =&gt;<br>
+                    unmeltasset "asset_name" assetqty "to_address"
+                    "from_address" fee_amount "fee_address"
+                    "(change_address)" (has_ipfs) "(ipfs_hash)"<br>
+                    <ul>
+                      <li>Reactivates the designated qty of Vault assets
+                        by moving them from AQ into the designated
+                        address and back into circulation. <br>
+                      </li>
+                      <li> It requires a payment of RVN currency equal
+                        to the current per-asset "face value" times the
+                        qty of Vault assets being unmelted</li>
+                      <li> If this command is executed with qty=0, it
+                        prints the current values of AQ and RF to reveal
+                        the amount of RVN currency which will be
+                        required for an unmelt</li>
+                    </ul>
+                    Arguments: </td>
+                </tr>
+                <tr>
+                  <td valign="top">"asset_name"</td>
+                  <td valign="top">(string, required) the name of the
+                    Vault assets which are being reactivated</td>
+                </tr>
+                <tr>
+                  <td valign="top">"assetqty"</td>
+                  <td valign="top"> (numeric, required) the number of
+                    assets being reactivated</td>
+                </tr>
+                <tr>
+                  <td valign="top">"to_address"</td>
+                  <td valign="top">(string, required), address to which
+                    Vault assets will be moved and activated<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"from_address"<br>
+                  </td>
+                  <td valign="top">(string, required), address from
+                    which RVN will be taken for the "face value" of the
+                    assets<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_amount"</td>
+                  <td valign="top">(numeric, required) the number of
+                    ravencoins to be paid in fees for this transaction</td>
+                </tr>
+                <tr>
+                  <td valign="top">"fee_address"<br>
+                  </td>
+                  <td valign="top">(string, required), address from
+                    which the ravencoin fee will be taken<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"change_address"<br>
+                  </td>
+                  <td valign="top">(string, optional, default=""),
+                    address the Ravencoin change from the fee will be
+                    sent to. If it is empty, a change address will be
+                    generated for you</td>
+                </tr>
+                <tr>
+                  <td valign="top">"has_ipfs"</td>
+                  <td valign="top"> (boolean, optional, default=false),
+                    whether ifps hash is going to be added to the asset</td>
+                </tr>
+                <tr>
+                  <td valign="top">"ipfs_hash"</td>
+                  <td valign="top"> (string, optional but required if
+                    has_ipfs = 1), an ipfs hash or a txid hash once RIP5
+                    is activated</td>
+                </tr>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top"><br>
+                    Result:<br>
+                    "txid" (string) The transaction id<br>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top">Remint =&gt;<br>
+                    remintasset
+                    <meta http-equiv="content-type" content="text/html;
+                      charset=windows-1252">
+                    <span style="color: rgb(0, 0, 0); font-family:
+                      verdana; font-size: 24px; font-style: normal;
+                      font-variant-ligatures: normal; font-variant-caps:
+                      normal; font-weight: 400; letter-spacing: normal;
+                      orphans: 2; text-align: start; text-indent: 0px;
+                      text-transform: none; white-space: normal; widows:
+                      2; word-spacing: 0px; -webkit-text-stroke-width:
+                      0px; text-decoration-thickness: initial;
+                      text-decoration-style: initial;
+                      text-decoration-color: initial; display: inline
+                      !important; float: none;">"asset_name" assetqty
+                      rvnqty "fund_address" "to_address"
+                      fee_amount&nbsp; "fee_address" "(change_address)"
+                      (units) ( reissuable ) (has_ipfs) "(ipfs_hash)"</span><br>
+                    or<br>
+                    remintasset "asset_name" <br>
+                    <ul>
+                      <li>remintasset is like a reissueasset but for a
+                        Vault asset</li>
+                      <li>Reissue a Vault fungible asset. If the asset
+                        was previously monetized, then also lock RVN
+                        into the escrow RF attached to this asset name<br>
+                      </li>
+                      <li> Asset name must already exist and be
+                        reissuable.&nbsp;</li>
+                      <li>You must own the Owner Token</li>
+                      <ul>
+                      </ul>
+                      <li>If RF&gt;0 the fund_address must contain
+                        sufficient RVN currency equal to the current
+                        per-asset "face value" times the assetqty being
+                        reissued. It increases RF.</li>
+                      <ul>
+                      </ul>
+                    </ul>
+                    Arguments:</td>
+                </tr>
+                <tr>
+                  <td valign="top">"asset_name"</td>
+                  <td valign="top">(string, required) the name of the
+                    Vault assets which are being reissued</td>
+                </tr>
+                <tr>
+                  <td valign="top">assetqty</td>
+                  <td valign="top"> (numeric, required) the number of
+                    Vault assets to reissue</td>
+                </tr>
+                <tr>
+                  <td valign="top">rvnqty<br>
+                  </td>
+                  <td valign="top">
+                    <meta http-equiv="content-type" content="text/html;
+                      charset=windows-1252">
+                    <table style="color: rgb(0, 0, 0); font-family:
+                      verdana; font-size: 24px; font-style: normal;
+                      font-variant-ligatures: normal; font-variant-caps:
+                      normal; font-weight: 400; letter-spacing: normal;
+                      orphans: 2; text-align: start; text-transform:
+                      none; white-space: normal; widows: 2;
+                      word-spacing: 0px; -webkit-text-stroke-width: 0px;
+                      text-decoration-thickness: initial;
+                      text-decoration-style: initial;
+                      text-decoration-color: initial;" cellspacing="2"
+                      cellpadding="2" border="1" width="100%">
+                      <tbody>
+                        <tr>
+                          <td valign="top">(numeric, required) the
+                            number of RVN to be put into escrow RF for
+                            this assetname</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"fund_address"</td>
+                  <td valign="top">(string, required if RF&gt;0),
+                    address from which the rvnqty will be taken and
+                    locked in the escrow for this asset name</td>
+                </tr>
+                <tr>
+                  <td valign="top">"to_address"<br>
+                  </td>
+                  <td valign="top">
+                    <meta http-equiv="content-type" content="text/html;
+                      charset=windows-1252">
+                    <table style="color: rgb(0, 0, 0); font-family:
+                      verdana; font-size: 24px; font-style: normal;
+                      font-variant-ligatures: normal; font-variant-caps:
+                      normal; font-weight: 400; letter-spacing: normal;
+                      orphans: 2; text-align: start; text-transform:
+                      none; white-space: normal; widows: 2;
+                      word-spacing: 0px; -webkit-text-stroke-width: 0px;
+                      text-decoration-thickness: initial;
+                      text-decoration-style: initial;
+                      text-decoration-color: initial;" cellspacing="2"
+                      cellpadding="2" border="1" width="100%">
+                      <tbody>
+                        <tr>
+                          <td valign="top">(string, required), address
+                            asset will be sent to</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"remint_burnfee_address"</td>
+                  <td valign="top">(string, required), the address from
+                    which the RVN burn fee will be taken to pay for the
+                    remintasset operation</td>
+                </tr>
+                <tr>
+                  <td valign="top">fee_amount</td>
+                  <td valign="top">
+                    <meta http-equiv="content-type" content="text/html;
+                      charset=windows-1252">
+                    <table style="color: rgb(0, 0, 0); font-family:
+                      verdana; font-size: 24px; font-style: normal;
+                      font-variant-ligatures: normal; font-variant-caps:
+                      normal; font-weight: 400; letter-spacing: normal;
+                      orphans: 2; text-align: start; text-transform:
+                      none; white-space: normal; widows: 2;
+                      word-spacing: 0px; -webkit-text-stroke-width: 0px;
+                      text-decoration-thickness: initial;
+                      text-decoration-style: initial;
+                      text-decoration-color: initial;" cellspacing="2"
+                      cellpadding="2" border="1" width="100%">
+                      <tbody>
+                        <tr>
+                          <td valign="top">(numeric, required) the
+                            number of ravencoins to be paid in fees for
+                            this transaction</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">
+                    <meta http-equiv="content-type" content="text/html;
+                      charset=windows-1252">
+                    <span style="color: rgb(0, 0, 0); font-family:
+                      verdana; font-size: 24px; font-style: normal;
+                      font-variant-ligatures: normal; font-variant-caps:
+                      normal; font-weight: 400; letter-spacing: normal;
+                      orphans: 2; text-align: start; text-indent: 0px;
+                      text-transform: none; white-space: normal; widows:
+                      2; word-spacing: 0px; -webkit-text-stroke-width:
+                      0px; text-decoration-thickness: initial;
+                      text-decoration-style: initial;
+                      text-decoration-color: initial; display: inline
+                      !important; float: none;">"fee_address"</span></td>
+                  <td valign="top">
+                    <meta http-equiv="content-type" content="text/html;
+                      charset=windows-1252">
+                    <span style="color: rgb(0, 0, 0); font-family:
+                      verdana; font-size: 24px; font-style: normal;
+                      font-variant-ligatures: normal; font-variant-caps:
+                      normal; font-weight: 400; letter-spacing: normal;
+                      orphans: 2; text-align: start; text-indent: 0px;
+                      text-transform: none; white-space: normal; widows:
+                      2; word-spacing: 0px; -webkit-text-stroke-width:
+                      0px; text-decoration-thickness: initial;
+                      text-decoration-style: initial;
+                      text-decoration-color: initial; display: inline
+                      !important; float: none;">(string, required),
+                      address from which the ravencoin fee will be taken</span></td>
+                </tr>
+                <tr>
+                  <td valign="top">"to_address"</td>
+                  <td valign="top">(string, required), address asset
+                    will be sent to</td>
+                </tr>
+                <tr>
+                  <td valign="top">"change_address"</td>
+                  <td valign="top">(string, optional, default=""),
+                    address the Ravencoin change from the fee will be
+                    sent to. If it is empty, a change address will be
+                    generated for you</td>
+                </tr>
+                <tr>
+                  <td valign="top">"reissuable"</td>
+                  <td valign="top">(boolean, optional, default=true),
+                    whether future reissuance is allowed</td>
+                </tr>
+                <tr>
+                  <td valign="top">new_units<br>
+                  </td>
+                  <td valign="top">(numeric, optional, default=-1), the
+                    new units that will be associated with the asset<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">"new_ipfs" <br>
+                  </td>
+                  <td valign="top">(string, optional, default=), whether
+                    to update the current ipfs hash or txid once RIP5 is
+                    active</td>
+                </tr>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top"><br>
+                    If this command is executed with only the asset_name
+                    specified, it prints the qty of the asset in
+                    circulation and RF to reveal the amount of Ravencoin
+                    currency which will be required for a reissue</td>
+                </tr>
+                <tr>
+                  <td rowspan="1" colspan="2" valign="top"><br>
+                    Result:<br>
+                    <blockquote> "txid" (string) The transaction id<br>
+                    </blockquote>
+                    or<br>
+                    <blockquote>"asset_name": There are
+                      "circulation_qty" assets in circulation and "RF"
+                      Ravencoins in escrow<br>
+                    </blockquote>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <u><b><a name="Q_n_A"></a>Q &amp; A</b></u><br>
+            <br>
+            <b>Q:</b> Why is this desired?<br>
+            <b>A:</b> This capability would give Ravencoin powerful
+            functionality to more fully participate in the
+            cryptocurrency and fintech ecosystems. <br>
+            <br>
+            <b>Q:</b> Can you give an example?<br>
+            <b>A:</b> Business founders could distribute assets as
+            ownership shares, or people could buy those assets as always
+            envisioned for Ravencoin assets. But now, the profits from
+            the business can be used to do "monetizeasset" transactions,
+            thereby giving the distributed assets immediate value. That
+            value could be hodled or traded. Or it could be cashed out
+            at any time by doing a "meltasset" and selling the resultant
+            Ravencoin currency on any of the exchanges. This model is
+            especially powerful for businesses which earn their income
+            in cryptocurrency, but it could be used for any business.<br>
+            <br>
+            <b>Q:</b> Would the sale and transfer price of an asset
+            always be determined by the quantity of Ravencoin currency
+            held in escrow for that asset?<br>
+            <b>A:</b> No. Assets would have a "face value" determined by
+            the escrow amount. But assets would have a higher trading
+            price determined by the market based on people's
+            expectations for the future value of that asset as well by
+            the perceived value of the company or community which the
+            asset represents. Additionally, there may be real world
+            assets attached by traditional legal means to the on-chain
+            asset which are not visible on-chain but which can increase
+            its trading price.<br>
+            <br>
+            <u><b>Additional implementation explanation:</b></u><br>
+            <blockquote>At present, the nodes keep track of the UTXO set
+              for both RVN and assets. For assets, that implies keeping
+              track not only of the creation and transfer history
+              bitcoin-style, but also of some metadata (units,
+              reissuability, etc). The nodes already have to track that
+              metadata and changes to it just like UTXO changes. This
+              concept adds an additional Raven_Fund metadata number to
+              every asset name, which represents the number of RVN
+              backing that asset name. All nodes know what the current
+              Raven_Fund number is for each asset name, just as they
+              know the other metadata and the UTXOs from the transaction
+              history. The sum of all the Raven_Fund (RF) numbers plus
+              the sum of all the RVN at addresses is the total RVN
+              supply, which is fixed by the whitepaper and changes only
+              due to miner rewards. That can be thought of as an
+              extended UTXO dataset, and the RFs for all the assets can
+              be thought of as pseudo-addresses. <br>
+              <br>
+              When new Vault assets are created (issued) for the first
+              time, an amount of RVN is set aside for the Raven_Fund
+              (RF) for that asset name. After the mintasset command is
+              executed, each Vault asset by that name will have a "face
+              value" equal to the RF quantity of RVN divided by the
+              quantity of Vault assets which were issued.<br>
+              <br>
+              Anyone can transfer RVN from an address into an asset
+              name's Raven_Fund using a new RPC which specifies the
+              asset name and the qty of RVN, which increases the "face
+              value" of all the assets issued with that name. This is a
+              "monetize" transaction. The nodes track these transfers as
+              their extended UTXO dataset and know where the RVN are.
+              The "face value" of any single asset token is equal to the
+              number of RVN in the Raven_Fund divided by the number of
+              tokens in circulation, and all nodes know that number.<br>
+              <br>
+              Assets can be transferred as usual. If the recipient of
+              some assets wants to "cash them in", then he can execute a
+              "melt" on those assets. To support this, there is a 2nd
+              new metadata number attached to every asset name which I
+              call Authorized_Quantity (AQ), and it is also tracked by
+              all nodes as part of the extended UTXO dataset. The sum of
+              all the assets at addresses plus the AQ for that asset
+              name equals the total number of assets issued by that
+              name. The AQ is the number of existing but inactivated
+              assets temporarily removed from circulation just as the
+              Raven_Fund is the number of RVN temporarily removed from
+              circulation. A "melt" operation increments the AQ number
+              for the asset and removes the assets from the owner's
+              address. It also decrements the Raven_Fund number for the
+              asset, and puts RVN into the owner's address. AQ and RF
+              can be thought of as pseudo-addresses and all nodes track
+              their change as part of the extended UTXO dataset.<br>
+              <br>
+              An "unmeltasset" operation allows the person controlling
+              the owner token to take inactivated Vault tokens from AQ,
+              spend RVN into RF to catch those assets back up to the
+              current "face value" of the assets currently in
+              circulation, and reactivate those assets (put them back
+              into circulation).<br>
+              <br>
+              A "remintasset" operation is like an "unmeltasset"
+              operation except that it creates new assets out of thin
+              air instead of reactivating tokens which were inactive in
+              AQ. Note that this can only be done if the Vault asset was
+              set as "reissueable" when first issued. An "unmeltasset"
+              operation can be done even on an asset which is
+              non-reissuable because does not result in more assets in
+              existence than originally authorized.<br>
+            </blockquote>
+            <br>
+            <u><b><a name="Use_Case_Example"></a>A Simple Use Case
+                Example:</b></u><br>
+            <blockquote>Currently, Ravencoin depends entirely on the
+              traditional legal system to give value to on-chain asset
+              tokens tied to real-world assets. The RavenVault extension
+              provides the ability to choose any business model you
+              prefer ranging from fully on-chain value to traditional
+              legal value or any mix in between.<br>
+              <br>
+              Let me describe a simple on-chain example. You might
+              decide to start a company called Ravenco which provides
+              security services and products, along with Joe and myself
+              and 4 other friends. So you issue the "^MYRAVENCO" asset
+              having 10 tokens. You keep 3 tokens for yourself,
+              Joe&nbsp; gets 2 tokens for his expertise, I get 1.9
+              tokens because I am in charge of security, our accountant
+              friend gets 0.1 token because the chain does most of the
+              work, and 3 other friends get one token. You might write a
+              subscription security blog, and the on-line shopping cart,
+              which collects payment in RVN, immedicately "monetizes"
+              the RVN to the Ravenco Raven_Fund. You also give your
+              subscriber list to me. I teach self-defence classes, and
+              with the money I collect, I buy RVN and "monetize" them to
+              the Raven_Fund. After a while, the Raven_Fund contains
+              1000 RVN, so every Ravenco token has a face value (book
+              value in Wall Street lingo) of 100 RVN, and your 3 tokens
+              are worth 300 RVN. Then one of our friends needs cash, so
+              he "melts" his token, which pays him 100 RVN and increases
+              the Authorized_Quantity to 1.<br>
+              Your 3 tokens are still worth 300 RVN. After that, you
+              could "unmelt" that AQ token to a new business partner. Or
+              you could remint new tokens for new investors. But either
+              way, I don't have to worry about you diluting my value
+              because the "unmelt" and "remint" commands fail unless you
+              provide enough RVN to cover the face value of the tokens
+              being put into circulation. So new partners have to buy-in
+              at a minimum of face value. But of course, you could
+              provide more value during the "unmelt" or "remint".
+              Perhaps Craig Wright would desperately want to buy the
+              token because he thinks that Ravenco will take over the
+              world, and he is willing to pay 1.2 million RVN. Then you
+              could "unmelt" the token from AQ to him while specifing
+              the fund_address as his address which contains the 1.2
+              million RVN. After that transaction, your 3 Ravenco tokens
+              are worth 360270 RVN. So you and I and our friends "melt"
+              our tokens to get our RVN and go start a new company. All
+              enforced on-chain. With more security than a programmed
+              smart contract could ever offer.<br>
+              <br>
+              The Ravenco asset has a single Raven_Fund number attached
+              to it which represents the number of RVN taken out of
+              circulation and put into escrow to back that asset. So if
+              there are 1000 RVN in the Ravenco Raven_Fund and there are
+              10 Ravenco tokens currently in circulation, then each
+              token has a face value of 100 RVN. In my example, the
+              Raven_Fund accumulated 1000 RVN from business profit
+              "monetize" transactions, then dropped 100 RVN when our
+              friend "melt"ed his token, then added 1.2 Million RVN when
+              a token was "unmelt"ed to Craig. So at the end, there are
+              1000-100+1200000 RVN in the Raven_Fund of Ravenco and
+              still 10 tokens in circulation. So dividing the Raven_Fund
+              quantity by the token count of 10 gives each token a face
+              value of 120090 RVN available by "melt"ing.<br>
+            </blockquote>
+            <u><b><br>
+                Footnotes:</b></u><br>
+            <br>
+            <blockquote>It is important to recognize the possible impact
+              of round-off errors when calculating the "face value" of
+              an asset. Since any number of RVN are allowed when
+              creating the Raven_Fund for an asset or when adding to the
+              Raven_Fund, it is possible for the "face value" of a
+              single token to be a number with an infinite number of
+              decimal places.<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; For instance:<br>
+              <ol type="a">
+                <li>If a "mintasset" is executed to create 12 asset
+                  tokens backed by a Raven_Fund of 4 RVN, then each
+                  token will have a "face value" of 0.33333... RVN.</li>
+                <li>Likewise, a "mintasset" command creating 12 assets
+                  with a Raven_Fund of 3 RVN, followed by a
+                  "monetizeasset" command of 1 RVN to the same asset,
+                  will create the same result.</li>
+              </ol>
+              &nbsp;&nbsp;&nbsp; If round-off errors are not taken into
+              account, the movement of RVN back and forth between
+              circulation and Raven_Funds can impact the total RVN
+              supply.<br>
+              <br>
+              &nbsp;&nbsp;&nbsp; <b>In order to accurately preserve the
+                total RVN supply in existence, round-off errors are best
+                handled as follows:</b><br>
+              <ol type="A">
+                <li>Any number of RVN are allowed during "mintasset" or
+                  "monetizeasset" commands.</li>
+                <li>When doing "face value" calculations, round up for
+                  "unmeltasset" and "remintasset" commands; round down
+                  for the "meltasset" command. In other words, unmelt
+                  and remint will always require a small over-payment,
+                  while melts will always yield a small under-payout.
+                  This will insure that the holder of the asset owner
+                  token cannot repeatedly unmelt or remint and then melt
+                  to extract RVN from the Raven_Fund. Also, round-off
+                  errors will accumulate in the Raven_Fund, which slowly
+                  raises the face value of the remaining tokens in
+                  circulation.</li>
+                <li>If all tokens are melted (that is, all tokens are
+                  moved from circulation to AQ), the amount payed out
+                  during the final melt command should be set equal to
+                  the value of the Raven_Fund balance. This insures that
+                  the final Raven_Fund=0 and the total RVN supply is
+                  accurately maintained.</li>
+              </ol>
+              <br>
+              <hr size="2" width="100%">
+              <hr size="2" width="100%"><br>
+              <a name="RavenVault-Plus"></a> <u><b>RavenVault-Plus<br>
+                  <br>
+                </b></u>
+              <ul>
+                <li> RavenVault-Plus is a further modification of the
+                  RavenVault proposal to allow extraction of face value
+                  from assets. </li>
+                <li> Its primary feature is that it provides a mechanism
+                  for DAO cash-outs</li>
+              </ul>
+              <br>
+              <ul>
+                <li>Vote for Re-Mint at face value</li>
+                <ul>
+                  <li>doesn't change value of each outstanding token,
+                    but reduces equity share &amp; thus voting power per
+                    token </li>
+                </ul>
+                <li>Vote for Re-Issue at zero value</li>
+                <ul>
+                  <li>useful for funds withdrawal off-chain; reduces
+                    value per token and equity share per token</li>
+                </ul>
+              </ul>
+              Voting implementation:<br>
+              <ul>
+                <li>Each token has metadata which specifies</li>
+              </ul>
+              <blockquote>
+                <ol>
+                  <li>Is a vote required to authorize Re-Mint at face
+                    value </li>
+                  <li>Is a vote required to authorize Re-Issue at zero
+                    value</li>
+                </ol>
+              </blockquote>
+              <ul>
+                <li>If a token is not re-issuable, then there is nothing
+                  to vote about</li>
+                <li>If a token is re-issuable, then during a re-issue
+                  the meta-data can be made more restrictive but not
+                  more permissive</li>
+                <li>Vote are always won by 51% of the vote</li>
+                <li>All tokens vote by design: The vote of each asset
+                  UTXO is part of the asset transfer transaction, and
+                  stays valid until changed by the next transfer</li>
+                <ul>
+                  <li>disadvantage: requires sending all your tokens to
+                    a new address to change the vote for those tokens</li>
+                  <li>advantage: the token owner sets the inital default
+                    when distributing the tokens</li>
+                  <li>the wallet default should be to set all the votes
+                    to permissive on each transfer</li>
+                  <li>The vote could be encoded into asset transfer
+                    transactions by the addition of a new "vote" field</li>
+                </ul>
+              </ul>
+            </blockquote>
+            <blockquote><br>
+              <ol type="A">
+              </ol>
+            </blockquote>
+            <center>
+              <div style="width: 70%;"><big><i><br>
+                    "In Theory There Is No Difference Between Theory and
+                    Practice, While In Practice There Is"</i></big></div>
+            </center>
+            <br>
+            <br>
+            <div align="center">Copyright 2020-2021 by Hans Schmidt<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

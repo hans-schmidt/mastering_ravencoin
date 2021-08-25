@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>Evermore Support for 2-step On-Chain SIGHASH_SINGLE Atomic
+      Swaps</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="Evermore Support for 2-step On-Chain SIGHASH_SINGLE
+      Atomic Swaps" name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table cellspacing="2" cellpadding="2" border="0"
+              width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp;
+                    August 2021<br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center"> <big><big>Evermore Support for 2-step
+                  On-Chain SIGHASH_SINGLE Atomic Swaps</big></big> <br>
+              <br>
+            </div>
+            2-Step On-Chain Atomic Swaps can be constructed on Ravencoin
+            by making available half-transaction offers using 1 input
+            and 1 output and SIGHASH_SINGLE|SIGHASH_ANYONECANPAY. The
+            swaps guarantee atomicity due to the all-or-nothing nature
+            of transactions in which all inputs and outputs are executed
+            or none of them are.<br>
+            <br>
+            The nice thing about this scheme is that there is no upfront
+            negotiation needed. They are far simpler than traditional
+            HTLC P2SH Cross-Chain Atomic Swaps, which require
+            substantial off-chain communication between buyer and
+            seller. In a 2-step swap, the seller posts an offer which is
+            a partial transaction which basically says "I am willing to
+            sell X and I don't care about any other inputs or outputs as
+            long as I get Y". Any buyer who likes the terms can accept
+            the offer by completing the transaction and submitting it.<br>
+            <br>
+            See the following resource describing the use of
+            SIGHASH_SINGLE|SIGHASH_ANYONECANPAY to achieve this
+            functionality: <br>
+            &nbsp;&nbsp;&nbsp; <a moz-do-not-send="true"
+href="https://raghavsood.com/blog/2018/06/10/bitcoin-signature-types-sighash">https://raghavsood.com/blog/2018/06/10/bitcoin-signature-types-sighash</a><br>
+            <br>
+            Note that there is really no difference between an "offer to
+            sell" and an "offer to buy". An "offer to sell" uses an
+            asset as the input with RVN as the ouput, while an "offer to
+            buy" uses RVN is the input with an asset as the ouput.<br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <u><b><a name="Level-1_DEX_Support"></a>Level-1 DEX Support:</b></u><br>
+            <br>
+            Every UTXO can be an offer if new "desired swap" data fields
+            are created and filled in by the offer creator during an
+            asset transaction. Retracting or revising an offer is then
+            simply done by creating another transaction which transfers
+            the asset to a new UTXO with new data in the "desired swap"
+            fields.<br>
+            <br>
+            Note that this eliminates the need for a database or a
+            broadcast channel for offer tracking and transmission since
+            the blockchain itself serves those functions.<br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="1302" height="189" align="center">
+              <tbody>
+                <tr>
+                  <td valign="top">Chain</td>
+                  <td valign="top">Which chain holds the asset I want in
+                    exchange. Currently always RVN. This field in for
+                    cross-chain swaps</td>
+                </tr>
+                <tr>
+                  <td valign="top">Asset_Name</td>
+                  <td valign="top">The name of what I want in exchange
+                    such as RVN or another asset.</td>
+                </tr>
+                <tr>
+                  <td valign="top">Ask_Qty</td>
+                  <td valign="top">How many of them I want. Equivalent
+                    to the price times the input Qty.</td>
+                </tr>
+                <tr>
+                  <td valign="top">Expire_Time</td>
+                  <td valign="top">The Unix epoch time at which the
+                    offer expires (+- one block interval)<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">Signature</td>
+                  <td valign="top"> My signature needed by you to
+                    construct a full transaction using my
+                    SIGHASH_SINGLE|SIGHASH_ANYONECANPAY offer</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            These new data fields are only informational and unused in
+            the transaction in which they are written into an output of
+            that transaction. But they contain the information necessary
+            for anyone to create a spending transaction which accepts
+            the offer described by the new data fields. <br>
+            <br>
+            Traders can wait for the new UTXOs to be mined before
+            searching them and submitting matching acceptance
+            transactions. But nothing prevents buyers from snooping the
+            P2P node traffic, in which case an offer and its acceptance
+            could be mined sequentially into the same block. <br>
+            <br>
+            Of course a separate database and separate communication
+            channel could still be used to track and broadcast offers in
+            order to save on transaction fees.<br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <a name="Level-2_DEX_Support"></a> <u><b>Level-2 DEX
+                Support:</b></u><br>
+            <br>
+            One inefficiency of this scheme is that buyers must match
+            the exact qty of the offer by creating a matching UTXO. In a
+            competition amoung buyers, miners will insure that only one
+            of the buyers will be allowed to take the offered UTXO and
+            the other buyers' transactions will be rejected with no
+            transaction fee. Nevertheless, the all-or-nothing
+            requirement of the swapped quantity limits the number of
+            possible buyers and complicates swap completion.<br>
+            <br>
+            An even larger inefficiency is in price discovery. On-chain
+            offers as described above are a useful mechanism to
+            bootstrap a DEX since they eliminate the need for a database
+            or a broadcast channel to track the offers. But on-chain
+            atomic swaps are best viewed as settlement (delivery) rather
+            than price discovery. 2-step offers can migrate off-chain
+            using an out-of-band broadcast channel for better
+            performance, but improving price discovery requires support
+            for more complex order types such as Market, Stop, Limit,
+            Stop_Limit, and Stop_Market. <br>
+            <br>
+            Both quantity flexibility and improved price discovery can
+            be improved by adding the following UTXO data field
+            enhancements:&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <br>
+            <br>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="80%" align="center">
+              <tbody>
+                <tr>
+                  <td valign="top">Order_Type</td>
+                  <td valign="top">Precise(Legacy)/Market/Stop/Limit/Stop_Limit/Stop_Market
+
+                    (note: Trailing_Stop is not possible since it
+                    requires knowledge of the past)</td>
+                </tr>
+                <tr>
+                  <td valign="top">Stop</td>
+                  <td valign="top">The Stop Qty (price) for Stop Orders
+                    (ratio assuming input Qty=1)</td>
+                </tr>
+                <tr>
+                  <td valign="top">Limit</td>
+                  <td valign="top">The Limit Qty (price) for Limit
+                    Orders (ratio assuming input Qty=1)</td>
+                </tr>
+                <tr>
+                  <td valign="top">Granularity</td>
+                  <td valign="top">Zero represents an All-or-None legacy
+                    UTXO. Non-zero values indicate the granularity under
+                    which an order may be partially filled. </td>
+                </tr>
+                <tr>
+                  <td valign="top">Change_Address</td>
+                  <td valign="top">The ScriptPubKey to which a change
+                    output should be created if the order is only
+                    partially filled. If left blank, the change is sent
+                    back to the source address</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <ul>
+            </ul>
+            Note that all of these new data fields are only
+            informational and unused in the transaction in which they
+            are written into an output of that transaction. However,
+            during a future transaction which spends that output by
+            using it as an input, the consensus rules read these new
+            fields to determine whether the spending transaction
+            satisfies the requirements set by these fields. The spending
+            transaction may have a Vout value (final settlement
+            quantity) which is different than Ask_Qty due to partial
+            order fulfillment (based on Granularity) or price change
+            (within the rules set by Order_Type, Stop, and Limit).<br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <a name="Level-3_DEX_Support"></a> <u><b>Level-3 DEX
+                Support:</b></u><br>
+            <br>
+            Price Discovery can be made even more efficient. Large
+            liquid markets implementing full bid/ask order books will
+            remain more efficient for many asset pairs than most other
+            market implementations. In those cases, it is advantageous
+            to support the use of an Oracle for price discovery.
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            <br>
+            Oracle support can improve price discovery and provide vast
+            flexibility by adding the following UTXO data field
+            enhancements:<br>
+            <br>
+            <div align="center">Written into the transaction output of
+              the transaction making an offer</div>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="1302" height="83" align="center">
+              <tbody>
+                <tr>
+                  <td valign="top">Oracle_Pubkey</td>
+                  <td valign="top">The pubkey of the Oracle trusted by
+                    the seller to dictate the exchange price for this
+                    UTXO</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center">Included along with Vout in the spending
+              transaction which accepts an offer<br>
+            </div>
+            <table cellspacing="2" cellpadding="2" border="1"
+              width="1302" height="73" align="center">
+              <tbody>
+                <tr>
+                  <td valign="top">Oracle_Quote</td>
+                  <td valign="top"> Time-stampled Oracle Response which
+                    was used to set the price when the order was filled<br>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            Note that the Oracle is chosen by the owner of the UTXO
+            making the offer. It is up to the other party to decide
+            whether to accept that Oracle by taking the deal. <br>
+            <br>
+            Note also that it would not be practical in any case for the
+            Oracle to simply be an asset metadata field chosen by the
+            asset issuer because there will likely be different Oracles
+            based on the other asset in the trading pair. <br>
+            <br>
+            Note that neither nodes nor miners are responsible for
+            creating transactions from offers, though they may choose to
+            do so. They are not required to determine whether completed
+            transactions can be assembled from matching broadcasted
+            half-transactions nor from previous transactions containing
+            offers. They are also not responsible for connecting to
+            Oracles and determining prices which fulfill the order
+            requirements. Any party can execute those functions to build
+            and submit full transactions in the hope that they will be
+            mined and they can make a profit on the bid/ask spread. That
+            will be true of fixed price offers as well as for the
+            complex order types. Full nodes (including miners) will have
+            modified concensus rules which implement the new rules
+            regarding partial order fulfillment, complex orders, and/or
+            Oracle-guided pricing to insure that the submitted
+            transactions satisfy those new rules.<br>
+            <br>
+            <br>
+            <hr size="2" width="100%"><br>
+            <u><b><a name="Oracle-guided_trading"></a>Oracle-guided
+                trading:</b></u><br>
+            <br>
+            <ul>
+              <li>Normal UTXO trading uses traditional price discovery
+                negotiated between buyers and sellers. But such trading
+                requires high-speed order books and cannot be done
+                on-chain. While such legacy trades should always be an
+                available option, a more efficient on-chain market can
+                be implemented if Oracles are used to set the price of
+                trades. Fairly simple changes to Ravencoin can be
+                implemented which use Oracle price setting and 2-step
+                On-Chain Atomic Swaps to implement much more efficient
+                and flexible trade types including
+                Precise(Legacy)/Market/Stop/Limit/Stop_Limit/Stop_Market.</li>
+            </ul>
+            <ul>
+              <li>Note that if the token being traded represents an
+                off-chain asset, then even with Oracle price setting,
+                the token requires a stable coin mechanism to bind the
+                token to the off-chain asset, or it must trade in a pair
+                with a stable-coin asset. This is needed to provide an
+                arbitrage mechanism to anchor the on-chain price to its
+                off-chain value. Otherwise, Oracle inaccuracies and
+                computational round-off errors will accumulate to create
+                growing token price inaccuracy.&nbsp;&nbsp;&nbsp; </li>
+            </ul>
+            <ul>
+              <li>Note, however, that no off-chain anchor is needed if
+                the value is fully on-chain. A token containing a
+                predictions market contract which accepts RVN from bet
+                participants and pays out based on Oracle information
+                needs no off-chain anchor. </li>
+            </ul>
+            <br>
+            <hr size="2" width="100%"><br>
+            <u><b><a name="Implementing_the_Price_Oracles"></a>Implementing
+
+                the Price Oracles:</b></u><br>
+            <br>
+            Remember that the goal of RavencoinPlus is to implement
+            low-level plumbing support for defi in a bitcoin-like
+            architecture without committing to specific defi
+            implementations when there are choices. Price discovery, for
+            instance, can be done in a number of ways. Many of the
+            newest defi projects use Automated Market Makers (AMMs)
+            using a variety of experimental formulas. Using an Oracle in
+            the low-level protocol is implementation agnostic because
+            the Oracle could be an on-chain AMM, an AMM on another
+            chain, or a price feed from a Centralized Exchange. Or, just
+            leave the Oracle field blank and Ravencoin will work just
+            like it does now with you deciding the price- it is forward
+            flexible and backward compatible.<br>
+            <br>
+            The simplest and most flexible solution is to allow
+            selection of the Oracle to be made by the party making the
+            offer, and it is up to the other party to decide whether to
+            accept that Oracle by taking the deal.<br>
+            <ul>
+              <li>Note that the Oracle cannot simply be an asset
+                metadata field chosen by the asset issuer because there
+                will likely be different Oracles based on the other
+                asset in the trading pair.</li>
+            </ul>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            The use of Oracles is best suited for trade between tokens
+            who's prices are pegged to well-known assets since a
+            reliable Oracle is needed which "knows" the price with high
+            confidence. But since the party making the offer selects the
+            Oracle and the party accepting the offer is also accepting
+            the Oracle choice, this is not a problem. <br>
+            <br>
+            For well-known common crytpo assets, price discovery is
+            already done well on many centralized exchanges. Those will
+            remain the best sources of price information for the
+            foreseeable future and an Oracle should be chosen which uses
+            a data feed from one or more centralized exchanges. <br>
+            <br>
+            Oracles are available from some distributed exchanges, but
+            they are less reliable because distributed exchanges have
+            insufficient capacity or speed to implement Limit Order
+            Books like centralized exchanges which handle by far most of
+            the volume. Those limitation imply that there is a greater
+            risk of manipulation of a DEX-derived price Oracle&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            It would be possible to implement the Oracle by letting
+            miners "vote" on the best source (as in Pegnet), but that is
+            complex, and it is subject to manipulation by miners and
+            attackers.<br>
+            <br>
+            Note that when trading tokens on Ravencoin when the tokens
+            represent off-chain assets, the token trade can be viewed as
+            the close of price agreement between the parties, but
+            without settlement. Settlement is the act of delivery of the
+            off-chain asset in exchange for the Ravencoin token.
+            Settlement can happen at a later time, or be replaced by
+            anoter token trade, or can be settled in RVN rather than in
+            the underlying asset. This also means that if settlement is
+            implemented using a cross-chain atomic swap technology, then
+            there need be no concern about the possible existence of
+            free options in the atomic swap protocol because the price
+            has already been fixed and the sale committed. <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            Some well known sources of Oracles are already available: <br>
+            <ul>
+              <li>Chainlink Price Reference Data contract</li>
+              <li>Compound's Open Price Feed</li>
+              <li>Okcoin Oracle signed price feed</li>
+            </ul>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            New technologies such as "Gravity Protocol" are expected to
+            make Oracles much more common, not only for price discovery,
+            but also for a variety of inter-blockchain data
+            communications<br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+            Developing and providing Oracles as a for-profit business is
+            expected to be a good opportunity for independent vendors<br>
+            <br>
+            <br>
+            <hr size="2" width="100%">
+            <hr size="2" width="100%"> <b><br>
+            </b>
+            <div align="center">Copyright 2021 by Hans Schmidt<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
