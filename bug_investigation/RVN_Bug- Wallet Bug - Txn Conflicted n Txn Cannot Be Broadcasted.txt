@@ -1,0 +1,117 @@
+
+RVN_Bug- Wallet Bug - Txn Conflicted n Txn Cannot Be Broadcasted
+================================================================
+
+Where Reported:
+---------------
+see https://discord.com/channels/429127343165145089/826527482815447121/918421300505112576
+
+When Reported:
+--------------
+2021-12-09
+
+Description:
+------------
+-this bug happened on testnet, mostly when creating multiple transactions in rapid succession and apparently mostly when testnet was weakly mined so that blocks came late.
+-the debug.log file shows that it creates transactions but then can't send them::
+	2021-12-09 08:08:16 AddToWallet 95e2434a24a2535800a077800076d5d764af5c4c4c49edc803520de9a9399800  new
+	2021-12-09 08:08:16 CommitTransaction(): Transaction cannot be broadcast immediately, 
+-the actual raven-qt GUI after creating the transaction shows:
+	Status: conflicted with a transaction with 26 confirmations
+
+Core Log Output:
+----------------
+2021-12-09 08:07:12 CommitTransaction:
+CTransaction(hash=14746b65ec, ver=2, vin.size=4, vout.size=2, nLockTime=1007972)
+    CTxIn(COutPoint(45c9365728, 0), scriptSig=4730440220341d56454843f9, nSequence=4294967294)
+    CTxIn(COutPoint(5c87b0f5ea, 3), scriptSig=483045022100b0ae53b28990, nSequence=4294967294)
+    CTxIn(COutPoint(8c3ea02f91, 1), scriptSig=483045022100f25763ec3d7b, nSequence=4294967294)
+    CTxIn(COutPoint(8c3ea02f91, 2), scriptSig=473044022072a15ed59001cf, nSequence=4294967294)
+    CScriptWitness()
+    CScriptWitness()
+    CScriptWitness()
+    CScriptWitness()
+    CTxOut(nValue=0.00000000, scriptPubKey=76a9140ccdca81238012fe548b69c6)
+    CTxOut(nValue=499.99284550, scriptPubKey=76a91461c8ea6cdccf5c57d73f690e)
+2021-12-09 08:07:12 keypool keep 1057
+2021-12-09 08:07:12 AddToWallet 14746b65ec8c92e0d1f61e3c15ae8ed6395195400a10d4e1f05fa8250631a578  new
+2021-12-09 08:07:12 CommitTransaction(): Transaction cannot be broadcast immediately, 
+2021-12-09 08:07:22 AddToWallet f2c80ca479f2d53e0ef5b9f8f73069a5b4b17f3b3f9faafe1c33b544f874fe66  update
+2021-12-09 08:07:22 Transaction 45c93657286bdae5c207ec4ff3f2b32eb2dfa4df4619b1800bf0e0cbbe60dccb (in block 000000034102bbb6fee03d5bf28b3e948687156e229120e3481646899f5ce2b9) conflicts with wallet transaction 529ab96102ffe52a783359afa51a9b6e3f7d2753bfc3fa11510f2d6d57ff7683 (both spend 4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245:2)
+2021-12-09 08:07:22 Transaction 45c93657286bdae5c207ec4ff3f2b32eb2dfa4df4619b1800bf0e0cbbe60dccb (in block 000000034102bbb6fee03d5bf28b3e948687156e229120e3481646899f5ce2b9) conflicts with wallet transaction 9228d097695a881faac8d174ad7220f44bc0ab34ad3d4bc47f34db1e6e9adcc5 (both spend 4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245:2)
+2021-12-09 08:07:22 AddToWallet 45c93657286bdae5c207ec4ff3f2b32eb2dfa4df4619b1800bf0e0cbbe60dccb  update
+2021-12-09 08:07:51 keypool added 1 keys (1 internal), size=2000 (1000 internal)
+
+Relevant Information:
+---------------------
+xtn 45c93657286bdae5c207ec4ff3f2b32eb2dfa4df4619b1800bf0e0cbbe60dccb was on 2021-12-09 08:06:56 (UTC) in block 1007973
+xtn f2c80ca479f2d53e0ef5b9f8f73069a5b4b17f3b3f9faafe1c33b544f874fe66 was on 2021-12-09 08:06:56 (UTC) in block 1007973
+xtn 4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245 was on 2021-12-09 07:02:15 (UTC) in block 1007912
+
+xtn 14746b65ec8c92e0d1f61e3c15ae8ed6395195400a10d4e1f05fa8250631a578 does not exist
+xtn 529ab96102ffe52a783359afa51a9b6e3f7d2753bfc3fa11510f2d6d57ff7683 does not exist
+xtn 9228d097695a881faac8d174ad7220f44bc0ab34ad3d4bc47f34db1e6e9adcc5 does not exist
+
+==========
+Similary:
+
+Core Log Output:
+----------------
+2021-12-09 08:08:16 CommitTransaction:
+CTransaction(hash=95e2434a24, ver=2, vin.size=4, vout.size=2, nLockTime=1007900)
+    CTxIn(COutPoint(45c9365728, 1), scriptSig=483045022100c0cdb5a886ec, nSequence=4294967294)
+    CTxIn(COutPoint(5c87b0f5ea, 3), scriptSig=47304402200ee7144a21480f, nSequence=4294967294)
+    CTxIn(COutPoint(8c3ea02f91, 1), scriptSig=483045022100f0a4bc3eb31b, nSequence=4294967294)
+    CTxIn(COutPoint(8c3ea02f91, 2), scriptSig=48304502210097eb0ae87fc2, nSequence=4294967294)
+    CScriptWitness()
+    CScriptWitness()
+    CScriptWitness()
+    CScriptWitness()
+    CTxOut(nValue=0.00000000, scriptPubKey=76a9140ccdca81238012fe548b69c6)
+    CTxOut(nValue=1399.20726825, scriptPubKey=76a914541b7b33ad28abe36d73c468)
+2021-12-09 08:08:16 keypool keep 1059
+2021-12-09 08:08:16 AddToWallet 95e2434a24a2535800a077800076d5d764af5c4c4c49edc803520de9a9399800  new
+2021-12-09 08:08:16 CommitTransaction(): Transaction cannot be broadcast immediately, 
+
+Relevant Information:
+---------------------
+shown on the GUI: xtn 95e2434a24a2535800a077800076d5d764af5c4c4c49edc803520de9a9399800
+"conflicted with a transaction with 26 confirmations
+
+Note that vout:2 of txn 4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245, contains the ~50K qty of the asset which must be returned as change during a spend txn before another spend tx can be done:
+
+
+TXID: 4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245
+
+{"txid":"4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245",
+"hash":"4dee4d794bad7b20fdcbcd76020ca7afd81efebcb3de9eb1466fefc4c348e245","version":2,"size":683,"vsize":683,"locktime":1007911,
+
+"vin":[
+
+{"txid":"f8e7643751d92399679e540c91e84be2131a44593780bd5c80894d4e0a6d29c7", "vout":0,"scriptSig":
+{"asm":"30440221008a08547576652ab699d9ba7dd2f9b61de785b966d0dfd6a5672bb17c6987ba2b021f1eeae23096816de64c6d20e53f8729b4b0f0cd74c213edb191b0fc67661949[ALL] 037b3dc0036a48b4d1ebf4eb71682e6053f0f3d3a4ae5f1d21ce8afe177744139c",
+"hex":"4730440221008a08547576652ab699d9ba7dd2f9b61de785b966d0dfd6a5672bb17c6987ba2b021f1eeae23096816de64c6d20e53f8729b4b0f0cd74c213edb191b0fc676619490121037b3dc0036a48b4d1ebf4eb71682e6053f0f3d3a4ae5f1d21ce8afe177744139c"},"sequence":4294967294},
+
+{"txid":"be814ccc3c23c06bc7a1a42ef4c9101544c6b08b8e10a2c241406763323dde1f", "vout":1,"scriptSig":
+{"asm":"03045022100ba62e42c75693fa7af2224f2cdc89f5e12d5fea521dd9e30c7399b0318cd7f4e022058f2482fe379e646ed1638cd9bc01cddc586584ceedab4577d8316dca3a35f5e[ALL] 30450221009efc07451f05ecd21fd1df4a26cdcb5f2c4c5221b97b87e95b4a19676b83408b022023b392727ec48857882d3d94c3c623b3781e97f923f9134fc4a14a7c206c4e44[ALL] 3045022100974a72ae35b24594f992d39746e9b67704689322f9fc05ebb2f125f4da0607a002201ff9e1e2491acddb784f031ed8150591b96201fec1ef88337262326c6dd11b2e[ALL] 53210290a94966897e88746af835a7d139260da499f48a3f53b86254ba4b3767b6dd252103903b2a48567a413c672d3b7d1036a6abcf84ae6949dc6fc9fd9f76a7b4e1d2012103d20896a95d7e1d2e0d566ef1728a8f166198e6133c4aef82e69ef6802067f13e53ae","hex":"00483045022100ba62e42c75693fa7af2224f2cdc89f5e12d5fea521dd9e30c7399b0318cd7f4e022058f2482fe379e646ed1638cd9bc01cddc586584ceedab4577d8316dca3a35f5e014830450221009efc07451f05ecd21fd1df4a26cdcb5f2c4c5221b97b87e95b4a19676b83408b022023b392727ec48857882d3d94c3c623b3781e97f923f9134fc4a14a7c206c4e4401483045022100974a72ae35b24594f992d39746e9b67704689322f9fc05ebb2f125f4da0607a002201ff9e1e2491acddb784f031ed8150591b96201fec1ef88337262326c6dd11b2e014c6953210290a94966897e88746af835a7d139260da499f48a3f53b86254ba4b3767b6dd252103903b2a48567a413c672d3b7d1036a6abcf84ae6949dc6fc9fd9f76a7b4e1d2012103d20896a95d7e1d2e0d566ef1728a8f166198e6133c4aef82e69ef6802067f13e53ae"
+},
+"sequence":4294967294}],
+
+"vout":[
+{"value":0,"n":0,"scriptPubKey":{"asm":"OP_HASH160 fa67945e10a16070c1505711e56f612bcc7bdffe OP_EQUAL OP_RVN_ASSET 1972766e740c4b494e4b414a4f55434f494e003717890000000075",
+"hex":"a914fa67945e10a16070c1505711e56f612bcc7bdffe87c01972766e740c4b494e4b414a4f55434f494e003717890000000075"
+,"reqSigs":1,"type":"transfer_asset","asset":{"name":"KINKAJOUCOIN","amount":23},"addresses":["2NG5F15LVeYtyKmTeQ44HTrkY5iSLZTKrvB"]},"valueSat":0},
+{"value":0,"n":1,"scriptPubKey":{"asm":"OP_DUP OP_HASH160 acdefa922bc1c48acf374fa31ea282ca1fcddb50 OP_EQUALVERIFY OP_CHECKSIG OP_RVN_ASSET 1972766e740c4b494e4b414a4f55434f494e0019229e8b04000075",
+"hex":"76a914acdefa922bc1c48acf374fa31ea282ca1fcddb5088acc01972766e740c4b494e4b414a4f55434f494e0019229e8b04000075",
+"reqSigs":1,"type":"transfer_asset","asset":{"name":"KINKAJOUCOIN","amount":49977},"addresses":["mwH1dtQ6FHazvn2PWGCaHQZvka79C2GE3B"]},"valueSat":0},
+{"value":"1899.21673925","n":2,"scriptPubKey":{"asm":"OP_DUP OP_HASH160 acdefa922bc1c48acf374fa31ea282ca1fcddb50 OP_EQUALVERIFY OP_CHECKSIG","hex":"76a914acdefa922bc1c48acf374fa31ea282ca1fcddb5088ac",
+"reqSigs":1,"type":"pubkeyhash","addresses":["mwH1dtQ6FHazvn2PWGCaHQZvka79C2GE3B"]},"valueSat":189921673925}],
+
+"hex":"0200000002c7296d0a4e4d89805cbd803759441a13e24be8910c549e679923d9513764e7f8000000006a4730440221008a08547576652ab699d9ba7dd2f9b61de785b966d0dfd6a5672bb17c6987ba2b021f1eeae23096816de64c6d20e53f8729b4b0f0cd74c213edb191b0fc676619490121037b3dc0036a48b4d1ebf4eb71682e6053f0f3d3a4ae5f1d21ce8afe177744139cfeffffff1fde3d3263674041c2a2108e8bb0c6441510c9f42ea4a1c76bc0233ccc4c81be01000000fd470100483045022100ba62e42c75693fa7af2224f2cdc89f5e12d5fea521dd9e30c7399b0318cd7f4e022058f2482fe379e646ed1638cd9bc01cddc586584ceedab4577d8316dca3a35f5e014830450221009efc07451f05ecd21fd1df4a26cdcb5f2c4c5221b97b87e95b4a19676b83408b022023b392727ec48857882d3d94c3c623b3781e97f923f9134fc4a14a7c206c4e4401483045022100974a72ae35b24594f992d39746e9b67704689322f9fc05ebb2f125f4da0607a002201ff9e1e2491acddb784f031ed8150591b96201fec1ef88337262326c6dd11b2e014c6953210290a94966897e88746af835a7d139260da499f48a3f53b86254ba4b3767b6dd252103903b2a48567a413c672d3b7d1036a6abcf84ae6949dc6fc9fd9f76a7b4e1d2012103d20896a95d7e1d2e0d566ef1728a8f166198e6133c4aef82e69ef6802067f13e53aefeffffff03000000000000000033a914fa67945e10a16070c1505711e56f612bcc7bdffe87c01972766e740c4b494e4b414a4f55434f494e00371789000000007500000000000000003576a914acdefa922bc1c48acf374fa31ea282ca1fcddb5088acc01972766e740c4b494e4b414a4f55434f494e0019229e8b04000075c5c236382c0000001976a914acdefa922bc1c48acf374fa31ea282ca1fcddb5088ac27610f00"
+,"blockhash":"0000000598b26bcdcccd2e67ac16af614d7732243c138aeec9524a0bd0618883",
+"height":1007912,
+"confirmations":69979,
+"time":1639033335,
+"blocktime":1639033335}
+
+
