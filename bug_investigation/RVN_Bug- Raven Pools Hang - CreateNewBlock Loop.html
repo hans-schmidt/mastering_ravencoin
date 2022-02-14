@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>RVN_Bug- Raven Pools Hang - CreateNewBlock Loop</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="RVN_Bug- Raven Pools Hang - CreateNewBlock Loop"
+      name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
+              <tbody>
+                <tr>
+                  <td width="33%" valign="top">Hans Schmidt :&nbsp; Feb
+                    14th 2022 <br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td width="33%" valign="top" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center">
+              <big><big>RVN_Bug- Raven Pools Hang - CreateNewBlock Loop</big></big>
+              <br>
+              <i><b>*An explanation of how the bug fails and why the
+                  chosen Pull Request is the correct solution*</b></i><br>
+            </div>
+            Please refer to <a moz-do-not-send="true"
+              href="https://github.com/RavenProject/Ravencoin/pull/1173">https://github.com/RavenProject/Ravencoin/pull/1173</a>
+            for the Pull Request which fixes this bug.<br>
+            <br>
+            <u><b>Where Reported:</b></u><br>
+            <a moz-do-not-send="true"
+href="https://discord.com/channels/429127343165145089/429133749867905024/916397139016421448">https://discord.com/channels/429127343165145089/429133749867905024/916397139016421448</a><br>
+            <br>
+            <u><b>When Reported:</b></u><br>
+            2021-12-03<br>
+            <br>
+            <u><b>Description:</b></u><br>
+            Numerous RVN pool operators locked up at the same time on
+            mainnset, and could only be recovered by rebooting. <br>
+            <br>
+            <u><b>Core Log Output:</b></u><br>
+            2021-12-03 17:57:18 UpdateTip: new
+            best=0000000000007348fc5c194290e03e3d5b8cd33ed1d8d4d0419dc0fa3a81ff82
+            height=2044413 version=0x30000000 log2_work=69.609431
+            tx=19027719 date='2021-12-03 17:57:15' progress<br>
+            =1.000000 cache=29.6MiB(185942txo)<br>
+            2021-12-03 17:57:18 CreateNewBlock(): block weight: 19140
+            txs: 5 fees: 5679343 sigops 744<br>
+            2021-12-03 17:57:57 UpdateTip: new
+            best=00000000000077f2fb6ca8a12cddc1e97fa5a824226a30b23dec9682fb3ec41f
+            height=2044414 version=0x30000000 log2_work=69.609432
+            tx=19027726 date='2021-12-03 17:57:56' progress=1.000000
+            cache=29.6MiB(186032txo)<br>
+            2021-12-03 17:57:57 CreateNewBlock(): block weight: 5472
+            txs: 2 fees: 1146404 sigops 432<br>
+            2021-12-03 17:57:57 ERROR: ConnectBlock:
+            Consensus::CheckTxInputs:
+            395e8bac9aec45ab88d64179bb0514033852f628f2922118e77a71ca9a4a7252,
+            bad-txns-inputs-missingorspent, CheckTxInputs: inputs
+            missing/spent (code 16)<br>
+            2021-12-03 17:57:57 ERROR: TestBlockValidity:
+            Consensus::ConnectBlock: bad-txns-inputs-missingorspent,
+            CheckTxInputs: inputs missing/spent (code 16)<br>
+            2021-12-03 17:57:57 CreateNewBlock(): block weight: 5472
+            txs: 2 fees: 1146404 sigops 432<br>
+            2021-12-03 17:57:57 ERROR: ConnectBlock:
+            Consensus::CheckTxInputs:
+            395e8bac9aec45ab88d64179bb0514033852f628f2922118e77a71ca9a4a7252,
+            bad-txns-inputs-missingorspent, CheckTxInputs: inputs
+            missing/spent (code 16)<br>
+            2021-12-03 17:57:57 ERROR: TestBlockValidity:
+            Consensus::ConnectBlock: bad-txns-inputs-missingorspent,
+            CheckTxInputs: inputs missing/spent (code 16)<br>
+            ...<br>
+            continuous CreateNewBlock() loop until reboot<br>
+            <br>
+            <u><b>Relevant Information:</b></u><br>
+            What was unusual about that time was that 3 blocks were
+            found in less that a minute, with the last two within one
+            second.<br>
+            What's unusal about block 2044414 =&gt;<br>
+            2044416 Dec 3, 2021 11:59:28 AM
+            15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp; 123034<br>
+            2044415 Dec 3, 2021 11:57:57 AM 1&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; 2Miners PPLNS&nbsp;&nbsp; &nbsp;&nbsp;
+            335<br>
+            2044414 Dec 3, 2021 11:57:56 AM
+            7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; 5407<br>
+            2044413 Dec 3, 2021 11:57:15 AM 25&nbsp; &nbsp;&nbsp;&nbsp;
+            MiningPoolHub&nbsp;&nbsp; &nbsp; 104486<br>
+            2044412 Dec 3, 2021 11:55:09 AM
+            17&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp; 17407<br>
+            <br>
+            <u><b>What's unusal about the error messages</b></u><br>
+            -We repeatedly trip the "ERROR: TestBlockValidity:
+            Consensus::ConnectBlock" in src/validation.cpp:L4519<br>
+            -But we never trip the "TestBlockValidity failed:" in
+            src/miner.cpp:L221<br>
+            <br>
+            <hr width="100%" size="2"><br>
+            <u><b>Analysis</b></u><br>
+            <br>
+            The CreateNewBlock() looping forever bug program flow:<br>
+            <br>
+            &nbsp;&nbsp;&nbsp; 1. The pool received and validated a
+            transaction, and added it into the mempool as TX1<br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; 2. When getblocktemplate is called by the
+            pool, it builds a new block with the transactions in the
+            mempool. <br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; 3. Another block was mined that contained
+            a transaction TX2 that spent the same UTXO as TX1. <br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; 4. For some reason TX1 wasn't ejected out
+            of the mempool even though TX2 spent the same UTXO. <br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; 5. When getblocktemplate is called to
+            build a new block header to send to the miners, we are still
+            including TX1 which is now invalid. While building the new
+            header, we check transaction inputs and see that a
+            transaction is invalid, so we generate error messages and
+            fail to complete the operation. But as written, the code
+            currently does not keep track of which transaction failed or
+            mark it for removal from the mempool. Since we don't clear
+            the mempool of the bad transaction TX1, the next
+            getblocktemplate will encounter the same problem repeatedly.
+            The pool is thus stuck in a loop. <br>
+            &nbsp;&nbsp;&nbsp; <br>
+            &nbsp;&nbsp;&nbsp; 6. The reason that a restart fixes the
+            problem is because on restart we load all the transactions
+            from the mempool and call AcceptToMempool function on them.
+            This checks to make sure that the TxInputs are still valid.
+            This check fails for the bad transaction and it isn't added
+            to the mempool anymore<br>
+            <br>
+            <u><b>Step-5 in greater detail</b></u> &nbsp;&nbsp;&nbsp; <br>
+            getblocktemplet in src/rpc/mining.cpp <br>
+            <ul>
+              <li>calls <a moz-do-not-send="true"
+href="https://github.com/RavenProject/Ravencoin/blob/9daa6b29f99a3c754775f03e33497cd956c2d72f/src/rpc/mining.cpp#L562">HERE</a>
+                CreateNewBlock() in src/miner.cpp which </li>
+              <li>calls <a moz-do-not-send="true"
+href="https://github.com/RavenProject/Ravencoin/blob/develop/src/miner.cpp#L197">HERE</a>
+                TestBlockValidity() in src/validation.cpp which </li>
+              <li>calls <a moz-do-not-send="true"
+href="https://github.com/RavenProject/Ravencoin/blob/9daa6b29f99a3c754775f03e33497cd956c2d72f/src/validation.cpp#L4530">HERE</a>
+                ConnectBlock() in src/validation.cpp which </li>
+              <li>calls <a moz-do-not-send="true"
+href="https://github.com/RavenProject/Ravencoin/blob/9daa6b29f99a3c754775f03e33497cd956c2d72f/src/validation.cpp#L2553">HERE</a>
+                Consensus::CheckTxInputs() in
+                src/consensus/tx_verify.cpp which </li>
+              <li>fails <a moz-do-not-send="true"
+href="https://github.com/RavenProject/Ravencoin/blob/9daa6b29f99a3c754775f03e33497cd956c2d72f/src/consensus/tx_verify.cpp#L566">HERE</a>
+                and produces the error message "ERROR: ConnectBlock:
+                Consensus::CheckTxInputs: ...". </li>
+              <li>However, when Consensus::CheckTxInputs() fails in
+                ConnectBlock(), nothing keeps track of that fact or
+                which transaction # it was. So when the
+                TestBlockValidity() check is done,
+                state.IsTransactionError <a moz-do-not-send="true"
+href="https://github.com/RavenProject/Ravencoin/blob/develop/src/miner.cpp#L198">HERE
+                </a>returns false and the bad transaction is never
+                flushed from the mempool (even if the "-autofixmempool"
+                option is used). The pool then retries getblocktemplet
+                forever in a loop.&nbsp; &nbsp;&nbsp;&nbsp; </li>
+            </ul>
+            <br>
+            Note again: The "-autofixmempool" option could not have been
+            used on v4.3.2.1 as a way to avoid this bug because even
+            though TestBlockValidity() at miner.cpp:L198 failed due to
+            ConnectBlock() failing due to "Consensus::CheckTxInputs()
+            failing, state.IsTransactionError() returned false. If it
+            had been set, then the bad transaction would have been
+            purged even without the "-autofixmempool" option.<br>
+            <br>
+            The solution is to do
+            "state.SetFailedTransaction(tx-&gt;GetHash())" in
+            ConnectBlock() after Consensus::CheckTxInputs() fails in
+            order to keep track of the bad transaction and cause it to
+            be flushed from the mempool.<br>
+            <br>
+            For the same reasons that
+            "state.SetFailedTransaction(tx-&gt;GetHash())" needs to be
+            added after Consensus::CheckTxInputs() fails in
+            ConnectBlock(), it is advisable to also add the same line
+            after CheckTransaction() fails in CheckBlock(). That is done
+            in the second code change included in the commit. Note,
+            however, that this 2nd change does nothing relevant to the
+            current bug since CheckTransaction() checks many things but
+            does not check whether transaction inputs have already been
+            spent.(which is checked only by Consensus::CheckTxInputs),
+            and CheckBlock() calls CheckTransaction() but not
+            Consensus::CheckTxInputs(). This 2nd code change is intended
+            to avoid any similar more general transaction problems which
+            may need to be flushed from the cache. <br>
+            <br>
+            Thanks go to Jeremy for help with this bug..<br>
+            <b><br>
+            </b>
+            <div align="center">Copyright 2022 by Hans Schmidt<br>
+              <div align="left"><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
