@@ -35,26 +35,25 @@ div{margin-top:20px; margin-bottom:20px !important;}
               border="0">
               <tbody>
                 <tr>
-                  <td width="33%" valign="top">Hans Schmidt :&nbsp; Feb
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Feb
                     14th 2022 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
-                  <td width="33%" valign="top" align="right"><a
+                  <td valign="top" width="33%" align="right"><a
                       href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
                 </tr>
               </tbody>
             </table>
             <br>
             <br>
-            <div align="center">
-              <big><big>RVN_Bug- Raven Pools Hang - CreateNewBlock Loop</big></big>
-              <br>
+            <div align="center"> <big><big>RVN_Bug- Raven Pools Hang -
+                  CreateNewBlock Loop</big></big> <br>
               <i><b>*An explanation of how the bug fails and why the
                   chosen Pull Request is the correct solution*</b></i><br>
             </div>
             Please refer to <a moz-do-not-send="true"
-              href="https://github.com/RavenProject/Ravencoin/pull/1173">https://github.com/RavenProject/Ravencoin/pull/1173</a>
+              href="https://github.com/RavenProject/Ravencoin/pull/1184">https://github.com/RavenProject/Ravencoin/pull/1184</a>
             for the Pull Request which fixes this bug.<br>
             <br>
             <u><b>Where Reported:</b></u><br>
@@ -111,6 +110,7 @@ href="https://discord.com/channels/429127343165145089/429133749867905024/9163971
             What's unusal about block 2044414 =&gt;<br>
             2044416 Dec 3, 2021 11:59:28 AM
             15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
             &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp; 123034<br>
             2044415 Dec 3, 2021 11:57:57 AM 1&nbsp;&nbsp;
@@ -118,12 +118,14 @@ href="https://discord.com/channels/429127343165145089/429133749867905024/9163971
             335<br>
             2044414 Dec 3, 2021 11:57:56 AM
             7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
             &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp; 5407<br>
             2044413 Dec 3, 2021 11:57:15 AM 25&nbsp; &nbsp;&nbsp;&nbsp;
             MiningPoolHub&nbsp;&nbsp; &nbsp; 104486<br>
             2044412 Dec 3, 2021 11:55:09 AM
             17&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
             &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp; 17407<br>
             <br>
@@ -133,7 +135,7 @@ href="https://discord.com/channels/429127343165145089/429133749867905024/9163971
             -But we never trip the "TestBlockValidity failed:" in
             src/miner.cpp:L221<br>
             <br>
-            <hr width="100%" size="2"><br>
+            <hr size="2" width="100%"><br>
             <u><b>Analysis</b></u><br>
             <br>
             The CreateNewBlock() looping forever bug program flow:<br>
@@ -196,6 +198,7 @@ href="https://github.com/RavenProject/Ravencoin/blob/9daa6b29f99a3c754775f03e334
                 TestBlockValidity() check is done,
                 state.IsTransactionError <a moz-do-not-send="true"
 href="https://github.com/RavenProject/Ravencoin/blob/develop/src/miner.cpp#L198">HERE
+
                 </a>returns false and the bad transaction is never
                 flushed from the mempool (even if the "-autofixmempool"
                 option is used). The pool then retries getblocktemplet
@@ -231,7 +234,7 @@ href="https://github.com/RavenProject/Ravencoin/blob/develop/src/miner.cpp#L198"
             to avoid any similar more general transaction problems which
             may need to be flushed from the cache. <br>
             <br>
-            Thanks go to Jeremy for help with this bug..<br>
+            Thanks go to Jeremy for help with this bug.<br>
             <b><br>
             </b>
             <div align="center">Copyright 2022 by Hans Schmidt<br>
