@@ -31,12 +31,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
           background-repeat: repeat;">
           <div style="padding-right: 50px; padding-top: 10px;
             padding-bottom: 20px;"><br>
-            <table cellspacing="2" cellpadding="2" border="0"
-              width="100%">
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
               <tbody>
                 <tr>
-                  <td valign="top" width="33%">Hans Schmidt :&nbsp; Aug
-                    1st 2021 <br>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp;
+                    March 23 2022 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
@@ -55,8 +55,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                     github*</small></b></i><br>
             </div>
             <br>
-            <table cellspacing="2" cellpadding="2" border="1"
-              width="90%" align="center">
+            <table width="90%" align="center" cellspacing="2"
+              cellpadding="2" border="1">
               <tbody>
                 <tr>
                   <td valign="top">This page describes the encoding of a
@@ -99,12 +99,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             needs the Owner Asset to authorize one of the
             authority-requiring asset operations just described.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -178,12 +179,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Main_Asset (Root Asset), then an Owner Asset is also
             created.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -275,6 +277,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
                     (max 34)<br>
                   </td>
                   <td width="30%"><br>
@@ -325,12 +328,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             support the embedding of a message and a message expiry time
             into the transaction output.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -440,12 +444,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             taken effect by being mined. Unique assets can never be
             reissued. <br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -529,6 +534,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td><small>1byte Type +1byte Length +32bytes max (usu
                       IPFS base58 converted to hex)</small></td>
                   <td valign="bottom" width="20%" align="center">variable
+
                     (max 34)<br>
                   </td>
                   <td width="30%"><br>
@@ -563,12 +569,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             the requirements of the VerifierString (a boolean of
             Qualifiers) associated with that Restricted Asset.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -642,7 +649,11 @@ div{margin-top:20px; margin-bottom:20px !important;}
               </tbody>
             </table>
             <br>
-            <br>
+            Note that if the first two bytes are "c014" and the Name (up
+            to 31 bytes) is a valid "Qualifier Name" (ie starts&nbsp;
+            with "#"), then this is a "Tag/Untag Address" type of
+            nullasset script, rather than a "Freeze/Unfreeze Address"
+            type.<br>
             <br>
             <hr size="2" width="100%"><br>
             <b><u>Freeze/Unfreeze Address script<br>
@@ -654,12 +665,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Asset may not be transferred into or out of the specified
             address.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -732,7 +744,11 @@ div{margin-top:20px; margin-bottom:20px !important;}
               </tbody>
             </table>
             <br>
-            <br>
+            Note that if the first two bytes are "c014" and the Name (up
+            to 31 bytes) is a valid "Restricted Asset Name" (ie
+            starts&nbsp; with "$"), then this is a "Freeze/Unfreeze
+            Address" type of nullasset script, rather than a "Tag/Untag
+            Address" type.<br>
             <br>
             <hr size="2" width="100%"><br>
             <b><u>Global Freeze/Unfreeze script<br>
@@ -743,12 +759,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             all addresses. When frozen, the specified Restricted Asset
             may not be transferred into or out of any addresses.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -831,12 +848,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Script, and the Verifier Script "true" is used when no
             Qualifiers are desired.<br>
             <br>
-            <table border="2" width="100%">
+            <table width="100%" border="2">
               <tbody>
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -855,7 +873,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
-                  <td rowspan="2" colspan="1">NullAssetVerifierTxDataScript
+                  <td rowspan="1" colspan="1">NullAssetVerifierTxDataScript
+
 
 
 
@@ -867,17 +886,10 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   </td>
                 </tr>
                 <tr>
-                  <td valign="top" align="center">1 byte<br>
-                  </td>
-                  <td valign="top">anything except 50<br>
-                  </td>
-                </tr>
-                <tr>
                   <td>Bytelength of Script</td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
-                  <td width="30%">0b<br>
-                  </td>
+                  <td width="30%">anything except 50 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of VerifierString<br>
