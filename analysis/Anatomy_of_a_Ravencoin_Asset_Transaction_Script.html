@@ -36,7 +36,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
               <tbody>
                 <tr>
                   <td valign="top" width="33%">Hans Schmidt :&nbsp;
-                    March 23 2022 <br>
+                    April 15 2022 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
@@ -113,9 +113,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -150,10 +156,10 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Asset_Name: (<small><small>root_asset!)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
-                  </td>
+                  <td>Asset_Name: (<small><small>root_asset! is the
+                        owner asset for root_asset)</small></small></td>
+                  <td valign="bottom" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -193,9 +199,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -204,8 +216,14 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td><small>Either:<br>
+                      a) The number (#) of bytes below not counting
+                      OP_DROP (if #&lt;=75)<br>
+                      or <br>
+                      b) 0x4c followed by the number (#) of bytes below
+                      not counting OP_DROP (if #&gt;75)</small></td>
+                  <td valign="middle" width="20%" align="center">1 or 2
+                    bytes<br>
                   </td>
                   <td width="30%">48<br>
                   </td>
@@ -230,13 +248,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_Name:<br>
-                    <small><small>root_asset, root/subasset,
-                        root#unique, $restricted_asset, #qualifier,
-                        #qualifier/#subqualifier <br>
+                    <small><small>root_asset, root_asset!,
+                        root/subasset, root#unique, $restricted_asset,
+                        #qualifier, #qualifier/#subqualifier <br>
                       </small></small> </td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
-                  </td>
+                  <td valign="middle" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -267,21 +284,45 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
-                  <td><small>1byte Type +1byte Length +32bytes max (usu
-                      IPFS base58 converted to hex)</small> </td>
-                  <td valign="bottom" width="20%" align="center">variable
-
-
-
-
-
-
-
-
-                    (max 34)<br>
+                  <td>
+                    <table width="100%" cellspacing="2" cellpadding="2"
+                      border="1">
+                      <tbody>
+                        <tr>
+                          <td valign="top">userdata Type <small>(usually
+                              0x12 or 0x54)</small><br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata Length (usually
+                            0x20)<br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata; <small>usually:<br>
+                              &nbsp;&nbsp; IPFS_base58_converted_to_hex
+                              (type=0x12)<br>
+                              or Transaction_Hash_ID (type=0x54)<br>
+                            </small> </td>
+                          <td valign="middle">32 bytes max<br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </td>
-                  <td width="30%"><br>
+                  <td valign="middle" width="20%" align="center">optional<br>
+                    variable (max 34 bytes)<br>
                   </td>
+                  <td width="30%">1220c9ae8712366f46a43e<br>
+                    7403e50d1967f2f068d6f42c<br>
+                    c65f742edc0cc1706c109f<br>
+                    <br>
+                    &nbsp; (equivalent to Qmbuw1XZV8i4uFucmKSSYH7<br>
+                    gGhD5B1B1NPMseh9tp5hgea) </td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
@@ -342,9 +383,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -353,8 +400,14 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td><small>Either:<br>
+                      a) The number (#) of bytes below not counting
+                      OP_DROP (if #&lt;=75)<br>
+                      or <br>
+                      b) 0x4c followed by the number (#) of bytes below
+                      not counting OP_DROP (if #&gt;75)</small></td>
+                  <td valign="middle" width="20%" align="center">1 or 2
+                    bytes<br>
                   </td>
                   <td width="30%"> 38 </td>
                 </tr>
@@ -368,7 +421,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td>Asset_type: transfer(t)=74</td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
-                  <td width="30%"> 71 </td>
+                  <td width="30%"> 74 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Asset_Name</td>
@@ -378,12 +431,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_Name:<br>
-                    <small><small>root_asset, root/subasset,
-                        root#unique, $restricted_asset, #qualifier,
-                        #qualifier/#subqualifier </small></small> </td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
+                    <small><small>root_asset, root_asset!,
+                        root/subasset, root#unique, $restricted_asset,
+                        #qualifier, #qualifier/#subqualifier </small></small>
                   </td>
+                  <td valign="middle" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -395,24 +448,53 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 00743ba40b000000 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of Message<br>
+                  <td>
+                    <table width="100%" cellspacing="2" cellpadding="2"
+                      border="1">
+                      <tbody>
+                        <tr>
+                          <td valign="top">userdata Type <small>(usually
+                              0x12 or 0x54)</small><br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata Length (usually
+                            0x20)<br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata; <small>usually:<br>
+                              &nbsp;&nbsp; IPFS_base58_converted_to_hex
+                              (type=0x12)<br>
+                              or Transaction_Hash_ID (type=0x54)<br>
+                            </small> </td>
+                          <td valign="middle">32 bytes max<br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
-                  </td>
-                  <td width="30%"> 08 </td>
+                  <td valign="middle" width="20%" align="center">optional;<br>
+                    variable (max 34 bytes) </td>
+                  <td width="30%">1220c9ae8712366f46a43e<br>
+                    7403e50d1967f2f068d6f42c<br>
+                    c65f742edc0cc1706c109f<br>
+                    <br>
+                    &nbsp; (equivalent to Qmbuw1XZV8i4uFucmKSSYH7<br>
+                    gGhD5B1B1NPMseh9tp5hgea)</td>
                 </tr>
                 <tr>
-                  <td>Message</td>
-                  <td valign="bottom" width="20%" align="center">variable<br>
+                  <td>userdata Expiry Time (UTC Unix timestamp format)<br>
                   </td>
-                  <td width="30%"> 01 </td>
-                </tr>
-                <tr>
-                  <td>Message Expiry Time<br>
+                  <td valign="bottom" width="20%" align="center">optional;<br>
+                    8 bytes<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="30%">625a168a<br>
                   </td>
-                  <td width="30%"> 01 </td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
@@ -458,9 +540,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -469,8 +557,14 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td><small>Either:<br>
+                      a) The number (#) of bytes below not counting
+                      OP_DROP (if #&lt;=75)<br>
+                      or <br>
+                      b) 0x4c followed by the number (#) of bytes below
+                      not counting OP_DROP (if #&gt;75)</small></td>
+                  <td valign="middle" width="20%" align="center">1 or 2
+                    bytes<br>
                   </td>
                   <td width="30%"> 38 </td>
                 </tr>
@@ -495,12 +589,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_Name:<br>
-                    <small><small>root_asset, root/subasset,
-                        root#unique, $restricted_asset, #qualifier,
-                        #qualifier/#subqualifier </small></small> </td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
+                    <small><small>root_asset, root_asset!,
+                        root/subasset, root#unique, $restricted_asset,
+                        #qualifier, #qualifier/#subqualifier </small></small>
                   </td>
+                  <td valign="middle" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -531,14 +625,44 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
-                  <td><small>1byte Type +1byte Length +32bytes max (usu
-                      IPFS base58 converted to hex)</small></td>
-                  <td valign="bottom" width="20%" align="center">variable
-
-                    (max 34)<br>
+                  <td>
+                    <table width="100%" cellspacing="2" cellpadding="2"
+                      border="1">
+                      <tbody>
+                        <tr>
+                          <td valign="top">userdata Type <small>(usually
+                              0x12 or 0x54)</small><br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata Length (usually
+                            0x20)<br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata; <small>usually:<br>
+                              &nbsp;&nbsp; IPFS_base58_converted_to_hex
+                              (type=0x12)<br>
+                              or Transaction_Hash_ID (type=0x54)<br>
+                            </small> </td>
+                          <td valign="middle">32 bytes max<br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </td>
-                  <td width="30%"><br>
-                  </td>
+                  <td valign="middle" width="20%" align="center">optional;<br>
+                    variable (max 34 bytes) </td>
+                  <td width="30%">1220c9ae8712366f46a43e<br>
+                    7403e50d1967f2f068d6f42c<br>
+                    c65f742edc0cc1706c109f<br>
+                    <br>
+                    &nbsp; (equivalent to Qmbuw1XZV8i4uFucmKSSYH7<br>
+                    gGhD5B1B1NPMseh9tp5hgea) </td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
@@ -583,9 +707,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -627,9 +757,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Qualifier Name <small><small>(#qualifier OR
                         #qualifier/#subqualifier)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
-                  </td>
+                  <td valign="bottom" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -679,9 +808,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -722,9 +857,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Restricted Asset Name <small><small>($restricted_asset)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
-                  </td>
+                  <td valign="bottom" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the $ </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -773,9 +907,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -807,9 +947,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Restricted Asset Name <small><small>($restricted_asset)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
-                  </td>
+                  <td valign="bottom" width="20%" align="center">&gt;=3
+                    and &lt;=30 bytes not including the $ </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
@@ -862,9 +1001,15 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
+
+
+
+
                     <br>
                   </td>
-                  <th style="text-align: left;" width="30%"> Hex Value </th>
+                  <th style="text-align: left;" width="30%"> Hex Value
+                    Example </th>
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
@@ -874,6 +1019,11 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td rowspan="1" colspan="1">NullAssetVerifierTxDataScript
+
+
+
+
+
 
 
 
@@ -964,7 +1114,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             &nbsp;&nbsp;&nbsp; must have at least 3 characters<br>
             &nbsp;&nbsp;&nbsp; Max VerifierString Length: 31 bytes<br>
             <br>
-            <div align="center">Copyright 2021 by Hans Schmidt<br>
+            <div align="center">Copyright 2021, 2022 by Hans Schmidt<br>
             </div>
           </div>
         </div>
