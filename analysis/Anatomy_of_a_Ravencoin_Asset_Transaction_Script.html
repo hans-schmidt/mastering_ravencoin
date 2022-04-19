@@ -36,7 +36,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
               <tbody>
                 <tr>
                   <td valign="top" width="33%">Hans Schmidt :&nbsp;
-                    April 15 2022 <br>
+                    April 18 2022 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
@@ -105,6 +105,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -204,6 +205,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
                     <br>
                   </td>
                   <th style="text-align: left;" width="30%"> Hex Value
@@ -290,6 +292,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
                               0x12 or 0x54)</small><br>
                           </td>
                           <td valign="top">1 byte<br>
@@ -336,26 +339,42 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <u><b>Note:<br>
                 <br>
               </b></u>For Unique Asset:<br>
-            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
-            &nbsp;&nbsp;&nbsp; -Reissuable is always set to false<br>
+            <ul>
+              <li>Unit is always set to Zero (0)</li>
+              <li>Reissuable is always set to false</li>
+            </ul>
             <br>
-            For Qualifier:<br>
-            &nbsp;&nbsp;&nbsp; -Amount is a number between 1 and 10<br>
-            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
-            &nbsp;&nbsp;&nbsp; -Reissuable is always set to false<br>
+            For Qualifier or SubQualifier:<br>
+            <ul>
+              <li>Amount is a number between 1 and 10</li>
+              <li>Unit is always set to Zero (0)</li>
+              <li>Reissuable is always set to false</li>
+              <li>Note that the purpose of the ability to issue more
+                than quantity=1 of a Qualifier or SubQualifier is to
+                give the Qualifier owner the ability to delegate tagging
+                authority to other entities by transferring a Qualifier
+                or SubQualifier to an address they control. Using a
+                Qualifier or SubQualifier to tag an address does not
+                consume that Qualifier or SubQualifier (a tag operation
+                is not a transfer). </li>
+            </ul>
             <br>
             For Restricted Asset:<br>
-            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
-            &nbsp;&nbsp;&nbsp; -Reissuable is true/false for whether
-            additional asset quantity can be created and if the verifier
-            string can be changed<br>
+            <ul>
+              <li>Unit is always set to Zero (0)</li>
+              <li>Reissuable is true/false for whether additional asset
+                quantity can be created and if the verifier string can
+                be changed</li>
+            </ul>
             <br>
             Divisible:<br>
-            &nbsp;&nbsp;&nbsp; -Specifies how many decimal places the
-            "Amount" has to the right of the decimal point. Zero means
-            "Amount" is always an integer number of assets. Amount of
-            eight means "Amount" varies in increments of 0.00000001
-            assets.<br>
+            <ul>
+              <li>Specifies how many decimal places the "Amount" has to
+                the right of the decimal point. Zero means "Amount" is
+                always an integer number of assets. Amount of eight
+                means "Amount" varies in increments of 0.00000001
+                assets.</li>
+            </ul>
             <br>
             <br>
             <hr size="2" width="100%"><br>
@@ -375,6 +394,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -454,6 +474,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
                               0x12 or 0x54)</small><br>
                           </td>
                           <td valign="top">1 byte<br>
@@ -493,7 +514,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td valign="bottom" width="20%" align="center">optional;<br>
                     8 bytes<br>
                   </td>
-                  <td width="30%">625a168a<br>
+                  <td width="30%">00000000625a168a<br>
                   </td>
                 </tr>
                 <tr>
@@ -532,6 +553,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -631,6 +653,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
                               0x12 or 0x54)</small><br>
                           </td>
                           <td valign="top">1 byte<br>
@@ -676,10 +699,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Note:<br>
             <br>
             For Restricted Asset:<br>
-            &nbsp;&nbsp;&nbsp; -Unit is always set to Zero (0)<br>
-            &nbsp;&nbsp;&nbsp; -Reissuable is true/false for whether
-            additional asset quantity can be created and if the verifier
-            string can be changed<br>
+            <ul>
+              <li>Unit is always set to Zero (0)</li>
+              <li>Reissuable is true/false for whether additional asset
+                quantity can be created and if the VerifierString can be
+                changed</li>
+            </ul>
             <br>
             <br>
             <hr size="2" width="100%"><br>
@@ -687,11 +712,32 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 (a type of nullasset script)<br>
               </u></b> <br>
             The Tag/Untag Address script is used to tag or untag an
-            address using a Qualifier. This operation determines whether
-            a particular Restricted Asset may be received by that
-            address depending on whether or not the address satisfies
-            the requirements of the VerifierString (a boolean of
-            Qualifiers) associated with that Restricted Asset.<br>
+            address using a Qualifier or SubQualifier asset. This
+            operation determines whether a particular Restricted Asset
+            may be received by that address depending on whether or not
+            the address satisfies the requirements of the VerifierString
+            (a boolean of Qualifiers) associated with that Restricted
+            Asset. <br>
+            <br>
+            Note that although a SubQualifier can be used to tag an
+            address, only the root Qualifier has any effect and is
+            stored with the address since VerifierStrings can consist
+            only of Qualifiers. <br>
+            <br>
+            Note also that using a Qualifier or SubQualifier to tag an
+            address does not consume that Qualifier or SubQualifier (a
+            tag operation is not a transfer). The purpose of the ability
+            to issue more than quantity=1 of a Qualifier or SubQualifier
+            asset is to give the Qualifier owner the ability to delegate
+            tagging authority to other entities by transferring a
+            Qualifier or SubQualifier to an address they control.
+            Typically this is done using a SubQualifier. Although an
+            address tagged by such an entity using a SubQualifier is
+            affected only by the root Qualifier, the blockchain
+            maintains the transaction history of the SubQualifier used
+            to tag that address. This provides a record of the use of
+            the delegated authority.<br>
+            <br>
             <br>
             <table width="100%" border="2">
               <tbody>
@@ -699,6 +745,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -755,7 +802,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>Qualifier Name <small><small>(#qualifier OR
+                  <td>Qualifier Name <small><small>(#qualifier or
                         #qualifier/#subqualifier)</small></small></td>
                   <td valign="bottom" width="20%" align="center">&gt;=3
                     and &lt;=30 bytes not including the owner asset ! </td>
@@ -768,6 +815,54 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td valign="bottom" width="20%" align="center">1 bytes<br>
                   </td>
                   <td width="30%"> 01</td>
+                </tr>
+                <tr>
+                  <td valign="middle" align="center">
+                    <table width="100%" cellspacing="2" cellpadding="2"
+                      border="1">
+                      <tbody>
+                        <tr>
+                          <td valign="top">userdata Type <small>(usually
+
+                              0x12 or 0x54)</small><br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata Length (usually
+                            0x20)<br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata; <small>usually:<br>
+                              &nbsp;&nbsp; IPFS_base58_converted_to_hex
+                              (type=0x12)<br>
+                              or Transaction_Hash_ID (type=0x54)<br>
+                            </small> </td>
+                          <td valign="middle">32 bytes max<br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td valign="middle" align="center">optional;<br>
+                    variable (max 34 bytes)</td>
+                  <td valign="top">1220c9ae8712366f46a43e<br>
+                    7403e50d1967f2f068d6f42c<br>
+                    c65f742edc0cc1706c109f<br>
+                    <br>
+                    &nbsp; (equivalent to Qmbuw1XZV8i4uFucmKSSYH7<br>
+                    gGhD5B1B1NPMseh9tp5hgea)</td>
+                </tr>
+                <tr>
+                  <td valign="middle">userdata Expiry Time (UTC Unix
+                    timestamp format)</td>
+                  <td valign="middle" align="center">optional;<br>
+                    8 bytes</td>
+                  <td valign="middle">00000000625a168a</td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
@@ -800,6 +895,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -870,6 +966,54 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%">01</td>
                 </tr>
                 <tr>
+                  <td valign="middle" align="center">
+                    <table width="100%" cellspacing="2" cellpadding="2"
+                      border="1">
+                      <tbody>
+                        <tr>
+                          <td valign="top">userdata Type <small>(usually
+
+                              0x12 or 0x54)</small><br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata Length (usually
+                            0x20)<br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata; <small>usually:<br>
+                              &nbsp;&nbsp; IPFS_base58_converted_to_hex
+                              (type=0x12)<br>
+                              or Transaction_Hash_ID (type=0x54)<br>
+                            </small> </td>
+                          <td valign="middle">32 bytes max<br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td valign="middle" align="center">optional;<br>
+                    variable (max 34 bytes)</td>
+                  <td valign="top">1220c9ae8712366f46a43e<br>
+                    7403e50d1967f2f068d6f42c<br>
+                    c65f742edc0cc1706c109f<br>
+                    <br>
+                    &nbsp; (equivalent to Qmbuw1XZV8i4uFucmKSSYH7<br>
+                    gGhD5B1B1NPMseh9tp5hgea)</td>
+                </tr>
+                <tr>
+                  <td valign="middle">userdata Expiry Time (UTC Unix
+                    timestamp format)</td>
+                  <td valign="middle" align="center">optional;<br>
+                    8 bytes</td>
+                  <td valign="middle">00000000625a168a</td>
+                </tr>
+                <tr>
                   <td>OP_DROP </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
@@ -899,6 +1043,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -960,6 +1105,54 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%">01</td>
                 </tr>
                 <tr>
+                  <td valign="middle" align="center">
+                    <table width="100%" cellspacing="2" cellpadding="2"
+                      border="1">
+                      <tbody>
+                        <tr>
+                          <td valign="top">userdata Type <small>(usually
+
+                              0x12 or 0x54)</small><br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata Length (usually
+                            0x20)<br>
+                          </td>
+                          <td valign="top">1 byte<br>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top">userdata; <small>usually:<br>
+                              &nbsp;&nbsp; IPFS_base58_converted_to_hex
+                              (type=0x12)<br>
+                              or Transaction_Hash_ID (type=0x54)<br>
+                            </small> </td>
+                          <td valign="middle">32 bytes max<br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td valign="middle" align="center">optional;<br>
+                    variable (max 34 bytes)</td>
+                  <td valign="middle">1220c9ae8712366f46a43e<br>
+                    7403e50d1967f2f068d6f42c<br>
+                    c65f742edc0cc1706c109f<br>
+                    <br>
+                    &nbsp; (equivalent to Qmbuw1XZV8i4uFucmKSSYH7<br>
+                    gGhD5B1B1NPMseh9tp5hgea)</td>
+                </tr>
+                <tr>
+                  <td valign="middle">userdata Expiry Time (UTC Unix
+                    timestamp format)</td>
+                  <td valign="middle" align="center">optional;<br>
+                    8 bytes</td>
+                  <td valign="middle">00000000625a168a</td>
+                </tr>
+                <tr>
                   <td>OP_DROP </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
@@ -974,18 +1167,19 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <b><u>VerifierString Assignment script<br>
                 (a type of nullasset script)<br>
               </u></b> <br>
-            A Verifier String is a boolean expression comprised of
+            A VerifierString is a boolean expression comprised of
             Qualifiers and boolean operators. It is associated with a
             Restricted Asset and determines the qualifiers which must
             have tagged an address in order for that address to be
             allowed to receive that Restricted Asset. In a transaction
             in which a Restricted Asset is issued or reissued by an
             output New Asset script or Reissue Asset script, an
-            additional output containing a Verifier String script is
-            created which associates that Verifier String with that
-            Restricted Asset. A Restricted Asset requires a Verifier
-            Script, and the Verifier Script "true" is used when no
-            Qualifiers are desired.<br>
+            additional output containing a VerifierString nullasset
+            script as described here is created in the transaction which
+            associates that VerifierString with that Restricted Asset. A
+            Restricted Asset requires a VerifierString, and the
+            VerifierString "true" must be used when no Qualifiers are
+            desired.<br>
             <br>
             <table width="100%" border="2">
               <tbody>
@@ -993,6 +1187,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
                   <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -1028,6 +1223,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
                     identifier<br>
                   </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
@@ -1042,18 +1238,18 @@ div{margin-top:20px; margin-bottom:20px !important;}
                   <td width="30%">anything except 50 </td>
                 </tr>
                 <tr>
-                  <td>Bytelength of VerifierString<br>
-                  </td>
+                  <td>Bytelength of VerifierString (&lt;=80 bytes after
+                    whitespace and "#"s are removed) </td>
                   <td valign="bottom" width="20%" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
-                  <td>VerifierString</td>
-                  <td valign="bottom" width="20%" align="center">up to
-                    31 bytes<br>
+                  <td>VerifierString&nbsp;</td>
+                  <td valign="bottom" width="20%" align="center">&lt;=
+                    80 bytes<br>
                   </td>
-                  <td width="30%"><br>
+                  <td width="30%">(RED&amp;BLUE)&amp;!GREEN<br>
                   </td>
                 </tr>
                 <tr>
@@ -1103,16 +1299,21 @@ div{margin-top:20px; margin-bottom:20px !important;}
             &nbsp;&nbsp;&nbsp; $ must be the first character. Special
             characters can't be the first or last characters or repeated<br>
             <br>
-            VerifierString: Boolean expression comprised of Qualifiers
-            and boolean operators, up to 31 bytes in length<br>
+            VerifierString: Boolean expression comprised of root
+            Qualifiers and boolean operators<br>
+            &nbsp;&nbsp;&nbsp; Parentheses () are allowed for grouping<br>
+            &nbsp;&nbsp;&nbsp; Legal operators are: &amp; | !<br>
+            &nbsp;&nbsp;&nbsp; SubQualifiers may NOT be used<br>
             <br>
             The names RVN, RAVEN, and RAVENCOIN are reserved<br>
             <br>
             Excluding the owner tag ('!') =&gt;<br>
-            &nbsp;&nbsp;&nbsp; MAX_NAME_LENGTH = 31;<br>
-            &nbsp;&nbsp;&nbsp; MAX_CHANNEL_NAME_LENGTH = 12;<br>
-            &nbsp;&nbsp;&nbsp; must have at least 3 characters<br>
-            &nbsp;&nbsp;&nbsp; Max VerifierString Length: 31 bytes<br>
+            &nbsp;&nbsp;&nbsp; Maximum non-channel asset name length =
+            31<br>
+            &nbsp;&nbsp;&nbsp; Maximum channel asset name length = 12<br>
+            &nbsp;&nbsp;&nbsp; Minimum asset name length = 3<br>
+            &nbsp;&nbsp;&nbsp; Max VerifierString Length: 80 bytes after
+            whitespace and "#"s are removed<br>
             <br>
             <div align="center">Copyright 2021, 2022 by Hans Schmidt<br>
             </div>
