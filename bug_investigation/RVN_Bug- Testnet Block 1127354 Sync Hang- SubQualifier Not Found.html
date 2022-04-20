@@ -164,17 +164,11 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <br>
             First off, the code related to TempCache (dirty cache) can
             be ignored because the function is called with
-            fSkipTempCache = true). In fact, this is true in all cases
-            except when calledfrom the rpc client in src/rpc/assets.cpp.
-            In all other cases, we only want to check against states
-            that are deterministic and created by successful blocks
-            being added to the chain.<br>
-            <br>
-            Secondly, it's important to understand that only root
-            Qualifier assets are used in VerifierStrings or in tagging
-            addresses. Although a SubQualifier may be used to tag an
-            address, only its root is stored with the address during the
-            operation.<br>
+            fSkipTempCache = true. In fact, this is true in all cases
+            except when called from the rpc client in
+            src/rpc/assets.cpp. In all other cases, we only want to
+            check against states that are deterministic and created by
+            successful blocks being added to the chain.<br>
             <br>
             The sequence Restricted Asset activity during the relevant
             transactions is as follows (this is all in-memory activity;
@@ -246,10 +240,6 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <u><b>Conclusion</b></u><br>
             <br>
             <ul>
-              <li>The bug is a side-effect of that fact that only root
-                Qualifiers are stored with the address when tagging</li>
-            </ul>
-            <ul>
               <li>The bug occurs when reading the cache to look for the
                 Qualifiers tagged to an address</li>
             </ul>
@@ -260,7 +250,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <li>addtag Qualifier, removetag Qualifier, addtag
                   SubQualifier</li>
               </ul>
-              <li>It wil not happen in the sequence:</li>
+              <li>It will not happen in the sequence:</li>
               <ul>
                 <li>addtag SubQualifier, removetag SubQualifier, addtag
                   Qualifier</li>
@@ -281,7 +271,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <br>
             The bug is present in all versions of Ravencoin core which
             support Restricted assets.&nbsp; Since it happens during a
-            cache read operaion, the bug may or may not occur depending
+            cache read operation, the bug may or may not occur depending
             on the speed of the node, the compiling method used, and
             other items which affect timing<br>
             <br>
