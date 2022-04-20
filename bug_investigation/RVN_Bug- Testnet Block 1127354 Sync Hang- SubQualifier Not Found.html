@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>RVN_Bug- Testnet Block 1127354 Sync Hang- SubQualifier Not
+      Found</title>
+    <meta content="Hans Schmidt" name="author">
+    <meta content="RVN_Bug- Testnet Block 1127354 Sync Hang-
+      SubQualifier Not Found" name="description">
+    <style type="text/css">
+
+body{margin:0; padding-left: 50px; padding-right: 50px; font-family: verdana; font-size: 150%;}
+
+p{padding:100px; height:20px; color:#4e4e4e; font-size:30px;}
+
+a:link{color:#000066;}
+
+a:visited{color:#6666ff;}
+
+a:hover{color:#000000; text-decoration:underline;}
+
+#spiral_note{margin:0; background-image:url(../images/spiral_note.png); background-repeat: repeat-y;}
+
+div{margin-top:20px; margin-bottom:20px !important;}
+  </style>
+  </head>
+  <body>
+    <div id="spiral_note">
+      <div style="padding-left: 126px;">
+        <div style="background-image: url(../images/nospiral_note.png);
+          background-repeat: repeat;">
+          <div style="padding-right: 50px; padding-top: 10px;
+            padding-bottom: 20px;"><br>
+            <table width="100%" cellspacing="2" cellpadding="2"
+              border="0">
+              <tbody>
+                <tr>
+                  <td valign="top" width="33%">Hans Schmidt :&nbsp;
+                    April 20th 2022 <br>
+                  </td>
+                  <td valign="top" align="center"><br>
+                  </td>
+                  <td valign="top" width="33%" align="right"><a
+                      href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <br>
+            <div align="center"> <big><big>RVN_Bug- Testnet Block
+                  1127354 Sync Hang- SubQualifier Not Found</big></big>
+              <br>
+              <i><b>*An explanation of how the bug fails and why the
+                  chosen Pull Request is the correct solution*</b></i><br>
+            </div>
+            Please refer to <a moz-do-not-send="true"
+              href="https://github.com/RavenProject/Ravencoin/pull/1189">https://github.com/RavenProject/Ravencoin/pull/1189</a>
+            for the Pull Request which fixes this bug.<br>
+            <br>
+            <u><b>Where Reported:</b></u><br>
+            <a moz-do-not-send="true"
+              href="https://github.com/RavenProject/Ravencoin/issues/1188">
+              Issue #1188</a><br>
+            <br>
+            <u><b>When Reported:</b></u><br>
+            2022-03-07<br>
+            <br>
+            <u><b>Description:</b></u><br>
+            Many people on testnet reported that their node stopped
+            syncing when they reached block #1127354. <br>
+            <br>
+            The problem could be corrected by issuing a
+            "reconsiderblock&nbsp;
+            000000025a39fa0d11c24815aa78f843ba342b8694b93513e6a7f6283def617c"
+            command on that block, after which syncing continued.<br>
+            <br>
+            <u><b>Core Log Output:</b></u><br>
+            <font size="-1">2022-03-20 01:11:31 UpdateTip: new
+              best=00000003ca8624c9a3ce647767f319f361e34ab65efef57804c066a089b43bd0
+              height=1127352 version=0x30000000 log2_work=51.791538
+              tx=129<br>
+              4621 date='2022-03-10 00:27:41' progress=0.986789
+              cache=2.1MiB(15285txo)<br>
+              2022-03-20 01:11:31 UpdateTip: new
+              best=0000000c62d766a35f783a39799fe5e7cca6b894e85b3e50084795e17be9a229
+              height=1127353 version=0x30000000 log2_work=51.791538
+              tx=1294622 date='2022-03-10 00:28:15' progress=0.986789
+              cache=2.1MiB(15287txo)<br>
+              2022-03-20 01:11:31 ERROR: ContextualCheckVerifierString :
+              The address mnzcdtNKpTY7kpuaW7Th88HPnzxes3BLEd failed to
+              verify against: KYCTEST. Is null 1<br>
+              2022-03-20 01:11:31 ERROR: ContextualCheckTransferAsset :
+              bad-txns-null-verifier-address-failed-verification<br>
+              2022-03-20 01:11:31 ERROR: ConnectBlock:
+              Consensus::CheckTxAssets:
+              39f584821bfaeb6472969f008d219d6886a9ea430ac948858530a2e252f7ba58,&nbsp;
+              (code 16)<br>
+              2022-03-20 01:11:31 InvalidChainFound: invalid
+              block=000000025a39fa0d11c24815aa78f843ba342b8694b93513e6a7f6283def617c&nbsp;
+              height=1127354&nbsp; log2_work=51.791538&nbsp;
+              date=2022-03-10 00:28:27<br>
+              2022-03-20 01:11:31 InvalidChainFound:&nbsp; current
+              best=0000000c62d766a35f783a39799fe5e7cca6b894e85b3e50084795e17be9a229&nbsp;
+              height=1127353&nbsp; log2_work=51.791538&nbsp;
+              date=2022-03-10 00:28:15<br>
+              2022-03-20 01:11:31 ERROR: ConnectTip(): ConnectBlock
+              000000025a39fa0d11c24815aa78f843ba342b8694b93513e6a7f6283def617c
+              failed<br>
+            </font><br>
+            <u><b>Relevant Information:</b></u><br>
+            The following Restricted Asset activity occurred leading up
+            to the failure:<br>
+            <font size="-1">Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Transaction&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+              Height&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Comment</font><br>
+            <font size="-1"><font face="Courier">2022-03-07 18:50:13
+                a2791de8bfca034f9801ac3a6411d6a8302d9e08a8064abe8e83c2a206e317cc&nbsp;
+                &nbsp;&nbsp; 1124545&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; $RENEWABLOX asset created<br>
+                2022-03-07 19:01:32
+                bac49094ae3ce2d80668672276af44a05034abd3234062d393b2a8769cd7f253
+                &nbsp;&nbsp;&nbsp; 1124562&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; #KYCTEST tagged to address<br>
+                2022-03-07 19:05:44
+                b949ef7f1e64ab67b9d16fb08bbc658cb0f78024ad4cab47ad1ac1a049fe67af
+                &nbsp;&nbsp;&nbsp; 1124568&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; $RENEWABLOX transferred to address <br>
+                2022-03-07 19:32:12
+                ccebd395b263817f2f1ccf6e9a76a287332b1a5ed98d7fcd29ca1970739b3540
+                &nbsp;&nbsp;&nbsp; 1124625&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; #KYCTEST untagged from address <br>
+                2022-03-07 21:43:01
+                744ae2f262efdab76d2398430cd9fe5213ee06e1925d709435d684e2e5afed23
+                &nbsp;&nbsp;&nbsp; 1124809&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; #KYCTEST/#RNBX1_TEST tagged to
+                address <br>
+                2022-03-10 00:28:27
+                39f584821bfaeb6472969f008d219d6886a9ea430ac948858530a2e252f7ba58
+                &nbsp;&nbsp;&nbsp; 1127354&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp; $RENEWABLOX transferred to address </font><br>
+            </font><br>
+            <hr size="2" width="100%"><br>
+            <u><b>Analysis</b></u><br>
+            <br>
+            ConnectBlock calls<br>
+            CheckTxAssets calls<br>
+            ContextualCheckTransferAsset calls<br>
+            ContextualAgainstCheckVerifierString calls<br>
+            ContextualCheckVerifierString which generates the error
+            message<br>
+            &nbsp;&nbsp;&nbsp; "The address
+            mnzcdtNKpTY7kpuaW7Th88HPnzxes3BLEd failed to verify against:
+            KYCTEST."<br>
+            &nbsp;&nbsp;&nbsp; based on results it got by calling<br>
+            CheckForAddressQualifier (the function which is the source
+            of the problem)<br>
+            <br>
+            <br>
+            <u><b>CheckForAddressQualifier action analysis</b></u><br>
+            in src/assets/assets.cpp<br>
+            <br>
+            First off, the code related to TempCache (dirty cache) can
+            be ignored because the function is called with
+            fSkipTempCache = true). In fact, this is true in all cases
+            except when calledfrom the rpc client in src/rpc/assets.cpp.
+            In all other cases, we only want to check against states
+            that are deterministic and created by successful blocks
+            being added to the chain.<br>
+            <br>
+            Secondly, it's important to understand that only root
+            Qualifier assets are used in VerifierStrings or in tagging
+            addresses. Although a SubQualifier may be used to tag an
+            address, only its root is stored with the address during the
+            operation.<br>
+            <br>
+            The sequence Restricted Asset activity during the relevant
+            transactions is as follows (this is all in-memory activity;
+            no database actions):<br>
+            <br>
+            1.
+            **bac49094ae3ce2d80668672276af44a05034abd3234062d393b2a8769cd7f253**<br>
+            &nbsp; a. #KYCTEST - with type=add added to
+            assetcache-&gt;setNewQualifierAddressToAdd<br>
+            &nbsp; b. on block connected and validated assetcache
+            flushes to *passets** object<br>
+            &nbsp; c. Final - passets-&gt;setNewQualifierAddressToAdd
+            contains #KYCTEST with type=add<br>
+            <br>
+            2.
+            **b949ef7f1e64ab67b9d16fb08bbc658cb0f78024ad4cab47ad1ac1a049fe67af**<br>
+            &nbsp; a. transfer of asset occured<br>
+            <br>
+            3.
+            **ccebd395b263817f2f1ccf6e9a76a287332b1a5ed98d7fcd29ca1970739b3540**<br>
+            &nbsp; a. #KYCTEST - with type=remove added to
+            assetcache-&gt;setNewQualifierAddressToAdd<br>
+            &nbsp; b. on block connected and validated assetcache
+            flushes to **passets** object<br>
+            &nbsp; c. During flush,
+            passets-&gt;setNewQualifierAddressToAdd removes current
+            #KYCTEST object with type=add<br>
+            &nbsp; d. During flush,
+            passets-&gt;setNewQualifierAddressToAdd add new #KYCTEST
+            object with type=remove<br>
+            <br>
+            4.
+            **744ae2f262efdab76d2398430cd9fe5213ee06e1925d709435d684e2e5afed23**<br>
+            &nbsp; a. #KYCTEST/#RNBX1_TEST with type=add is modifed to
+            #KYCTEST and added to
+            assetCache-&gt;mapRootQualifierAddressAdd<br>
+            &nbsp; b. #KYCTEST/#RNBX1_TEST with type=add is added to
+            assetCache-&gt;setNewQualifierAddressToAdd<br>
+            &nbsp; c. On block connected and validate assetcache flushes
+            to **passets** object<br>
+            &nbsp; d. During flush,
+            passets-&gt;mapRootQualifierAddressAdd adds new #KYCTEST
+            with type=add<br>
+            &nbsp; e. During flush,
+            passets-&gt;setNewQualifierAddressToAdd add new
+            #KYCTEST/#RNBX1_TEST with type=add<br>
+            <br>
+            5.
+            **39f584821bfaeb6472969f008d219d6886a9ea430ac948858530a2e252f7ba58**<br>
+            &nbsp; a. Transfer of restricted asset tx come in<br>
+            &nbsp; b Code pulls verify string for address. Seeing
+            #KYCTEST<br>
+            &nbsp; c. Code goes and sees if address has the tag KYCTEST<br>
+            &nbsp; d When examining if the address contains the tag, the
+            following happens in this order. <br>
+            &nbsp;&nbsp;&nbsp; 1. Check
+            passets-&gt;setNewQualifierAddressToRemove (This is only
+            used when undoing blocks, can be ignored for this example)<br>
+            &nbsp;&nbsp;&nbsp; 2. Check
+            passets-&gt;setNewQualifierAddressToAdd<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Here we find a result, the
+            same result that step (3.d) has. which is&nbsp;
+            passets-&gt;setNewQualifierAddressToAdd add new #KYCTEST
+            object with type=remove<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. This check sees the the
+            #KYCTEST has been removed from that address as a qualifier,
+            so this check returns false and the validation fails. <br>
+            <br>
+            <u><b>Conclusion</b></u><br>
+            <br>
+            <ul>
+              <li>The bug is a side-effect of that fact that only root
+                Qualifiers are stored with the address when tagging</li>
+            </ul>
+            <ul>
+              <li>The bug occurs when reading the cache to look for the
+                Qualifiers tagged to an address</li>
+            </ul>
+            <ul>
+              <li>The bug only applies to the specific sequence of
+                actions:</li>
+              <ul>
+                <li>addtag Qualifier, removetag Qualifier, addtag
+                  SubQualifier</li>
+              </ul>
+              <li>It wil not happen in the sequence:</li>
+              <ul>
+                <li>addtag SubQualifier, removetag SubQualifier, addtag
+                  Qualifier</li>
+              </ul>
+            </ul>
+            <ul>
+              <li>
+                After sufficient time has passed, the cache is written
+                to the database, after which this bug will no longer
+                cause failures</li>
+            </ul>
+            The code fix in <a moz-do-not-send="true"
+              href="https://github.com/RavenProject/Ravencoin/pull/1189">PR
+              #1189</a> adds an additional check to look for the
+            SubQualifier in the cache<br>
+            <br>
+            <u><b>Scope</b></u><br>
+            <br>
+            The bug is present in all versions of Ravencoin core which
+            support Restricted assets.&nbsp; Since it happens during a
+            cache read operaion, the bug may or may not occur depending
+            on the speed of the node, the compiling method used, and
+            other items which affect timing<br>
+            <br>
+            <hr size="2" width="100%"><br>
+            Thanks go to Jeremy for his help analyzing and patching this
+            bug.<br>
+            <b><br>
+            </b>
+            <div align="center">Copyright 2022 by Hans Schmidt<br>
+              <div align="left"><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
