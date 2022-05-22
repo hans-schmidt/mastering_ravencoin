@@ -35,12 +35,12 @@ div{margin-top:20px; margin-bottom:20px !important;}
               border="0">
               <tbody>
                 <tr>
-                  <td valign="top" width="33%">Hans Schmidt :&nbsp;
-                    April 18 2022 <br>
+                  <td width="33%" valign="top">Hans Schmidt :&nbsp; May
+                    22 2022 <br>
                   </td>
                   <td valign="top" align="center"><br>
                   </td>
-                  <td valign="top" width="33%" align="right"><a
+                  <td width="33%" valign="top" align="right"><a
                       href="mailto:hans_schm1dt@protonmail.com">hans_schm1dt@protonmail.com</a></td>
                 </tr>
               </tbody>
@@ -104,7 +104,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -126,47 +127,47 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">0c<br>
                   </td>
                 </tr>
                 <tr>
                   <td>Asset_type Header("rvn" in ASCII) </td>
-                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  <td width="20%" valign="bottom" align="center">3 bytes<br>
                   </td>
                   <td width="30%"> 72766e </td>
                 </tr>
                 <tr>
-                  <td>Asset_type: owner(o)=6f </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td>Asset operation type: owner(o)=6f </td>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">6f<br>
                   </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Asset_Name</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
                   <td>Asset_Name: (<small><small>root_asset! is the
                         owner asset for root_asset)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="bottom" align="center">&gt;=3
                     and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -175,7 +176,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <br>
             <br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>New Asset script</u></b><br>
             <br>
             The New Asset script serves to create a new asset, which can
@@ -191,7 +192,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -213,7 +215,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
@@ -224,7 +226,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       or <br>
                       b) 0x4c followed by the number (#) of bytes below
                       not counting OP_DROP (if #&gt;75)</small></td>
-                  <td valign="middle" width="20%" align="center">1 or 2
+                  <td width="20%" valign="middle" align="center">1 or 2
                     bytes<br>
                   </td>
                   <td width="30%">48<br>
@@ -232,19 +234,19 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Asset_type Header("rvn" in ASCII) </td>
-                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  <td width="20%" valign="bottom" align="center">3 bytes<br>
                   </td>
                   <td width="30%"> 72766e </td>
                 </tr>
                 <tr>
-                  <td>Asset_type: new(q)=71</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td>Asset operation type: new(q)=71</td>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 71 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Asset_Name</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
@@ -254,7 +256,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                         root/subasset, root#unique, $restricted_asset,
                         #qualifier, #qualifier/#subqualifier <br>
                       </small></small> </td>
-                  <td valign="middle" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="middle" align="center">&gt;=3
                     and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
@@ -262,26 +264,26 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>8 Bytes of Little Endian hex: "Amount" of assets
                     in satoshis </td>
-                  <td valign="bottom" width="20%" align="center">8 bytes<br>
+                  <td width="20%" valign="bottom" align="center">8 bytes<br>
                   </td>
                   <td width="30%"> 00743ba40b000000 </td>
                 </tr>
                 <tr>
                   <td>Divisible-by range: (00..08) units<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 08 </td>
                 </tr>
                 <tr>
                   <td>is reissueable (01 yes: 00 no) </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
                   <td>Has userdata (01 yes: 00 no) </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 01 </td>
                 </tr>
@@ -292,6 +294,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
 
                               0x12 or 0x54)</small><br>
                           </td>
@@ -317,7 +320,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       </tbody>
                     </table>
                   </td>
-                  <td valign="middle" width="20%" align="center">optional<br>
+                  <td width="20%" valign="middle" align="center">optional<br>
                     variable (max 34 bytes)<br>
                   </td>
                   <td width="30%">1220c9ae8712366f46a43e<br>
@@ -329,7 +332,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -377,7 +380,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             </ul>
             <br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>Asset Transfer script</u></b><br>
             <br>
             The Asset Transfer script simply moves an asset from one
@@ -393,7 +396,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -415,7 +419,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
@@ -426,26 +430,26 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       or <br>
                       b) 0x4c followed by the number (#) of bytes below
                       not counting OP_DROP (if #&gt;75)</small></td>
-                  <td valign="middle" width="20%" align="center">1 or 2
+                  <td width="20%" valign="middle" align="center">1 or 2
                     bytes<br>
                   </td>
                   <td width="30%"> 38 </td>
                 </tr>
                 <tr>
                   <td>Asset_type Header("rvn" in ASCII) </td>
-                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  <td width="20%" valign="bottom" align="center">3 bytes<br>
                   </td>
                   <td width="30%"> 72766e </td>
                 </tr>
                 <tr>
-                  <td>Asset_type: transfer(t)=74</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td>Asset operation type: transfer(t)=74</td>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 74 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Asset_Name</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
@@ -455,7 +459,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                         root/subasset, root#unique, $restricted_asset,
                         #qualifier, #qualifier/#subqualifier </small></small>
                   </td>
-                  <td valign="middle" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="middle" align="center">&gt;=3
                     and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
@@ -463,7 +467,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>8 Bytes of Little Endian hex: Amount of assets in
                     satoshis </td>
-                  <td valign="bottom" width="20%" align="center">8 bytes<br>
+                  <td width="20%" valign="bottom" align="center">8 bytes<br>
                   </td>
                   <td width="30%"> 00743ba40b000000 </td>
                 </tr>
@@ -474,6 +478,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
 
                               0x12 or 0x54)</small><br>
                           </td>
@@ -499,7 +504,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       </tbody>
                     </table>
                   </td>
-                  <td valign="middle" width="20%" align="center">optional;<br>
+                  <td width="20%" valign="middle" align="center">optional;<br>
                     variable (max 34 bytes) </td>
                   <td width="30%">1220c9ae8712366f46a43e<br>
                     7403e50d1967f2f068d6f42c<br>
@@ -511,7 +516,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>userdata Expiry Time (UTC Unix timestamp format)<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">optional;<br>
+                  <td width="20%" valign="bottom" align="center">optional;<br>
                     8 bytes<br>
                   </td>
                   <td width="30%">00000000625a168a<br>
@@ -519,7 +524,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -528,7 +533,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <br>
             <br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>Asset Reissue script</u></b><br>
             <br>
             The Asset Reissue script issues an additional quantity of an
@@ -552,7 +557,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -574,7 +580,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
@@ -585,27 +591,26 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       or <br>
                       b) 0x4c followed by the number (#) of bytes below
                       not counting OP_DROP (if #&gt;75)</small></td>
-                  <td valign="middle" width="20%" align="center">1 or 2
+                  <td width="20%" valign="middle" align="center">1 or 2
                     bytes<br>
                   </td>
                   <td width="30%"> 38 </td>
                 </tr>
                 <tr>
                   <td>Asset_type Header("rvn" in ASCII) </td>
-                  <td valign="bottom" width="20%" align="center">3 bytes<br>
+                  <td width="20%" valign="bottom" align="center">3 bytes<br>
                   </td>
                   <td width="30%"> 72766e </td>
                 </tr>
                 <tr>
-                  <td>Asset_type: transfer(t)=74 or new(q)=71 or
-                    owner(o)=6f </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td>Asset operation type: reissue(r)=72</td>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 71 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Asset_Name</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
@@ -615,7 +620,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                         root/subasset, root#unique, $restricted_asset,
                         #qualifier, #qualifier/#subqualifier </small></small>
                   </td>
-                  <td valign="middle" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="middle" align="center">&gt;=3
                     and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
@@ -623,26 +628,26 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>8 Bytes of Little Endian hex: Amount of assets in
                     satoshis </td>
-                  <td valign="bottom" width="20%" align="center">8 bytes<br>
+                  <td width="20%" valign="bottom" align="center">8 bytes<br>
                   </td>
                   <td width="30%"> 00743ba40b000000 </td>
                 </tr>
                 <tr>
                   <td>Divisible-by range: (00..08) units<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 08 </td>
                 </tr>
                 <tr>
                   <td>is reissueable (01 yes: 00 no) </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 01 </td>
                 </tr>
                 <tr>
                   <td>Has userdata (01 yes: 00 no) </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 01 </td>
                 </tr>
@@ -653,6 +658,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
 
                               0x12 or 0x54)</small><br>
                           </td>
@@ -678,7 +684,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       </tbody>
                     </table>
                   </td>
-                  <td valign="middle" width="20%" align="center">optional;<br>
+                  <td width="20%" valign="middle" align="center">optional;<br>
                     variable (max 34 bytes) </td>
                   <td width="30%">1220c9ae8712366f46a43e<br>
                     7403e50d1967f2f068d6f42c<br>
@@ -689,7 +695,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -707,7 +713,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             </ul>
             <br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>Tag/Untag Address script<br>
                 (a type of nullasset script)<br>
               </u></b> <br>
@@ -744,7 +750,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -766,14 +773,14 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
                   <td>NullAssetTxDataScript identifier<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">14<br>
                   </td>
@@ -781,7 +788,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Hash-160 Address<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">20
+                  <td width="20%" valign="bottom" align="center">20
                     bytes<br>
                   </td>
                   <td width="30%"><br>
@@ -789,7 +796,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Bytelength of Script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">0b<br>
                   </td>
@@ -797,14 +804,14 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Bytelength of Qualifier Name<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
                   <td>Qualifier Name <small><small>(#qualifier or
                         #qualifier/#subqualifier)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="bottom" align="center">&gt;=3
                     and &lt;=30 bytes not including the owner asset ! </td>
                   <td width="30%"><br>
                   </td>
@@ -812,7 +819,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Operation (1=Add, 0=Remove)<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 bytes<br>
+                  <td width="20%" valign="bottom" align="center">1 bytes<br>
                   </td>
                   <td width="30%"> 01</td>
                 </tr>
@@ -823,6 +830,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
 
                               0x12 or 0x54)</small><br>
                           </td>
@@ -866,7 +874,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -879,7 +887,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             nullasset script, rather than a "Freeze/Unfreeze Address"
             type.<br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>Freeze/Unfreeze Address script<br>
                 (a type of nullasset script)<br>
               </u></b> <br>
@@ -894,7 +902,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -916,14 +925,14 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
                   <td>NullAssetTxDataScript identifier<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">14<br>
                   </td>
@@ -931,7 +940,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Hash-160 Address<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">20
+                  <td width="20%" valign="bottom" align="center">20
                     bytes<br>
                   </td>
                   <td width="30%"><br>
@@ -939,7 +948,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>Bytelength of Script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">0b<br>
                   </td>
@@ -947,13 +956,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Bytelength of Restricted Asset Name<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
                   <td>Restricted Asset Name <small><small>($restricted_asset)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="bottom" align="center">&gt;=3
                     and &lt;=30 bytes not including the $ </td>
                   <td width="30%"><br>
                   </td>
@@ -961,7 +970,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Operation (1=Freeze, 0=Unfreeze)<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 bytes<br>
+                  <td width="20%" valign="bottom" align="center">1 bytes<br>
                   </td>
                   <td width="30%">01</td>
                 </tr>
@@ -972,6 +981,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
 
                               0x12 or 0x54)</small><br>
                           </td>
@@ -1015,7 +1025,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -1028,7 +1038,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             Address" type of nullasset script, rather than a "Tag/Untag
             Address" type.<br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>Global Freeze/Unfreeze script<br>
                 (a type of nullasset script)<br>
               </u></b> <br>
@@ -1042,7 +1052,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -1064,21 +1075,21 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
                 <tr>
                   <td>NullGlobalRestrictionAssetTxDataScript identifier<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">2 bytes<br>
+                  <td width="20%" valign="bottom" align="center">2 bytes<br>
                   </td>
                   <td width="30%">5050<br>
                   </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">0b<br>
                   </td>
@@ -1086,13 +1097,13 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Bytelength of Restricted Asset Name<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
                   <td>Restricted Asset Name <small><small>($restricted_asset)</small></small></td>
-                  <td valign="bottom" width="20%" align="center">&gt;=3
+                  <td width="20%" valign="bottom" align="center">&gt;=3
                     and &lt;=30 bytes not including the $ </td>
                   <td width="30%"><br>
                   </td>
@@ -1100,7 +1111,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <td>Operation (1=Freeze, 0=Unfreeze)<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 bytes<br>
+                  <td width="20%" valign="bottom" align="center">1 bytes<br>
                   </td>
                   <td width="30%">01</td>
                 </tr>
@@ -1111,6 +1122,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                       <tbody>
                         <tr>
                           <td valign="top">userdata Type <small>(usually
+
 
                               0x12 or 0x54)</small><br>
                           </td>
@@ -1154,7 +1166,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -1163,7 +1175,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <br>
             <br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <b><u>VerifierString Assignment script<br>
                 (a type of nullasset script)<br>
               </u></b> <br>
@@ -1186,7 +1198,8 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 <tr>
                   <th style="text-align: left; width: 60%;"> Description
                   </th>
-                  <td valign="bottom" width="20%" align="center">&nbsp;<b>Length</b>&nbsp;
+                  <td width="20%" valign="bottom" align="center">&nbsp;<b>Length</b>&nbsp;
+
 
 
 
@@ -1208,7 +1221,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_RVN_ASSET </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> c0 </td>
                 </tr>
@@ -1224,29 +1237,30 @@ div{margin-top:20px; margin-bottom:20px !important;}
 
 
 
+
                     identifier<br>
                   </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">50<br>
                   </td>
                 </tr>
                 <tr>
                   <td>Bytelength of Script</td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%">anything except 50 </td>
                 </tr>
                 <tr>
                   <td>Bytelength of VerifierString (&lt;=80 bytes after
                     whitespace and "#"s are removed) </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 05 </td>
                 </tr>
                 <tr>
                   <td>VerifierString&nbsp;</td>
-                  <td valign="bottom" width="20%" align="center">&lt;=
+                  <td width="20%" valign="bottom" align="center">&lt;=
                     80 bytes<br>
                   </td>
                   <td width="30%">(RED&amp;BLUE)&amp;!GREEN<br>
@@ -1254,7 +1268,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
                 </tr>
                 <tr>
                   <td>OP_DROP </td>
-                  <td valign="bottom" width="20%" align="center">1 byte<br>
+                  <td width="20%" valign="bottom" align="center">1 byte<br>
                   </td>
                   <td width="30%"> 75 </td>
                 </tr>
@@ -1263,7 +1277,7 @@ div{margin-top:20px; margin-bottom:20px !important;}
             <br>
             <br>
             <br>
-            <hr size="2" width="100%"><br>
+            <hr width="100%" size="2"><br>
             <u><b>Asset Naming Rules</b></u><br>
             <br>
             ROOT_ASSET: Root asset name valid characters are: A-Z 0-9 .
